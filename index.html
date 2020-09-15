@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="./Assets/CSS/style.css" />
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkb96g-9_ZHg68di_g4cUEDTA5pEi9Ef8"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkb96g-9_ZHg68di_g4cUEDTA5pEi9Ef8"></script> -->
 
     <title>Discover live artists in your area</title>
 
@@ -100,17 +101,16 @@
                 <div class="searchBand">
                     <h3> Search for a Band: </h3>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="searchBar" id="artist-input">
-                        <div class="input-group-append">
-                            <input type="submit" id="submitButton" id="searchBtn">
-                        </div>
+                        <input type="text" class="form-control" id="searchBar">
+                        <button id="submitButton" type="submit">submit</button>
                     </div>
                 </div>
 
-                <ul id="band-details">
-                    <h2 id="artist-name"></h2>
-                    <img id="artist-image" src="#" alt="artist image">
-
+                <div id="band-details">
+                    <h2 id="artist-name">Artist name</h2>
+                    <img id="artist-image" src="http://placehold.it/100x100" alt="artist image">
+                </div>
+                <ul id="band-features">
                     <li class="genre"> Genre: </li>
                     <li class="topSong"> #1 Rated Song: </li>
                     <li>Hits:
@@ -151,6 +151,7 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <script src="./Assets/JS/bandsintown.js"></script>
 </body>
 

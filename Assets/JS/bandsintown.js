@@ -1,7 +1,7 @@
+$("#submitButton").on("click", function(event) {
+    event.preventDefault();
 
-
-$("#searchBtn").on("click", function() {
-    var artist = $("#artist-input").val().trim();
+    var artist = $("#searchBar").val().trim();
 
     if (artist) {
         var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp";
