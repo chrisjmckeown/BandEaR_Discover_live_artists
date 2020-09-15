@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +12,150 @@
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkb96g-9_ZHg68di_g4cUEDTA5pEi9Ef8">        </script>
 
-    <title>Weather Dashboard</title>
-</head>
-<body>
-    <Header>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
-    </Header>
-    <main>
+    <title>Weather Dashboard</title>
+
+    <style>
+        header {
+            border: 1px solid red;
+            position: absolute;
+            top: 0;
+            height: 80px;
+            width: 100%;
+
+        }
+
+
+
+        .searchBand {
+            position: absolute;
+            border: 1px solid blue;
+            width: 26%;
+            top: 100px;
+
+        }
+
+        #band-features {
+            position: absolute;
+            border: 1px solid green;
+            width: 26%;
+            top: 200px;
+        }
+
+        .bandsInTownList {
+            position: relative;
+            border: 1px solid purple;
+            height: 90px;
+            width: 26%;
+            top: 400px;
+        }
+
+        .bandsInTownScroll {
+            position: relative;
+            border: 1px solid purple;
+            width: 26%;
+            top: 435px;
+            height: 90px;
+        }
+
+        #blurbAboutSite {
+            border: 1px solid black;
+            width: 33%;
+            position: absolute;
+            right: 490px;
+            height: 540px;
+            bottom: 88px
+        }
+
+        #googleMap {
+            border: 1px solid blue;
+            width: 33%;
+            position: absolute;
+            right: 10px;
+            height: 540px;
+            bottom: 88px
+        }
+
+        footer {
+            border: 1px solid orange;
+            position: fixed;
+            width: 100%;
+            bottom: 1px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <h1> Our App Name </h1>
+    </header>
+
+
+
+    <main class="main-content">
+        <div class="searchBand">
+            <h3> Search for a Band: </h3>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="searchBar">
+                <div class="input-group-append">
+                    <input type="submit" id="submitButton">
+                </div>
+            </div>
+        </div>
+
+        <div class="band-details">
+            <ul id="band-features">
+                <li class="bandName"> Band Name: </li>
+                <li class="genre"> Genre: </li>
+                <li class="topSong"> #1 Rated Song: </li>
+                <img class="albumCover" link="" alt="image">
+                <ol class="hits"> Hits:
+                    <li> Hit #1</li>
+                    <li> Hit #2</li>
+                    <li> Hit #3</li>
+                    <li> Hit #4</li>
+                </ol>
+                <li class="spotifyURL"> Spotify URL: </li>
+            </ul>
+
+
+
+        </div>
+
+        <div class="bandsInTownList">
+            <h3> The bands in Town </h3>
+        </div>
+
+        <div class="bandsInTownScroll">
+            <h3> Possible carousel of bands </h3>
+        </div>
+
+        <div id="blurbAboutSite">
+            <h1> Blurb about Site </h1>
+            <p> The content written will apear in here this is the dive here it goes in</p>
+
+        </div>
+
+        <div id="googleMap"> GOOGLE MAP GOES HERE </div>
+
+
+
+
 
     </main>
+
+
     <footer>
+        <h1> this is the footer here </h1>
 
     </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./Assets/Javascript/script.js"></script>
 </body>
+
 </html>
