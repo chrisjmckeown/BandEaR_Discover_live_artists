@@ -1,3 +1,5 @@
+
+
 $("#searchBtn").on("click", function() {
     var artist = $("#artist-input").val().trim();
 
@@ -41,6 +43,7 @@ $("#searchBtn").on("click", function() {
                             $("#band-details").append(", " + data.venue.location)
                         }
                     }
+                    // TODO: get location object
                     
                     if (data.url) {
                         var br = $("<br>");
