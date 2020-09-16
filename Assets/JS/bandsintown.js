@@ -1,62 +1,59 @@
-
+/** overrides $("#blurbAboutSite")
+ * This will display band name, image, number of upcoming events and next event showing
+ */
 
 $("#searchBtn").on("click", function() {
+    $("#blurbAboutSite").empty();
     var artist = $("#artist-input").val().trim();
+    var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     if (artist) {
-        var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp";
-
         $.ajax({
-            url: artistURL,
+            url: queryURL,
             method: "GET"
         }).then(function(response) {
-            // sleeping with sirens
-            console.log(response);
+            var data = response[0]
 
-            $("#artist-name").text(response.name);
-            $("#artist-image").attr("src", response.thumb_url); // artist image
-            $("#band-details").append("<br>" + response.upcoming_event_count + " upcoming events");
+            // artist info
+            var artistName = $("<h2>").text(data.artist.name);
+            var artistImage = $("<img>").attr("src", data.artist.thumb_url).width("200px");
+            var upcomingEvents = $("<p>").text(data.artist.upcoming_event_count + " upcoming events");
 
-            var events = response.upcoming_event_count
-            if (events > 0) {
-                var eventsURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+            $("#blurbAboutSite").append(artistName, artistImage, upcomingEvents);
 
-                $.ajax({
-                    url: eventsURL,
-                    method: "GET"
-                }).then(function(response) {
-                    console.log("events:")
-                    var data = response[0]
-                    console.log(data)
+            //events
+            if (data.artist.upcoming_event_count > 0) {
+                $("#blurbAboutSite").append("Next upcoming event: ")
 
-                    // venue
-                    console.log(data.venue.type)
-                    if (data.venue.name) {
-                        $("#band-details").append("<br>" + data.venue.name)
+                // venue info
+                if (data.venue.name) {
+                    var showName = $("<h4>").text(data.venue.name)
+                    $("#blurbAboutSite").append(showName)
+                }
+                if (data.title) {
+                    var showTitle = $("<h3>").text(data.title)
+                    $("#blurbAboutSite").append(showTitle)
+                }
+                if (data.venue.type !== "Virtual") {
+                    var showLocation = $("<p>").text(data.venue.city)
+                    if (data.venue.location) {
+                        showLocation.append(", " + data.venue.location)
                     }
-                    if (data.title) {
-                        $("#band-details").append("<br>" + data.title)
-                    }
-                    if (data.venue.city) {
-                        $("#band-details").append("<br>" + data.venue.city)
-                        if (data.venue.location) {
-                            $("#band-details").append(", " + data.venue.location)
-                        }
-                    }
-                    // TODO: get location object
-                    
-                    if (data.url) {
-                        var br = $("<br>");
-                        var aTag = $("<a>").text("ticket");
-                        aTag.attr("href", data.offers[0].url)
-                        $("#band-details").append(br)
-                        $("#band-details").append(aTag)
+                    $("#blurbAboutSite").append("Location: " + showLocation)
 
-                        console.log(data.offers[0].url)
-                    }
-                })
+                } else {
+                    $("#blurbAboutSite").append("Location: " + data.venue.type)
+                }
+
+                // ticket info
+                if (data.offers[0].url) {
+                    var pTag = $("<p>")
+                    var ticketInfo = $("<a>").text("Tickets available here").attr("href", data.offers[0].url)
+                    pTag.append(ticketInfo)
+
+                    $("#blurbAboutSite").append(pTag)
+                }
             }
-            
-        });
+        })
     }
 })
