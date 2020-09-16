@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify</title>
+
+    <style>
+        tbody,
+        td,
+        th {
+            border: 1px solid grey;
+        }
+
+
+        .display_hits {
+            z-index: 5;
+            position: relative;
+            right: 10px;
+            top: 10px;
+            background-color: antiquewhite;
+            border: 0 1px red;
+            border-radius: 20px;
+            padding: 20px;
+            overflow: hidden;
+
+        }
+
+        .text-right {
+            text-align: right;
+            cursor: pointer;
+            font-weight: 900;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="spotify">
+        <form id="search-form">
+            <label for="artist-search">Artist/ Band</label>
+            <input type="text" name="" id="artist-search">
+            <button type="submit">Search</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Genere</th>
+                    <th>Photo</th>
+                </tr>
+            </thead>
+            <tbody id="artist_list">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="./Assets/JS/spotify.js"></script>
+</body>
+
+</html>
