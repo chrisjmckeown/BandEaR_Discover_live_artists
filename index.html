@@ -37,15 +37,18 @@
             <aside class="col s12 m4 l3 search-band">
                 <h3 class="sideContentTitle"> Search for a Band: </h3>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Type in Band Name Here" id="artist-input">
-                    <div class="input-group-append">
-                        <input type="submit" id="searchBtn">
-                    </div>
+                    <form action="submit" id="search-form">
+                        <label for="artist-input"></label>
+                        <input type="text" class="form-control" id="artist-input">
+                        <div class="input-group-append">
+                            <input type="submit" id="searchBtn">
+                        </div>
+                    </form>
                 </div>
                 <div class="band-details">
                     <div id="band-details">
-                        <h2 id="artist-name"></h2>
-                        <img id="artist-image" src="#" alt="artist image">
+                        <!-- <h2 id="artist-name"></h2>
+                        <img id="artist-image" src="#" alt="artist image"> -->
                     </div>
                     <ul id="band-features">
                         <li class="genre"> Genre: </li>
@@ -129,7 +132,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./Assets/JS/bandsintown.js"></script>
     <script src="./Assets/JS/google.js"></script>
-    <script src="./Assets/JS/spotify.js"></script>
+    <!-- <script src="./Assets/JS/spotify.js"></script> -->
     <script src="./Assets/JS/bandsintown.js"></script>
 </body>
 
