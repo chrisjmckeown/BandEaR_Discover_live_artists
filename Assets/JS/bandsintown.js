@@ -4,22 +4,22 @@
  * 
  * gets an array of 20 artist names from spotify
  */
-$(document).ready(function () {
+$(document).ready(function() {
     //#region spotify
 
     var artists_search_results = []
     var clientId = '41cd629d017d4f53bc20ccb457fdd08e';
     var clientSecret = '70a3757b1ad54861be12d8693bc8b929';
     $.post({
-        url: 'https://accounts.spotify.com/api/token',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
-        },
-        data: 'grant_type=client_credentials'
-    }
+            url: 'https://accounts.spotify.com/api/token',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+            },
+            data: 'grant_type=client_credentials'
+        }
 
-    ).then(function (res) {
+    ).then(function(res) {
         token = res.access_token
         // console.log(token);
     })
@@ -31,13 +31,15 @@ $(document).ready(function () {
 
             // method: 'GET',
             url: `https://api.spotify.com/v1/search?q=${$('#artist-input').val().trim()}&type=artist`,
-            headers: { 'Authorization': 'Bearer ' + token }
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
 
-        }).then(function (dat) {
+        }).then(function(dat) {
 
             // console.log(dat.artists.items);
             const artists = dat.artists.items
-            artists.forEach(function (artist, index) {
+            artists.forEach(function(artist, index) {
                 const new_artist = $(`<div class="artist" id=${index}></div>`)
                 const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
                 // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
@@ -50,41 +52,14 @@ $(document).ready(function () {
 
     }
 
-    //#endregion
-
-    //#region bandsintown
-
-
-
-    // var artistList = [
-    //     { artistName: "Guns n' Roses" },
-    // ];
-
-    // test();
-
-    // function test() {
-    //     artistList.forEach(function (artist) {
-    //         displayBandsInTownData(artist.artistName);
-    //     });
-    // }
-
-    // $("#searchBtn").on("click", function () {
-    //     $(".bands-in-town-list").empty();
-
-    //     artistName.forEach(element => {
-    //         displayBandsInTownData(element);
-    //     });
-    // })
-
-    $('#search-form').submit(function (event) {
-
+    $('#search-form').submit(function(event) {
         event.preventDefault()
         get_results()
     })
+    //#endregion
 
-    $(document).on('click', '.artist', function () {
-        console.log('click');
-        // console.log(artists_search_results);
+    //#region bandsintown
+    $(document).on('click', '.artist', function() {
         artists_search_results.forEach((element, index) => {
             if (parseInt(this.id) == index) {
                 displayBandsInTownData(element)
@@ -92,46 +67,68 @@ $(document).ready(function () {
         });
     })
 
+    function appendArtistInfo(data) {
+        // artist info
+        if (data.name) {
+            $(".bands-in-town-list").append($("<h2>").text(data.name).attr("style", "margin: 0 0 5px 0"));
+        }
+        if (data.upcoming_event_count) {
+            $(".bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
+        } else {$(".bands-in-town-list").append($("<p>").text(data.name + " is not in town"))};
+        if (data.thumb_url) {
+            $(".bands-in-town-list").append($("<img>").attr("src", data.image_url).width("100%"));
+        }
+    }
+
+    function appendEventInfo(data) {
+        //events
+        $(".bands-in-town-list").append("Next upcoming event: ")
+
+        // venue info
+        if (data.venue.name) {
+            $(".bands-in-town-list").append($("<h6>").text(data.venue.name))
+        }
+        if (data.title) {
+            $(".bands-in-town-list").append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
+        }
+        if (data.venue.location) {
+            $(".bands-in-town-list").append("Location: " + data.venue.location)
+        } else {
+            $(".bands-in-town-list").append("Location: " + data.venue.type)
+        }
+
+        // ticket info
+        if (data.offers[0].url) {
+            var ticketInfo = $("<a>").text("Tickets available here").attr("href", data.offers[0].url).attr("target", "_blank")
+            $(".bands-in-town-list").append($("<p>").append(ticketInfo))
+        }
+    }
 
     function displayBandsInTownData(artistName) {
-        $(".bands-in-town-list").empty();
-        var artist = artistName
-        var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-
+        var artist = artistName.replace(/[^a-zA-Z0-9]/g, "")
         if (artist) {
+            var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp"
+
             $.ajax({
-                url: queryURL,
+                url: artistURL,
                 method: "GET"
-            }).then(function (response) {
-                if (response) {
-                    var data = response[0]
+            }).then(function(response) {
+                $("#blurb-about-site").attr("style", "display: none")
+                $(".bands-in-town-list").empty();
+                if (response.error) {
+                    $(".bands-in-town-list").text(response.error)
+                }
+                appendArtistInfo(response);
+                if (response.upcoming_event_count > 0) {
+                    var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
-                    // artist info
-                    var artistName = $("<h2>").text(data.artist.name);
-                    var artistImage = $("<img>").attr("src", data.artist.thumb_url).width("200px");
-                    var upcomingEvents = $("<p>").text(data.artist.upcoming_event_count + " upcoming events");
+                    $.ajax({
+                        url: eventURL,
+                        method: "GET"
+                    }).then(function(response) {
+                        var data = response[0]
+                        appendEventInfo(data)
 
-                    $(".bands-in-town-list").append(artistName, artistImage, upcomingEvents);
-
-                    //events
-                    if (data.artist.upcoming_event_count > 0) {
-                        $(".bands-in-town-list").append("Next upcoming event: ")
-
-                        // venue info
-                        if (data.venue.name) {
-                            var showName = $("<h4>").text(data.venue.name)
-                            $(".bands-in-town-list").append(showName)
-                        }
-                        if (data.title) {
-                            var showTitle = $("<h3>").text(data.title)
-                            $(".bands-in-town-list").append(showTitle)
-                        }
-                        if (data.venue.city) {
-                            $(".bands-in-town-list").append("Location: " + data.venue.city)
-
-                        } else {
-                            $(".bands-in-town-list").append("Location: " + data.venue.type)
-                        }
                         // lat, long
                         if (data.venue.latitude && data.venue.longitude) {
                             var coordinates = {
@@ -140,22 +137,9 @@ $(document).ready(function () {
                             };
                             initMap(coordinates)
                         }
-
-                        // ticket info
-                        if (data.offers[0].url) {
-                            var pTag = $("<p>")
-                            var ticketInfo = $("<a>").text("Tickets available here").attr("href", data.offers[0].url).attr("target", "_blank")
-                            pTag.append(ticketInfo)
-
-                            $(".bands-in-town-list").append(pTag)
-                        }
-                    }
-                } else {
-                    $(".bands-in-town-list").text("Artist not found")
+                    })
                 }
             })
-        } else {
-            $(".bands-in-town-list").text("Artist not found")
         }
     }
     //#endregion
@@ -170,7 +154,10 @@ $(document).ready(function () {
         // some of these could be user settings stored in local settings
         var mapOptions = {
             zoom: 10,
-            center: { lat: coordinates.latitude, lng: coordinates.longitude },
+            center: {
+                lat: coordinates.latitude,
+                lng: coordinates.longitude
+            },
             mapTypeControl: false,
             streetViewControl: false,
             fullscreenControl: false,
@@ -237,7 +224,10 @@ $(document).ready(function () {
         for (var i = 0; i < beaches.length; i++) {
             var beach = beaches[i];
             marker = new google.maps.Marker({
-                position: { lat: beach[1], lng: beach[2] },
+                position: {
+                    lat: beach[1],
+                    lng: beach[2]
+                },
                 map: map,
                 icon: image,
                 shape: shape,
@@ -271,7 +261,10 @@ $(document).ready(function () {
         var queryString = $.param(queryParameters);
         var queryURL = "https://ipinfo.io?" + queryString;
         // Call with a get method
-        $.ajax({ url: queryURL, method: 'get' }).then(function (response) {
+        $.ajax({
+            url: queryURL,
+            method: 'get'
+        }).then(function(response) {
             // split the location string to parse the longitude and latitude
             var loc = response.loc.split(',');
             coordinates = {
@@ -281,7 +274,7 @@ $(document).ready(function () {
             // initialise the map
             initMap(coordinates);
             setStoredCoordinates(coordinates);
-        }).catch(function (err) {
+        }).catch(function(err) {
             console.log(err);
         });
     };
