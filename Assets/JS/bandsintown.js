@@ -12,6 +12,21 @@ $(document).ready(function () {
     //#endregion
 
     //#region bandsintown
+
+
+
+    var artistList = [
+        { artistName: "Guns n Roses" },
+    ];
+
+    test();
+
+    function test() {
+        artistList.forEach(function (artist) {
+            displayBandsInTownData(artist.artistName);
+        });
+    }
+
     $("#searchBtn").on("click", function () {
         $(".bands-in-town-list").empty();
 
