@@ -1,16 +1,19 @@
-/** overrides $(".bands-in-town-list")
+/** 
+ * overrides $(".bands-in-town-list")
  * This will display band name, image, number of upcoming events and next event showing
  * 
- * get an array of 20 artist names from spotify
+ * gets an array of 20 artist names from spotify
  */
-
-artistName.forEach(element => {
-    displayBandsInTownData(element);
-});
-
-function displayBandsInTownData(element) {
+$("#searchBtn").on("click", function () {
     $(".bands-in-town-list").empty();
-    var artist = artistName
+
+    artistName.forEach(element => {
+        displayBandsInTownData(element);
+    });
+})
+
+function displayBandsInTownData(artist) {
+    
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     if (artist) {
