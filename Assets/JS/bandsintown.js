@@ -8,9 +8,8 @@ artistName.forEach(element => {
     displayBandsInTownData(element);
 });
 
-function displayBandsInTownData(artistName) {
+function displayBandsInTownData(artist) {
     $(".bands-in-town-list").empty();
-    var artist = artistName
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     if (artist) {
