@@ -76,7 +76,7 @@ $(document).ready(function() {
             $(".bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
         } else {$(".bands-in-town-list").append($("<p>").text(data.name + " is not in town"))};
         if (data.thumb_url) {
-            $(".bands-in-town-list").append($("<img>").attr("src", data.thumb_url).width("100%"));
+            $(".bands-in-town-list").append($("<img>").attr("src", data.image_url).width("100%"));
         }
     }
 
