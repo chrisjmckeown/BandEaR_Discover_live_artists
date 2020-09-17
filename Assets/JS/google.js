@@ -36,7 +36,7 @@ $(document).ready(function () {
           center: {lat: -33.9, lng: 151.2}
         });
       
-        setMarkers(map);
+        //setMarkers(map);
       }
       
       // Data for the markers consisting of a name, a LatLng and a zIndex for the
