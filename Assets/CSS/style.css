@@ -8,15 +8,35 @@ body {
     padding: 0;
 }
 
-header {
+
+footer{
+    background-color: beige;
+}
+.search-band{
+    background-color: grey;
+    height: 100%;
+}
+
+.main-body{
+    background-color: beige;
+}
+footer{
+    position: fixed;
+    width: 100%;
+    bottom: 1px;
+}
+.map_canvas{
+    min-height: 400px !important;
+}
+/* header {
     border: 1px solid red;
     position: absolute;
     top: 0;
     height: 80px;
     width: 100%;
-}
+} */
 
-.searchBand {
+/* .searchBand {
     position: absolute;
     border: 1px solid blue;
     width: 26%;
@@ -30,7 +50,7 @@ header {
     top: 200px;
 }
 
-.bandsInTownList {
+.bands-in-town-list {
     position: relative;
     border: 1px solid purple;
     height: 90px;
@@ -38,7 +58,7 @@ header {
     top: 400px;
 }
 
-.bandsInTownScroll {
+.bands-in-town-scroll {
     position: relative;
     border: 1px solid purple;
     width: 26%;
@@ -46,27 +66,11 @@ header {
     height: 90px;
 }
 
-#blurbAboutSite {
+#blurb-about-site {
     border: 1px solid black;
     width: 33%;
     position: absolute;
     right: 490px;
     height: 540px;
     bottom: 88px
-}
-
-#googleMap {
-    border: 1px solid blue;
-    width: 33%;
-    position: absolute;
-    right: 10px;
-    height: 540px;
-    bottom: 88px
-}
-
-footer {
-    border: 1px solid orange;
-    position: fixed;
-    width: 100%;
-    bottom: 1px;
-}
+}*/

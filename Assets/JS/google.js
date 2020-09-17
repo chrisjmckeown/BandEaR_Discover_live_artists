@@ -4,40 +4,41 @@ $(document).ready(function () {
     var marker;
 
     // initialise the map based on coordinates
-    // function initMap() {
-    //     //  create an object for the google settings
-    //     // some of these could be user settings stored in local settings
-    //     var mapOptions = {
-    //         zoom: 10,
-    //         center: { lat: coordinates.latitude, lng: coordinates.longitude },
-    //         mapTypeControl: false,
-    //         streetViewControl: false,
-    //         fullscreenControl: false,
-    //     };
-    //     // set the map variable, center location, and zoom
-    //     map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    //     var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-  
-    //     marker = new google.maps.Marker({
-    //         position: { lat: coordinates.latitude, lng: coordinates.longitude },
-    //         title: 'Hello World!',
-    //         animation: google.maps.Animation.DROP,
-    //         icon: image,
-    //     });
-
-    //     marker.setMap(map);
-    //     marker.addListener('click', toggleBounce);
-    //     // marker.setMap(null); // remove markers
-    // }
-
     function initMap() {
-        var map = new google.maps.Map(document.getElementById('googleMap'), {
-          zoom: 10,
-          center: {lat: -33.9, lng: 151.2}
-        });
+        //  create an object for the google settings
+        // some of these could be user settings stored in local settings
+        var mapOptions = {
+            zoom: 10,
+            center: { lat: coordinates.latitude, lng: coordinates.longitude },
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+        };
+        // set the map variable, center location, and zoom
+        console.log("here")
+        map = new google.maps.Map($('#map_canvas')[0], mapOptions);
+        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+  
+        // marker = new google.maps.Marker({
+        //     position: { lat: coordinates.latitude, lng: coordinates.longitude },
+        //     title: 'Hello World!',
+        //     animation: google.maps.Animation.DROP,
+        //     icon: image,
+        // });
+
+        //marker.setMap(map);
+        //marker.addListener('click', toggleBounce);
+        // marker.setMap(null); // remove markers
+    }
+
+    // function initMap() {
+    //     var map = new google.maps.Map(document.getElementById('google-map'), {
+    //       zoom: 10,
+    //       center: {lat: -33.9, lng: 151.2}
+    //     });
       
-        //setMarkers(map);
-      }
+    //     //setMarkers(map);
+    //   }
       
       // Data for the markers consisting of a name, a LatLng and a zIndex for the
       // order in which these markers should display on top of each other.
