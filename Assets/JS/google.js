@@ -15,7 +15,6 @@ $(document).ready(function () {
             fullscreenControl: false,
         };
         // set the map variable, center location, and zoom
-        console.log("here")
         map = new google.maps.Map($('#map_canvas')[0], mapOptions);
         var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
   
