@@ -12,14 +12,29 @@ body {
 footer{
     background-color: beige;
 }
+
+.form-control {
+    color: black;
+}
+
 .search-band{
-    background-color: grey;
-    height: 100%;
+    background-color:rgb(102, 195, 226);
+    height: 89em;
+    margin-top: 10px;
+}
+
+.sideContentTitle {
+    color: blue;
+    font-weight: 400;
+    font-family: serif;
+    margin-top: 30px;
 }
 
 .main-body{
     background-color: beige;
+    margin-top: 10px;
 }
+
 footer{
     position: fixed;
     width: 100%;
@@ -28,6 +43,25 @@ footer{
 .map_canvas{
     min-height: 400px !important;
 }
+
+.card {
+    height: 420px;
+}
+
+#band-features {
+    size: 80px;
+    padding-top: 20px;
+}
+
+.card-title {
+    text-align: center;
+
+}
+
+
+
+
+
 /* header {
     border: 1px solid red;
     position: absolute;
