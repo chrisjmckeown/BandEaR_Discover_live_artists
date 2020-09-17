@@ -69,22 +69,27 @@ $(document).ready(function() {
 
     function appendArtistInfo(data) {
         // artist info
-        var artistName = $("<h2>").text(data.name);
-        var upcomingEvents = $("<p>").text(data.upcoming_event_count + " upcoming events");
-        var artistImage = $("<img>").attr("src", data.thumb_url).width("100%");
-
-        $(".bands-in-town-list").append(artistName, upcomingEvents, artistImage);
+        if (data.name) {
+            $(".bands-in-town-list").append($("<h2>").text(data.name));
+        }
+        if (data.upcoming_event_count) {
+            $(".bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
+        } else {$(".bands-in-town-list").append($("<p>").text(data.name + " is not in town"))};
+        if (data.thumb_url) {
+            $(".bands-in-town-list").append($("<img>").attr("src", data.thumb_url).width("100%"));
+        }
     }
+
     function appendEventInfo(data) {
         //events
         $(".bands-in-town-list").append("Next upcoming event: ")
 
         // venue info
         if (data.venue.name) {
-            $(".bands-in-town-list").append($("<h5>").text(data.venue.name))
+            $(".bands-in-town-list").append($("<h6>").text(data.venue.name))
         }
         if (data.title) {
-            $(".bands-in-town-list").append($("<h4>").text(data.title))
+            $(".bands-in-town-list").append($("<h5>").text(data.title))
         }
         if (data.venue.location) {
             $(".bands-in-town-list").append("Location: " + data.venue.location)
@@ -102,13 +107,17 @@ $(document).ready(function() {
     function displayBandsInTownData(artistName) {
         var artist = artistName.replace(/[^a-zA-Z0-9]/g, "")
         if (artist) {
-            $(".bands-in-town-list").empty();
             var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp"
 
             $.ajax({
                 url: artistURL,
                 method: "GET"
             }).then(function(response) {
+                $("#blurb-about-site").attr("style", "display: none")
+                $(".bands-in-town-list").empty();
+                if (response.error) {
+                    $(".bands-in-town-list").text(response.error)
+                }
                 appendArtistInfo(response);
                 if (response.upcoming_event_count > 0) {
                     var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
@@ -117,24 +126,20 @@ $(document).ready(function() {
                         url: eventURL,
                         method: "GET"
                     }).then(function(response) {
-                        if (response) {
-                            var data = response[0]
-                            appendEventInfo(data)
+                        var data = response[0]
+                        appendEventInfo(data)
 
-                            // lat, long
-                            if (data.venue.latitude && data.venue.longitude) {
-                                var coordinates = {
-                                    latitude: parseFloat(data.venue.latitude),
-                                    longitude: parseFloat(data.venue.longitude)
-                                };
-                                initMap(coordinates)
-                            }
+                        // lat, long
+                        if (data.venue.latitude && data.venue.longitude) {
+                            var coordinates = {
+                                latitude: parseFloat(data.venue.latitude),
+                                longitude: parseFloat(data.venue.longitude)
+                            };
+                            initMap(coordinates)
                         }
                     })
                 }
             })
-        } else {
-            $(".bands-in-town-list").text("Artist not found")
         }
     }
     //#endregion
