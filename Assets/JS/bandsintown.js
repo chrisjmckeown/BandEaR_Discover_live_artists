@@ -1,9 +1,9 @@
-/** overrides $("#blurbAboutSite")
+/** overrides $("#blurb-about-site")
  * This will display band name, image, number of upcoming events and next event showing
  */
 
-$("#searchBtn").on("click", function() {
-    $("#blurbAboutSite").empty();
+$("#searchBtn").on("click", function () {
+    $("#blurb-about-site").empty();
     var artist = $("#artist-input").val().trim();
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
@@ -11,7 +11,7 @@ $("#searchBtn").on("click", function() {
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).then(function(response) {
+        }).then(function (response) {
             var data = response[0]
 
             // artist info
@@ -19,30 +19,30 @@ $("#searchBtn").on("click", function() {
             var artistImage = $("<img>").attr("src", data.artist.thumb_url).width("200px");
             var upcomingEvents = $("<p>").text(data.artist.upcoming_event_count + " upcoming events");
 
-            $("#blurbAboutSite").append(artistName, artistImage, upcomingEvents);
+            $("#blurb-about-site").append(artistName, artistImage, upcomingEvents);
 
             //events
             if (data.artist.upcoming_event_count > 0) {
-                $("#blurbAboutSite").append("Next upcoming event: ")
+                $("#blurb-about-site").append("Next upcoming event: ")
 
                 // venue info
                 if (data.venue.name) {
                     var showName = $("<h4>").text(data.venue.name)
-                    $("#blurbAboutSite").append(showName)
+                    $("#blurb-about-site").append(showName)
                 }
                 if (data.title) {
                     var showTitle = $("<h3>").text(data.title)
-                    $("#blurbAboutSite").append(showTitle)
+                    $("#blurb-about-site").append(showTitle)
                 }
                 if (data.venue.type !== "Virtual") {
                     var showLocation = $("<p>").text(data.venue.city)
                     if (data.venue.location) {
                         showLocation.append(", " + data.venue.location)
                     }
-                    $("#blurbAboutSite").append("Location: " + showLocation)
+                    $("#blurb-about-site").append("Location: " + showLocation)
 
                 } else {
-                    $("#blurbAboutSite").append("Location: " + data.venue.type)
+                    $("#blurb-about-site").append("Location: " + data.venue.type)
                 }
 
                 // ticket info
@@ -51,7 +51,7 @@ $("#searchBtn").on("click", function() {
                     var ticketInfo = $("<a>").text("Tickets available here").attr("href", data.offers[0].url)
                     pTag.append(ticketInfo)
 
-                    $("#blurbAboutSite").append(pTag)
+                    $("#blurb-about-site").append(pTag)
                 }
             }
         })
