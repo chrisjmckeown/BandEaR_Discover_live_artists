@@ -7,3 +7,66 @@ body {
     margin: 0;
     padding: 0;
 }
+
+header {
+    border: 1px solid red;
+    position: absolute;
+    top: 0;
+    height: 80px;
+    width: 100%;
+}
+
+.searchBand {
+    position: absolute;
+    border: 1px solid blue;
+    width: 26%;
+    top: 100px;
+}
+
+#band-features {
+    position: absolute;
+    border: 1px solid green;
+    width: 26%;
+    top: 200px;
+}
+
+.bandsInTownList {
+    position: relative;
+    border: 1px solid purple;
+    height: 90px;
+    width: 26%;
+    top: 400px;
+}
+
+.bandsInTownScroll {
+    position: relative;
+    border: 1px solid purple;
+    width: 26%;
+    top: 435px;
+    height: 90px;
+}
+
+#blurbAboutSite {
+    border: 1px solid black;
+    width: 33%;
+    position: absolute;
+    right: 490px;
+    height: 540px;
+    bottom: 88px
+}
+
+#googleMap {
+    border: 1px solid blue;
+    width: 33%;
+    position: absolute;
+    right: 10px;
+    height: 540px;
+    bottom: 88px
+}
+
+footer {
+    border: 1px solid orange;
+    position: fixed;
+    width: 100%;
+    bottom: 1px;
+}
