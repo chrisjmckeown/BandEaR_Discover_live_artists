@@ -35,9 +35,9 @@
             <!-- materialize grid column -->
             <!-- aside for seach area of the page -->
             <aside class="col s12 m4 l3 search-band">
-                <h3> Search for a Band: </h3>
+                <h3 class="sideContentTitle"> Search for a Band: </h3>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="artist-input">
+                    <input type="text" class="form-control" placeholder="Type in Band Name Here" id="artist-input">
                     <div class="input-group-append">
                         <input type="submit" id="searchBtn">
                     </div>
@@ -80,9 +80,24 @@
                         </section>
                         <section class="card">
                             <div class="card-title">Possible carousel of bands</div>
+
+                            <div class="carousel">
+                                <a class="carousel-item" href="#one!"><img
+                                        src="https://lorempixel.com/250/250/nature/1"></a>
+                                <a class="carousel-item" href="#two!"><img
+                                        src="https://lorempixel.com/250/250/nature/2"></a>
+                                <a class="carousel-item" href="#three!"><img
+                                        src="https://lorempixel.com/250/250/nature/3"></a>
+                                <a class="carousel-item" href="#four!"><img
+                                        src="https://lorempixel.com/250/250/nature/4"></a>
+                                <a class="carousel-item" href="#five!"><img
+                                        src="https://lorempixel.com/250/250/nature/5"></a>
+                            </div>
                             <div class="card-content bands-in-town-scroll"></div>
+
                         </section>
                     </div>
+
                     <div class="col s12 m6 l6">
                         <section class="card">
                             <div class="map_canvas" id="map_canvas"></div>
