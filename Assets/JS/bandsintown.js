@@ -70,7 +70,7 @@ $(document).ready(function() {
     function appendArtistInfo(data) {
         // artist info
         if (data.name) {
-            $(".bands-in-town-list").append($("<h2>").text(data.name));
+            $(".bands-in-town-list").append($("<h2>").text(data.name).attr("style", "margin: 0 0 5px 0"));
         }
         if (data.upcoming_event_count) {
             $(".bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
@@ -89,7 +89,7 @@ $(document).ready(function() {
             $(".bands-in-town-list").append($("<h6>").text(data.venue.name))
         }
         if (data.title) {
-            $(".bands-in-town-list").append($("<h5>").text(data.title))
+            $(".bands-in-town-list").append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
         }
         if (data.venue.location) {
             $(".bands-in-town-list").append("Location: " + data.venue.location)
