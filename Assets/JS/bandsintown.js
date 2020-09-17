@@ -1,59 +1,79 @@
-/** overrides $("#blurb-about-site")
+/** overrides $(".bands-in-town-list")
  * This will display band name, image, number of upcoming events and next event showing
+ * 
+ * get an array of 20 artist names from spotify
  */
 
-$("#searchBtn").on("click", function () {
-    $("#blurb-about-site").empty();
-    var artist = $("#artist-input").val().trim();
+artistName.forEach(element => {
+    displayBandsInTownData(element);
+});
+
+function displayBandsInTownData(element) {
+    $(".bands-in-town-list").empty();
+    var artist = artistName
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     if (artist) {
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).then(function (response) {
-            var data = response[0]
+        }).then(function(response) {
+            console.log("bandsintown:")
+            console.log(response)
+            if (response) {
+                var data = response[0]
 
-            // artist info
-            var artistName = $("<h2>").text(data.artist.name);
-            var artistImage = $("<img>").attr("src", data.artist.thumb_url).width("200px");
-            var upcomingEvents = $("<p>").text(data.artist.upcoming_event_count + " upcoming events");
+                // artist info
+                var artistName = $("<h2>").text(data.artist.name);
+                var artistImage = $("<img>").attr("src", data.artist.thumb_url).width("200px");
+                var upcomingEvents = $("<p>").text(data.artist.upcoming_event_count + " upcoming events");
 
-            $("#blurb-about-site").append(artistName, artistImage, upcomingEvents);
+                $(".bands-in-town-list").append(artistName, artistImage, upcomingEvents);
 
-            //events
-            if (data.artist.upcoming_event_count > 0) {
-                $("#blurb-about-site").append("Next upcoming event: ")
+                //events
+                if (data.artist.upcoming_event_count > 0) {
+                    $(".bands-in-town-list").append("Next upcoming event: ")
 
-                // venue info
-                if (data.venue.name) {
-                    var showName = $("<h4>").text(data.venue.name)
-                    $("#blurb-about-site").append(showName)
-                }
-                if (data.title) {
-                    var showTitle = $("<h3>").text(data.title)
-                    $("#blurb-about-site").append(showTitle)
-                }
-                if (data.venue.type !== "Virtual") {
-                    var showLocation = $("<p>").text(data.venue.city)
-                    if (data.venue.location) {
-                        showLocation.append(", " + data.venue.location)
+                    // venue info
+                    if (data.venue.name) {
+                        var showName = $("<h4>").text(data.venue.name)
+                        $(".bands-in-town-list").append(showName)
                     }
-                    $("#blurb-about-site").append("Location: " + showLocation)
+                    if (data.title) {
+                        var showTitle = $("<h3>").text(data.title)
+                        $(".bands-in-town-list").append(showTitle)
+                    }
+                    if (data.venue.city) {
+                        var showLocation = $("<p>").text(data.venue.city)
+                        if (data.venue.location) {
+                            showLocation.append(", " + data.venue.location)
+                        }
+                        $(".bands-in-town-list").append("Location: " + showLocation)
 
-                } else {
-                    $("#blurb-about-site").append("Location: " + data.venue.type)
+                    } else {
+                        $(".bands-in-town-list").append("Location: " + data.venue.type)
+                    }
+                    // lat, long
+                    if (data.venue.latitude) {
+                        if (data.venue.longitude) {
+                            console.log("latitude: " + data.venue.latitude + "longitude: " + data.venue.longitude)
+                        }
+                    }
+
+                    // ticket info
+                    if (data.offers[0].url) {
+                        var pTag = $("<p>")
+                        var ticketInfo = $("<a>").text("Tickets available here").attr("href", data.offers[0].url)
+                        pTag.append(ticketInfo)
+
+                        $(".bands-in-town-list").append(pTag)
+                    }
                 }
-
-                // ticket info
-                if (data.offers[0].url) {
-                    var pTag = $("<p>")
-                    var ticketInfo = $("<a>").text("Tickets available here").attr("href", data.offers[0].url)
-                    pTag.append(ticketInfo)
-
-                    $("#blurb-about-site").append(pTag)
-                }
+            } else {
+                $(".bands-in-town-list").text("Artist not found")
             }
         })
+    } else {
+        $(".bands-in-town-list").text("Artist not found")
     }
-})
+}
