@@ -63,7 +63,11 @@ $(document).ready(function () {
     //#endregion
 
     //#region bandsintown
-    $(document).on('click', '.artist', function () {
+    $(document).on('click', '#spotify', function (event) { event.stopPropagation() })
+
+
+    $(document).on('click', '.artist', function (event) {
+
         let artistId = artist_id[parseInt(this.id)]
         let divId = this.id
         // let artist = artists_search_results[parseInt(this.id)]
@@ -153,14 +157,14 @@ $(document).ready(function () {
                 // error checking
                 if (response.error) {
                     $(".bands-in-town-list").append(
-                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")), 
+                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
                         ($("<p>").text(artist + " " + response.error)))
                 } else if (response === "") {
-                    $(".bands-in-town-list").append( 
-                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")), 
+                    $(".bands-in-town-list").append(
+                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
                         ($("<p>").text(artist + " is not in town")))
                 } else { appendArtistInfo(response); }
-                
+
                 if (response.upcoming_event_count > 0) {
                     var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
