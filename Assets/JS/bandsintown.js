@@ -93,9 +93,7 @@ $(document).ready(function() {
         }
         if (data.venue.location) {
             $(".bands-in-town-list").append("Location: " + data.venue.location)
-        } else {
-            $(".bands-in-town-list").append("Location: " + data.venue.type)
-        }
+        } else { $(".bands-in-town-list").append("Location: " + data.venue.type) }
 
         // ticket info
         if (data.offers[0].url) {
@@ -105,7 +103,8 @@ $(document).ready(function() {
     }
 
     function displayBandsInTownData(artistName) {
-        var artist = artistName.replace(/[^a-zA-Z0-9]/g, "")
+        // replaces all special chars except letters, nums, non-latin chars and spaces
+        var artist = artistName.replace("&", "and").replace(/([^a-zA-Z0-9$ \p{L}-]+)/ug, "")
         if (artist) {
             var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp"
 
@@ -115,10 +114,18 @@ $(document).ready(function() {
             }).then(function(response) {
                 $("#blurb-about-site").attr("style", "display: none")
                 $(".bands-in-town-list").empty();
+
+                // error checking
                 if (response.error) {
-                    $(".bands-in-town-list").text(response.error)
-                }
-                appendArtistInfo(response);
+                    $(".bands-in-town-list").append(
+                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")), 
+                        ($("<p>").text(artist + " " + response.error)))
+                } else if (response === "") {
+                    $(".bands-in-town-list").append( 
+                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")), 
+                        ($("<p>").text(artist + " is not in town")))
+                } else { appendArtistInfo(response); }
+                
                 if (response.upcoming_event_count > 0) {
                     var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
