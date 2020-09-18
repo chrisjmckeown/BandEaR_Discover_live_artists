@@ -4,29 +4,32 @@
  * 
  * gets an array of 20 artist names from spotify
  */
-$(document).ready(function() {
+$(document).ready(function () {
     //#region spotify
 
-    var artists_search_results = []
-    var clientId = '41cd629d017d4f53bc20ccb457fdd08e';
-    var clientSecret = '70a3757b1ad54861be12d8693bc8b929';
+    let artists_search_results = []
+    let artist_id = []
+    const clientId = '41cd629d017d4f53bc20ccb457fdd08e';
+    const clientSecret = '70a3757b1ad54861be12d8693bc8b929';
     $.post({
-            url: 'https://accounts.spotify.com/api/token',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
-            },
-            data: 'grant_type=client_credentials'
-        }
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+        },
+        data: 'grant_type=client_credentials'
+    }
 
-    ).then(function(res) {
+    ).then(function (res) {
         token = res.access_token
         // console.log(token);
     })
 
     function get_results() {
         artists_search_results = []
+        artist_id = []
         $('#band-details').empty()
+
         $.get({
 
             // method: 'GET',
@@ -35,11 +38,11 @@ $(document).ready(function() {
                 'Authorization': 'Bearer ' + token
             }
 
-        }).then(function(dat) {
+        }).then(function (dat) {
 
             // console.log(dat.artists.items);
             const artists = dat.artists.items
-            artists.forEach(function(artist, index) {
+            artists.forEach(function (artist, index) {
                 const new_artist = $(`<div class="artist" id=${index}></div>`)
                 const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
                 // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
@@ -47,34 +50,70 @@ $(document).ready(function() {
                 new_artist.append(new_artist_name, new_artist_image)
                 $('#band-details').append(new_artist)
                 artists_search_results.push(artist.name)
+                artist_id.push(artist.id)
             });
         })
 
     }
 
-    $('#search-form').submit(function(event) {
+    $('#search-form').submit(function (event) {
         event.preventDefault()
         get_results()
     })
     //#endregion
 
     //#region bandsintown
-    $(document).on('click', '.artist', function() {
+    $(document).on('click', '#spotify', function (event) { event.stopPropagation() })
+
+
+    $(document).on('click', '.artist', function (event) {
+
+        let artistId = artist_id[parseInt(this.id)]
+        let divId = this.id
+        // let artist = artists_search_results[parseInt(this.id)]
+        $.get({
+            url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=AU`,
+            headers: { 'Authorization': 'Bearer ' + token }
+        }).then(function (dat) {
+            console.log(dat);
+            const tracks = dat.tracks
+            const new_Div = $(`<div id='spotify' class='display_hits'><p class='text-right'>x</p><h5>Top Hits</h5> </div>`)
+            $(`#${divId}`).append(new_Div)
+            $('.display_hits').show()
+            tracks.forEach(track => {
+                track.album.album_type  // may be used if needed
+                let new_hit = $('<div>')
+                let ex_url = $(`<div><a href=${track.external_urls.spotify} target='_blank'>${track.name}</a></div>`)
+                track.album.release_date // may be used if needed
+                const preview = track.preview_url ? $(`<div><audio controls src=${track.preview_url}></div`) : ''
+                new_hit.append(ex_url, preview)
+
+                $('#spotify').append(new_hit)
+                $('.text-right').click(() => $('.display_hits').remove())
+            })
+
+        })
+
+
+
+
         artists_search_results.forEach((element, index) => {
-            if (parseInt(this.id) == index) {
+            if (parseInt(this.id) === index) {
                 displayBandsInTownData(element)
             }
         });
     })
 
-    function appendArtistInfo(data) {
+    function appendArtistInfo(data, artist) {
         // artist info
         if (data.name) {
             $(".bands-in-town-list").append($("<h2>").text(data.name).attr("style", "margin: 0 0 5px 0"));
-        }
+        } else {
+            $(".bands-in-town-list").append($("<p>").text(artist + " is not in town"))
+        };
         if (data.upcoming_event_count) {
             $(".bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
-        } else {$(".bands-in-town-list").append($("<p>").text(data.name + " is not in town"))};
+        }
         if (data.thumb_url) {
             $(".bands-in-town-list").append($("<img>").attr("src", data.image_url).width("100%"));
         }
@@ -111,28 +150,28 @@ $(document).ready(function() {
             $.ajax({
                 url: artistURL,
                 method: "GET"
-            }).then(function(response) {
+            }).then(function (response) {
                 $("#blurb-about-site").attr("style", "display: none")
                 $(".bands-in-town-list").empty();
 
                 // error checking
                 if (response.error) {
                     $(".bands-in-town-list").append(
-                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")), 
+                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
                         ($("<p>").text(artist + " " + response.error)))
                 } else if (response === "") {
-                    $(".bands-in-town-list").append( 
-                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")), 
+                    $(".bands-in-town-list").append(
+                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
                         ($("<p>").text(artist + " is not in town")))
                 } else { appendArtistInfo(response); }
-                
+
                 if (response.upcoming_event_count > 0) {
                     var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
                     $.ajax({
                         url: eventURL,
                         method: "GET"
-                    }).then(function(response) {
+                    }).then(function (response) {
                         var data = response[0]
                         appendEventInfo(data)
 
@@ -271,7 +310,7 @@ $(document).ready(function() {
         $.ajax({
             url: queryURL,
             method: 'get'
-        }).then(function(response) {
+        }).then(function (response) {
             // split the location string to parse the longitude and latitude
             var loc = response.loc.split(',');
             coordinates = {
@@ -281,7 +320,7 @@ $(document).ready(function() {
             // initialise the map
             initMap(coordinates);
             setStoredCoordinates(coordinates);
-        }).catch(function(err) {
+        }).catch(function (err) {
             console.log(err);
         });
     };
