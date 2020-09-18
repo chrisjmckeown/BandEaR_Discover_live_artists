@@ -107,8 +107,6 @@ $(document).ready(function() {
         var artist = artistName.replace("&", "and").replace(/([^a-zA-Z0-9$ \p{L}-]+)/ug, "")
         if (artist) {
             var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp"
-            console.log("artist")
-            console.log(artist)
 
             $.ajax({
                 url: artistURL,
@@ -116,8 +114,6 @@ $(document).ready(function() {
             }).then(function(response) {
                 $("#blurb-about-site").attr("style", "display: none")
                 $(".bands-in-town-list").empty();
-                console.log("hi")
-                console.log(response)
 
                 // error checking
                 if (response.error) {
