@@ -104,16 +104,14 @@ $(document).ready(function () {
         });
     })
 
-    function appendArtistInfo(data, artist) {
+    function appendArtistInfo(data) {
         // artist info
         if (data.name) {
             $(".bands-in-town-list").append($("<h2>").text(data.name).attr("style", "margin: 0 0 5px 0"));
-        } else {
-            $(".bands-in-town-list").append($("<p>").text(artist + " is not in town"))
-        };
+        }
         if (data.upcoming_event_count) {
             $(".bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
-        }
+        } else { $(".bands-in-town-list").append($("<p>").text(artist + " is not in town")) };
         if (data.thumb_url) {
             $(".bands-in-town-list").append($("<img>").attr("src", data.image_url).width("100%"));
         }
