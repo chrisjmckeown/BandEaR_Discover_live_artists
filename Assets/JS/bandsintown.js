@@ -1,13 +1,4 @@
-/** 
- * overrides $(".bands-in-town-list")
- * This will display band name, image, number of upcoming events and next event showing
- * 
- * gets an array of 20 artist names from spotify
- */
 $(document).ready(function () {
-    
-    
-    
     //#region spotify
 
     let artists_search_results = []
@@ -22,27 +13,21 @@ $(document).ready(function () {
         },
         data: 'grant_type=client_credentials'
     }
-
     ).then(function (res) {
         token = res.access_token
-        // console.log(token);
     })
 
     function get_results() {
         artists_search_results = []
         artist_id = []
         $('#band-details').empty()
-
         $.get({
-
             // method: 'GET',
             url: `https://api.spotify.com/v1/search?q=${$('#artist-input').val().trim()}&type=artist`,
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-
         }).then(function (dat) {
-
             // console.log(dat.artists.items);
             const artists = dat.artists.items
             artists.forEach(function (artist, index) {
@@ -56,7 +41,6 @@ $(document).ready(function () {
                 artist_id.push(artist.id)
             });
         })
-
     }
 
     $('#search-form').submit(function (event) {
@@ -68,8 +52,16 @@ $(document).ready(function () {
     //#region bandsintown
     $(document).on('click', '#spotify', function (event) { event.stopPropagation() })
 
-
     $(document).on('click', '.artist', function (event) {
+        // set the divs
+        $("#map-canvas").attr("style", "display: none");
+
+        $("#blurb-about-site").attr("style", "display: none");
+        $("#bands-in-town").attr("style", "height: 82vh; display: block");
+ 
+        $("#map-canvas").attr("style", "height: 40vh; display: block");
+        $("#event-information").attr("style", "height: 40vh; display: block");
+        // , $(this).attr("title") + "Appended text.");
 
         let artistId = artist_id[parseInt(this.id)]
         let divId = this.id
@@ -94,12 +86,7 @@ $(document).ready(function () {
                 $('#spotify').append(new_hit)
                 $('.text-right').click(() => $('.display_hits').remove())
             })
-
         })
-
-
-
-
         artists_search_results.forEach((element, index) => {
             if (parseInt(this.id) === index) {
                 displayBandsInTownData(element)
@@ -110,35 +97,35 @@ $(document).ready(function () {
     function appendArtistInfo(data) {
         // artist info
         if (data.name) {
-            $(".bands-in-town-list").append($("<h2>").text(data.name).attr("style", "margin: 0 0 5px 0"));
+            $("#bands-in-town-list").append($("<h2>").text(data.name).attr("style", "margin: 0 0 5px 0"));
         }
         if (data.upcoming_event_count) {
-            $(".bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
-        } else { $(".bands-in-town-list").append($("<p>").text(artist + " is not in town")) };
+            $("#bands-in-town-list").append($("<p>").text(data.upcoming_event_count + " upcoming events"));
+        } else { $("#bands-in-town-list").append($("<p>").text(artist + " is not in town")) };
         if (data.thumb_url) {
-            $(".bands-in-town-list").append($("<img>").attr("src", data.image_url).width("100%"));
+            $("#bands-in-town-list").append($("<img>").attr("src", data.image_url).width("100%"));
         }
     }
 
     function appendEventInfo(data) {
         //events
-        $(".bands-in-town-list").append("Next upcoming event: ")
+        $("#bands-in-town-list").append("Next upcoming event: ")
 
         // venue info
         if (data.venue.name) {
-            $(".bands-in-town-list").append($("<h6>").text(data.venue.name))
+            $("#bands-in-town-list").append($("<h6>").text(data.venue.name))
         }
         if (data.title) {
-            $(".bands-in-town-list").append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
+            $("#bands-in-town-list").append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
         }
         if (data.venue.location) {
-            $(".bands-in-town-list").append("Location: " + data.venue.location)
-        } else { $(".bands-in-town-list").append("Location: " + data.venue.type) }
+            $("#bands-in-town-list").append("Location: " + data.venue.location)
+        } else { $("#bands-in-town-list").append("Location: " + data.venue.type) }
 
         // ticket info
         if (data.offers[0].url) {
             var ticketInfo = $("<a>").text("Tickets available here").attr("href", data.offers[0].url).attr("target", "_blank")
-            $(".bands-in-town-list").append($("<p>").append(ticketInfo))
+            $("#bands-in-town-list").append($("<p>").append(ticketInfo))
         }
     }
 
@@ -153,15 +140,15 @@ $(document).ready(function () {
                 method: "GET"
             }).then(function (response) {
                 $("#blurb-about-site").attr("style", "display: none")
-                $(".bands-in-town-list").empty();
+                $("#bands-in-town-list").empty();
 
                 // error checking
                 if (response.error) {
-                    $(".bands-in-town-list").append(
+                    $("#bands-in-town-list").append(
                         ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
                         ($("<p>").text(artist + " " + response.error)))
                 } else if (response === "") {
-                    $(".bands-in-town-list").append(
+                    $("#bands-in-town-list").append(
                         ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
                         ($("<p>").text(artist + " is not in town")))
                 } else { appendArtistInfo(response); }

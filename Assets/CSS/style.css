@@ -1,15 +1,23 @@
 /********** Colour reference chart*********
 *************************** colour *******/ 
 :root {
-    --colour-1:#706BC2;
-    --colour-2:#0E0582;
-    --colour-3:#91F8FF;
-    --colour-4:#37B4BD;
-    --colour-5:#58C9D1;
+    --spotify-card:#706BC2;
+    --artist-card:#0E0582;
+    --Main-Body: white;
+    --text: white;
+    --link: white;
+    --scroll: white;
     
     --buttons-hover: white;
-    --shadow:  rgba(0, 0, 0, 0.15);
   }
+
+  
+*,
+*::before,
+*::after {
+  /* Width and height apply to all parts of the element: content, padding and borders */
+  box-sizing: border-box;
+}
 /* main body styling */
 html,
 body {
@@ -18,60 +26,55 @@ body {
     padding: 0;
 }
 footer{
+    height: 50px;
     position: fixed;
     width: 100%;
     bottom: 0px;
 }
+.footer-copyright{
+  margin-top: 10px;
+}
+.body-row{
+    margin: 0px !important;
+    padding: 10px !important;
+}
+.main-body{
+    margin: 0px !important;
+    padding: 0px !important;
+}
+/* Main base body styling */
+.main-body{
+    background-color:var(--Main-Body);
+    margin-top: 10px;
+    height: 85vh;
+}
 
 /* Aside styling */
-.form-control {
-    color: black;
-}
-.search-band{
-    height: 89em;
-    margin-top: 10px;
-}
-
 .side-content-title {
     font-size: 1.2rem;
     font-weight: 400;
     font-family: sans-serif;
-    margin-top: 30px;
 }
-
-/* Main base body styling */
-.main-body{
-    background-color: beige;
-    margin-top: 10px;
+.artist-input{
+    padding-left: 10px !important;
 }
-
-/* Map styling */
-.map-canvas{
-    min-height: 400px !important;
+.btn{
+    height: 44px !important;
 }
-
 .band-details{
-    height:320px;
+    height: 71vh;
     overflow: scroll;
     overflow-x: hidden;
-    margin-top: 2.5rem;
 }
-
 .artist{
     display: flex;
-    background-color:#1b7ccc;
-    border-radius: 10px;
+    background-color:var(--artist-card);
+    border-radius: 5px;
     margin:10px;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
     position: relative;
-}
-#artist-input{
-    padding-left: 20px;
-    width:95%;
-    border-radius: 20px;
-    background-color:rgb(214, 237, 248);
 }
 .artist h3, .artist .image-holder {
     display: inline-block;
@@ -79,42 +82,44 @@ footer{
     padding:10px;
 }
 .artist h3{
-    font-size: 14pt;
+    font-size: 1.3rem;
     font-weight: 500;
-    color: rgb(255, 223, 134);
+    color: var(--text);
 }
 .artist .image-holder{
     text-align: right;
 }
 
-#spotify{
+.display_hits{
     position: absolute;
     top: 5.2rem;
     z-index: 5;
-    background-color: white;
+    background-color: var(--spotify-card);
     overflow: scroll;
     overflow-x: hidden;
-    height:200px;
-    border-radius: 10px;
+    height:250px;
     width:100%;
-    padding:10px;
+    padding:5px;
 }
-#spotify p{
+.display_hits p{
     text-align: right;
     margin: 0;
     padding: 0;
     font-weight: 700;
-    color: navy;
+    color: var(--text);
 }
-#spotify h5{
+.display_hits h5{
+    font-size: 1.3rem;
     text-align: center;
     margin: 0;
     padding-bottom: 10px;
     text-decoration: underline;
-    color: navy;
-
+    color: var(--text);
 }
-#spotify audio{
+.display_hits a{
+    color: var(--link);
+}
+.display_hits audio{
     width:100%;
 }
 ::-webkit-scrollbar {
@@ -122,16 +127,48 @@ footer{
   }
    
  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(2, 179, 46, 0.3);
+    box-shadow: inset 0 0 6px var(--text);
   }
    
 ::-webkit-scrollbar-thumb {
-    background-color: rgb(15, 3, 83);
-    outline: 1px solid rgb(2, 39, 8);
+    background-color:  var(--scroll);
+    outline: 1px solid  var(--scroll);
     padding:30px 0;
   }
-/* #searchBtn{
-    display: block;
-position: absolute;
-right:15px;
-} */
+
+/* central panel */
+.blurb-about-site{
+    font-family: sans-serif;
+    height: 80vh;
+    border: 1px solid;
+    border-radius: 15px !important;
+}
+.blurb-about-site-content{
+    height: 60%;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.bands-in-town{
+    display: none;
+    height: 80vh;
+    border: 1px solid;
+    border-radius: 15px !important;
+    height: 40vh;
+}
+.event-information{
+    display: none;
+    border: 1px solid;
+    border-radius: 15px !important;
+}
+/* Map styling */
+.map-canvas{
+    border-radius: 25px;
+    height: 80vh;
+    border: 1px solid;
+    border-radius: 15px !important;
+}
+.card-title{
+    padding-left: 10px !important;
+}
