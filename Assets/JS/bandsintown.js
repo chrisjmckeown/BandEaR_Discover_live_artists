@@ -126,7 +126,7 @@ $(document).ready(function () {
         }
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
-            $("#event-information-list").append($("<p>").text(data.upcoming_event_count + " upcoming events:"));
+            $("#event-information-list").append($("<p>").text(data.upcoming_event_count + " events:"));
         }
         else {
             $("#event-information-content").append($("<p>").text(artist + " is not in town."))
@@ -141,6 +141,7 @@ $(document).ready(function () {
     var eventList = [];
     function appendEventInfoList(response) {
         eventList = response;
+        console.log(response);
         var $eventUL = $("<ul>");
         $("#event-information-list").append($eventUL);
         var index = 0;
@@ -163,7 +164,6 @@ $(document).ready(function () {
     });
 
     function appendEventInfo(data, index) {
-        console.log(index);
         //events
         if (index === 0) {
             $("#event-information-content").append("Next upcoming event:")

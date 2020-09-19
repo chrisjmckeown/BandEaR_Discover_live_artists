@@ -12,7 +12,6 @@
     --buttons-hover: white;
   }
 
-  
 *,
 *::before,
 *::after {
@@ -26,11 +25,16 @@ body {
     margin: 0;
     padding: 0;
 }
+header a{
+    padding-left: 10px !important;
+}
 footer{
     height: 50px;
     position: fixed;
     width: 100%;
     bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .footer-copyright{
   margin-top: 10px;
@@ -149,7 +153,6 @@ footer{
     border-radius: 15px !important;
 }
 .blurb-about-site-content{
-    height: 60%;
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
