@@ -1,71 +1,84 @@
-#map {
- height: 100%;
+/********** Colour reference chart*********
+*************************** colour *******/ 
+:root {
+    --spotify-card:#d6465a;
+    --artist-card:#8babb2;
+    --Main-Body: white;
+    --borders: #d6465a;
+    --text: white;
+    --link: white;
+    --scroll: white;
+    
+    --buttons-hover: white;
+  }
+
+  
+*,
+*::before,
+*::after {
+  /* Width and height apply to all parts of the element: content, padding and borders */
+  box-sizing: border-box;
 }
+/* main body styling */
 html,
 body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
-
-
 footer{
-    background-color: beige;
-}
-
-.form-control {
-    color: black;
-}
-
-.search-band{
-    background-color:#2541b2f1;
-    height: 89em;
-    margin-top: 10px;
-    position: relative;
-}
-
-.sideContentTitle {
-    color: rgb(236, 236, 136);
-    font-size: 2.5rem;
-    font-weight: 400;
-    font-family: sans-serif;
-    margin-top: 30px;
-}
-
-.main-body{
-    background-color: beige;
-    margin-top: 10px;
-}
-
-footer{
+    height: 50px;
     position: fixed;
     width: 100%;
-    bottom: 1px;
+    bottom: 0px;
 }
-.map_canvas{
-    min-height: 400px !important;
+.footer-copyright{
+  margin-top: 10px;
 }
-#band-details{
-    height:320px;
+.body-row{
+    margin: 0px !important;
+    padding: 10px !important;
+}
+.main-body{
+    margin: 0px !important;
+    padding: 0px !important;
+}
+.container{
+    width: 100% !important;
+}
+/* Main base body styling */
+.main-body{
+    background-color:var(--Main-Body);
+    margin-top: 10px;
+    height: 85vh;
+}
+
+/* Aside styling */
+.side-content-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-family: sans-serif;
+}
+.artist-input{
+    padding-left: 10px !important;
+}
+.btn{
+    height: 44px !important;
+}
+.band-details{
+    height: 71vh;
     overflow: scroll;
     overflow-x: hidden;
 }
-
 .artist{
     display: flex;
-    background-color:#1b7ccc;
-    border-radius: 10px;
+    background-color:var(--artist-card);
+    border-radius: 5px;
     margin:10px;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
     position: relative;
-}
-#artist-input{
-    padding-left: 20px;
-    width:95%;
-    border-radius: 20px;
-    background-color:rgb(214, 237, 248);
 }
 .artist h3, .artist .image-holder {
     display: inline-block;
@@ -73,109 +86,97 @@ footer{
     padding:10px;
 }
 .artist h3{
-    font-size: 14pt;
+    font-size: 1.3rem;
     font-weight: 500;
-    color: rgb(255, 223, 134);
+    color: var(--text);
 }
 .artist .image-holder{
-text-align: right;
+    text-align: right;
 }
 
-#spotify{
+.display_hits{
     position: absolute;
     top: 5.2rem;
     z-index: 5;
-    background-color: white;
+    background-color: var(--spotify-card);
     overflow: scroll;
     overflow-x: hidden;
-    height:200px;
-    border-radius: 10px;
+    height:250px;
     width:100%;
-    padding:10px;
+    padding:5px;
 }
-#spotify p{
+.display_hits p{
     text-align: right;
     margin: 0;
     padding: 0;
     font-weight: 700;
-    color: navy;
+    color: var(--text);
 }
-#spotify h5{
+.display_hits h5{
+    font-size: 1.3rem;
     text-align: center;
     margin: 0;
     padding-bottom: 10px;
     text-decoration: underline;
-    color: navy;
-
+    color: var(--text);
 }
-#spotify audio{
-    width:100%;
+.display_hits a{
+    color: var(--link);
 }
-#band-details{
-    margin-top: 2.5rem;
+.display_hits audio{
+    width: 100%;
+    height: 20px;
 }
 ::-webkit-scrollbar {
     width: .5em;
   }
    
  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(2, 179, 46, 0.3);
+    box-shadow: inset 0 0 6px var(--text);
   }
    
 ::-webkit-scrollbar-thumb {
-    background-color: rgb(15, 3, 83);
-    outline: 1px solid rgb(2, 39, 8);
+    background-color:  var(--scroll);
+    outline: 1px solid  var(--scroll);
     padding:30px 0;
   }
-#searchBtn{
-    display: block;
-position: absolute;
-right:15px;
+
+/* central panel */
+.blurb-about-site{
+    font-family: sans-serif;
+    height: 80vh;
+    border: 1px solid var(--borders);
+    border-radius: 15px !important;
 }
-
-/* header {
-    border: 1px solid red;
-    position: absolute;
-    top: 0;
-    height: 80px;
-    width: 100%;
-} */
-
-/* .searchBand {
-    position: absolute;
-    border: 1px solid blue;
-    width: 26%;
-    top: 100px;
+.blurb-about-site-content{
+    height: 60%;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
-
-#band-features {
-    position: absolute;
-    border: 1px solid green;
-    width: 26%;
-    top: 200px;
+.bands-in-town{
+    display: none;
+    height: 80vh;
+    border: 1px solid var(--borders);
+    border-radius: 15px !important;
+    height: 40vh;
 }
-
-.bands-in-town-list {
-    position: relative;
-    border: 1px solid purple;
-    height: 90px;
-    width: 26%;
-    top: 400px;
+.event-information{
+    display: none;
+    border: 1px solid var(--borders);
+    border-radius: 15px !important;
 }
-
-.bands-in-town-scroll {
-    position: relative;
-    border: 1px solid purple;
-    width: 26%;
-    top: 435px;
-    height: 90px;
+/* Map styling */
+.map-canvas{
+    border-radius: 25px;
+    height: 80vh;
+    border: 1px solid var(--borders);
+    border-radius: 15px !important;
 }
-
-#blurb-about-site {
-    border: 1px solid black;
-    width: 33%;
-    position: absolute;
-    right: 490px;
-    height: 540px;
-    bottom: 88px
-}*/
+.card-title{
+    padding-left: 10px !important;
+}
+.event-item{
+    cursor: pointer;
+}
