@@ -5,6 +5,9 @@
  * gets an array of 20 artist names from spotify
  */
 $(document).ready(function () {
+    
+    
+    
     //#region spotify
 
     let artists_search_results = []
@@ -207,7 +210,7 @@ $(document).ready(function () {
             fullscreenControl: false,
         };
         // set the map variable, center location, and zoom
-        map = new google.maps.Map($('#map_canvas')[0], mapOptions);
+        map = new google.maps.Map($('#map-canvas')[0], mapOptions);
         var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
         // marker = new google.maps.Marker({

@@ -17,13 +17,13 @@
     <header>
         <nav>
             <!-- materialize nav. Change the color "blue accent-4 https://materializecss.com/color.html" -->
-            <div class="nav-wrapper blue accent-4">
+            <div class="nav-wrapper black">
                 <!-- could add a logo and change name -->
                 <a href="index.html" class="brand-logo">BANDEAR</a>
                 <!-- maybe a link to a settings page? recent search, radius etc?" -->
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="#">Personal Settings</a></li>
-                </ul>
+                </ul> -->
             </div>
         </nav>
     </header>
@@ -35,7 +35,7 @@
             <!-- materialize grid column -->
             <!-- aside for seach area of the page -->
             <aside class="col s12 m4 l3 search-band">
-                <h3 class="sideContentTitle"> Search for a Band</h3>
+                <h3 class="side-content-title"> Search for a Band</h3>
                 <div class="input-group mb-3">
                     <form action="submit" id="search-form">
                         <label for="artist-input"></label>
@@ -48,11 +48,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="band-details">
-                    <div id="band-details">
-                        <!-- <h2 id="artist-name"></h2>
-                        <img id="artist-image" src="#" alt="artist image"> -->
-                    </div>
+                <div class="band-details" id="band-details">
                 </div>
             </aside>
             <!-- materialize grid column -->
@@ -63,17 +59,17 @@
                     <!-- column for the page intro and detail search results -->
                     <div class="col s12 m6 l6">
                         <!-- cards used for but could be other materialize items? -->
-                        <section class="card" id="blurb-about-site">
+                        <section class="card blurb-about-site" id="blurb-about-site">
                             <div class="card-title">Blurb about Site</div>
                             <div class="card-content">
                                 <p> The content written will appear in here this is the dive here it goes in</p>
                             </div>
                         </section>
-                        <section class="card">
+                        <section class="card bands-in-town">
                             <div class="card-title">The bands in Town</div>
                             <div class="card-content bands-in-town-list"></div>
                         </section>
-                        <section class="card">
+                        <!-- <section class="card">
                             <div class="card-title">Possible carousel of bands</div>
 
                             <div class="carousel">
@@ -90,12 +86,12 @@
                             </div>
                             <div class="card-content bands-in-town-scroll"></div>
 
-                        </section>
+                        </section> -->
                     </div>
 
                     <div class="col s12 m6 l6">
                         <section class="card">
-                            <div class="map_canvas" id="map_canvas"></div>
+                            <div class="map-canvas" id="map-canvas"></div>
                         </section>
                     </div>
             </section>
@@ -103,10 +99,10 @@
     </main>
     <!-- semantic footer -->
     <!-- materialize footer. Change the color "blue accent-4 https://materializecss.com/color.html" -->
-    <footer class="blue accent-4">
+    <footer class="black">
         <div class="footer-copyright">
             <div class="container">
-                © Copyright - BANDEAR
+               <span class="grey-text text-lighten-4">© 2020 - BANDEAR</span>
                 <!-- links to our github accounts -->
                 <a class="grey-text text-lighten-4 right" target="_blank"
                     href="https://github.com/chrisjmckeown">chris-</a>
@@ -122,9 +118,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="./Assets/JS/google.js"></script>
-    <!-- <script src="./Assets/JS/spotify.js"></script> -->
-    <script src="./Assets/JS/bandsintown.js"></script>
+    <!-- <script src="./Assets/JS/bandsintown.js"></script> -->
 </body>
 
 </html>

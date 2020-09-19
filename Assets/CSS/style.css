@@ -1,54 +1,60 @@
-#map {
- height: 100%;
-}
+/********** Colour reference chart*********
+*************************** colour *******/ 
+:root {
+    --colour-1:#706BC2;
+    --colour-2:#0E0582;
+    --colour-3:#91F8FF;
+    --colour-4:#37B4BD;
+    --colour-5:#58C9D1;
+    
+    --buttons-hover: white;
+    --shadow:  rgba(0, 0, 0, 0.15);
+  }
+/* main body styling */
 html,
 body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
-
-
 footer{
-    background-color: beige;
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
 }
 
+/* Aside styling */
 .form-control {
     color: black;
 }
-
 .search-band{
-    background-color:#2541b2f1;
     height: 89em;
     margin-top: 10px;
-    position: relative;
 }
 
-.sideContentTitle {
-    color: rgb(236, 236, 136);
-    font-size: 2.5rem;
+.side-content-title {
+    font-size: 1.2rem;
     font-weight: 400;
     font-family: sans-serif;
     margin-top: 30px;
 }
 
+/* Main base body styling */
 .main-body{
     background-color: beige;
     margin-top: 10px;
 }
 
-footer{
-    position: fixed;
-    width: 100%;
-    bottom: 1px;
-}
-.map_canvas{
+/* Map styling */
+.map-canvas{
     min-height: 400px !important;
 }
-#band-details{
+
+.band-details{
     height:320px;
     overflow: scroll;
     overflow-x: hidden;
+    margin-top: 2.5rem;
 }
 
 .artist{
@@ -78,7 +84,7 @@ footer{
     color: rgb(255, 223, 134);
 }
 .artist .image-holder{
-text-align: right;
+    text-align: right;
 }
 
 #spotify{
@@ -111,9 +117,6 @@ text-align: right;
 #spotify audio{
     width:100%;
 }
-#band-details{
-    margin-top: 2.5rem;
-}
 ::-webkit-scrollbar {
     width: .5em;
   }
@@ -127,55 +130,8 @@ text-align: right;
     outline: 1px solid rgb(2, 39, 8);
     padding:30px 0;
   }
-#searchBtn{
+/* #searchBtn{
     display: block;
 position: absolute;
 right:15px;
-}
-
-/* header {
-    border: 1px solid red;
-    position: absolute;
-    top: 0;
-    height: 80px;
-    width: 100%;
 } */
-
-/* .searchBand {
-    position: absolute;
-    border: 1px solid blue;
-    width: 26%;
-    top: 100px;
-}
-
-#band-features {
-    position: absolute;
-    border: 1px solid green;
-    width: 26%;
-    top: 200px;
-}
-
-.bands-in-town-list {
-    position: relative;
-    border: 1px solid purple;
-    height: 90px;
-    width: 26%;
-    top: 400px;
-}
-
-.bands-in-town-scroll {
-    position: relative;
-    border: 1px solid purple;
-    width: 26%;
-    top: 435px;
-    height: 90px;
-}
-
-#blurb-about-site {
-    border: 1px solid black;
-    width: 33%;
-    position: absolute;
-    right: 490px;
-    height: 540px;
-    bottom: 88px
-}*/
