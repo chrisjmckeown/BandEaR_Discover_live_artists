@@ -121,13 +121,13 @@ footer{
     padding: 0px !important;
 }
 .display-hits{
-    position: absolute;
+    /* position: absolute; */
     top: 5.2rem;
     z-index: 5;
-    background-color: var(--display-hits);
+    /* background-color: var(--display-hits); */
     overflow: scroll;
     overflow-x: hidden;
-    height:250px;
+    height: 220px;
     width:100%;
     padding:5px;
 }
@@ -136,7 +136,7 @@ footer{
     margin: 0;
     padding: 0;
     font-weight: 700;
-    color: var(--text);
+    /* color: var(--text); */
 }
 .display-hits h5{
     font-size: 1.3rem;
@@ -144,10 +144,10 @@ footer{
     margin: 0;
     padding-bottom: 10px;
     text-decoration: underline;
-    color: var(--text);
+    /* color: var(--text); */
 }
 .display-hits a{
-    color: var(--link);
+    /* color: var(--link); */
 }
 .display-hits audio{
     width: 100%;

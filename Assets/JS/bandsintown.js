@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //#region spotify
     setMainBody(false);
 
@@ -12,8 +12,7 @@ $(document).ready(function () {
             $("#map-canvas").attr("style", "height: 82vh; display: block");
             $("#event-information").attr("style", "display: none");
             $('#band-details').empty();
-        }
-        else {
+        } else {
             // Set middle section
             $("#blurb-about-site").attr("style", "display: none");
             $("#bands-in-town").attr("style", "height: 82vh; display: block");
@@ -38,8 +37,7 @@ $(document).ready(function () {
             'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
         },
         data: 'grant_type=client_credentials'
-    }
-    ).then(function (res) {
+    }).then(function(res) {
         token = res.access_token
     })
 
@@ -53,10 +51,10 @@ $(document).ready(function () {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        }).then(function (dat) {
+        }).then(function(dat) {
             // console.log(dat.artists.items);
             const artists = dat.artists.items
-            artists.forEach(function (artist, index) {
+            artists.forEach(function(artist, index) {
                 const new_artist = $(`<div class="artist" id=${index}></div>`)
                 const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
                 // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
@@ -69,12 +67,12 @@ $(document).ready(function () {
         })
     }
 
-    $('#search-form').submit(function (event) {
+    $('#search-form').submit(function(event) {
         event.preventDefault();
         get_results();
     })
 
-    $("#artist-input").keyup(function () {
+    $("#artist-input").keyup(function() {
         var input = $(this).val().trim();
         if (!input) {
             setMainBody(false);
@@ -84,33 +82,43 @@ $(document).ready(function () {
 
     //#region bandsintown
 
-    $(document).on('click', '#spotify', function (event) { event.stopPropagation() })
+    $(document).on('click', '#spotify', function(event) {
+        event.stopPropagation()
+    })
 
-    $(document).on('click', '.artist', function () {
+    $(document).on('click', '.artist', function() {
         setMainBody(true);
         let artistId = artist_id[parseInt(this.id)]
         let divId = this.id
         // let artist = artists_search_results[parseInt(this.id)]
         $.get({
             url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=AU`,
-            headers: { 'Authorization': 'Bearer ' + token }
-        }).then(function (response) {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }).then(function(response) {
             const tracks = response.tracks
-            const new_Div = $(`<div id='spotify' class='display-hits'><p class='text-right'>x</p><h5>Top Hits</h5> </div>`)
-            $(`#${divId}`).append(new_Div)
-            $('.display-hits').show()
+            $("#bands-in-town-list").prepend($("<h5>").text("Top Hits"))
+            $("#bands-in-town-list").append($("<div>").attr("class", "display-hits"))
+            $(".display-hits").show()
+            
             tracks.forEach(track => {
-                track.album.album_type  // may be used if needed
+                // track.album.album_type // may be used if needed
                 let new_hit = $('<div>')
                 let ex_url = $(`<div><a href=${track.external_urls.spotify} target='_blank'>${track.name}</a></div>`)
-                track.album.release_date // may be used if needed
+                // track.album.release_date // may be used if needed
                 const preview = track.preview_url ? $(`<div><audio controls src=${track.preview_url}></div`) : ''
                 new_hit.append(ex_url, preview)
 
-                $('#spotify').append(new_hit)
-                $('.text-right').click(() => $('.display-hits').remove())
+                $(".display-hits").append(new_hit)
             })
+
+            // $(`#${divId}`).on("click", function(event) {
+            //     event.stopPropagation();
+            //     $(`.${divId}-artist`).toggle()
+            // })
         })
+
         artists_search_results.forEach((element, index) => {
             if (parseInt(this.id) === index) {
                 displayBandsInTownData(element)
@@ -127,24 +135,24 @@ $(document).ready(function () {
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
             $("#event-information-title").text("Event Information: " + data.upcoming_event_count + " events");
-        }
-        else {
+        } else {
             $("#event-information-content").append($("<p>").text(artist + " is not in town."))
             // reset map to your location
             initMap(defaultCoodinates);
         };
-        if (data.thumb_url) {
-            $("#bands-in-town-list").append($("<img>").attr("src", data.image_url).width("100%"));
+        if (data.image_url) {
+            $("#bands-in-town-list").prepend($("<img>").attr("src", data.image_url).css({ "max-width": "100%", "max-height": "300px" }));
         }
     }
 
     var eventList = [];
+
     function appendEventInfoList(response) {
         eventList = response;
         var $eventUL = $("<ul>");
         $("#event-information-list").append($eventUL);
         var index = 0;
-        response.forEach(function (data) {
+        response.forEach(function(data) {
             var $newEvent = $("<li>");
             $newEvent.text(data.venue.name);
             $newEvent.addClass("event-item");
@@ -156,27 +164,28 @@ $(document).ready(function () {
         appendEventInfo(response[0]);
     }
 
-    $(document).on('click', '.event-item', function () {
+    $(document).on('click', '.event-item', function() {
         var index = $(this).attr("index");
         $("#event-information-content").empty();
         appendEventInfo(eventList[index], index);
     });
     var timeout;
-    function appendEventInfo(data, index) {
+
+    function appendEventInfo(data) {
         //events
         var date = moment(data.datetime).format('DD/MM/YYYY');
         clearInterval(timeout);
         $("#event-information-content").append("Date: " + date)
 
         var eventTime = moment(data.datetime).unix(); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
-        var currentTime = moment().unix();//1366547400; // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
+        var currentTime = moment().unix(); //1366547400; // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
         var diffTime = eventTime - currentTime;
         var duration = moment.duration(diffTime * 1000, 'milliseconds');
         var durationDay = moment(data.datetime).diff(moment(), 'days');
         var interval = 1000;
         $("#event-information-content").append($("<p>").attr("id", "countdown"))
 
-        timeout = setInterval(function () {
+        timeout = setInterval(function() {
             duration = moment.duration(duration - interval, 'milliseconds');
             durationDay = moment(data.datetime).diff(moment(), 'days');
             $('#countdown').text("Countdown: " + durationDay + " " + duration.hours() + ":" + duration.minutes() + ":" + duration.seconds())
@@ -190,8 +199,7 @@ $(document).ready(function () {
         }
         if (data.venue.location) {
             $("#event-information-content").append("Location: " + data.venue.location)
-        }
-        else {
+        } else {
             $("#event-information-content").append("Location: " + data.venue.type)
         }
 
@@ -219,7 +227,7 @@ $(document).ready(function () {
             $.ajax({
                 url: artistURL,
                 method: "GET"
-            }).then(function (response) {
+            }).then(function(response) {
                 // error checking
                 if (response.error) {
                     $("#bands-in-town-list").append(
@@ -239,7 +247,7 @@ $(document).ready(function () {
                     $.ajax({
                         url: eventURL,
                         method: "GET"
-                    }).then(function (response) {
+                    }).then(function(response) {
                         eventList = [];
                         appendEventInfoList(response)
                     })
@@ -250,6 +258,9 @@ $(document).ready(function () {
     //#endregion
 
     //#region google
+    if (coordinates) {
+
+    
     let map;
     var marker;
 
@@ -272,7 +283,10 @@ $(document).ready(function () {
         // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
         marker = new google.maps.Marker({
-            position: { lat: coordinates.latitude, lng: coordinates.longitude },
+            position: {
+                lat: coordinates.latitude,
+                lng: coordinates.longitude
+            },
             // title: 'Hello World!',
             animation: google.maps.Animation.DROP,
             // icon: image,
@@ -281,7 +295,7 @@ $(document).ready(function () {
         marker.setMap(map);
         marker.addListener('click', toggleBounce);
         //marker.setMap(null); // remove markers
-    }
+    }}
 
     // function initMap() {
     //     var map = new google.maps.Map(document.getElementById('google-map'), {
@@ -369,7 +383,7 @@ $(document).ready(function () {
         $.ajax({
             url: queryURL,
             method: 'get'
-        }).then(function (response) {
+        }).then(function(response) {
             // split the location string to parse the longitude and latitude
             if (response.loc) {
                 var loc = response.loc.split(',');
@@ -382,7 +396,7 @@ $(document).ready(function () {
                 initMap(coordinates);
                 setStoredCoordinates(coordinates);
             }
-        }).catch(function (err) {
+        }).catch(function(err) {
             console.log(err);
         });
         defaultCoodinates = coordinates;
