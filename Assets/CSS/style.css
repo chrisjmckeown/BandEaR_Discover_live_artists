@@ -177,3 +177,6 @@ footer{
 .card-title{
     padding-left: 10px !important;
 }
+.event-item{
+    cursor: pointer;
+}

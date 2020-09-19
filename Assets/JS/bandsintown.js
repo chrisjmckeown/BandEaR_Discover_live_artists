@@ -11,8 +11,8 @@ $(document).ready(function () {
             // Set right section
             $("#map-canvas").attr("style", "height: 82vh; display: block");
             $("#event-information").attr("style", "display: none");
-            $('#band-details').empty()
-            getDefaultCityCountry();
+            $('#band-details').empty();
+            $('#event-information-list').empty();
         }
         else {
             $("#bands-in-town-list").empty();
@@ -23,8 +23,8 @@ $(document).ready(function () {
             // Set right section
             $("#map-canvas").attr("style", "height: 40vh; display: block");
             $("#event-information").attr("style", "height: 40vh; display: block");
-            getDefaultCityCountry();
         }
+        getDefaultCityCountry();
     }
 
     let artists_search_results = []
@@ -86,8 +86,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#spotify', function (event) { event.stopPropagation() })
 
-    $(document).on('click', '.artist', function (event) {
-
+    $(document).on('click', '.artist', function () {
         setMainBody(true);
         let artistId = artist_id[parseInt(this.id)]
         let divId = this.id
@@ -127,7 +126,7 @@ $(document).ready(function () {
         }
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
-            $("#event-information-content").append($("<p>").text(data.upcoming_event_count + " upcoming events."));
+            $("#event-information-list").append($("<p>").text(data.upcoming_event_count + " upcoming events:"));
         }
         else {
             $("#event-information-content").append($("<p>").text(artist + " is not in town."))
@@ -139,10 +138,39 @@ $(document).ready(function () {
         }
     }
 
-    function appendEventInfo(data) {
-        //events
-        $("#event-information-content").append("Next upcoming event: ")
+    var eventList = [];
+    function appendEventInfoList(response) {
+        eventList = response;
+        var $eventUL = $("<ul>");
+        $("#event-information-list").append($eventUL);
+        var index = 0;
+        response.forEach(function (data) {
+            var $newEvent = $("<li>");
+            $newEvent.text(data.venue.name);
+            $newEvent.addClass("event-item");
+            $newEvent.attr("id", "event-item");
+            $newEvent.attr("index", index++);
+            $newEvent.attr("data", data);
+            $($eventUL).append($newEvent);
+        });
+        appendEventInfo(response[0]);
+    }
 
+    $(document).on('click', '.event-item', function () {
+        var index = $(this).attr("index");
+        $("#event-information-content").empty();
+        appendEventInfo(eventList[index], index);
+    });
+
+    function appendEventInfo(data, index) {
+        console.log(index);
+        //events
+        if (index === 0) {
+            $("#event-information-content").append("Next upcoming event:")
+        }
+        else {
+            $("#event-information-content").append("Upcoming event:")
+        }
         // venue info
         if (data.venue.name) {
             $("#event-information-content").append($("<h6>").text(data.venue.name))
@@ -191,8 +219,8 @@ $(document).ready(function () {
                     $("#bands-in-town-list").append(
                         ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
                         ($("<p>").text(artist + " is not in town")))
-                } else { 
-                    appendArtistInfo(artist, response); 
+                } else {
+                    appendArtistInfo(artist, response);
                 }
 
                 if (response.upcoming_event_count > 0) {
@@ -202,8 +230,8 @@ $(document).ready(function () {
                         url: eventURL,
                         method: "GET"
                     }).then(function (response) {
-                        var data = response[0]
-                        appendEventInfo(data)
+                        eventList = [];
+                        appendEventInfoList(response)
                     })
                 }
             })
@@ -345,7 +373,7 @@ $(document).ready(function () {
                 setStoredCoordinates(coordinates);
             }
         }).catch(function (err) {
-             console.log(err);
+            console.log(err);
         });
         defaultCoodinates = coordinates;
     };

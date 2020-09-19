@@ -52,6 +52,7 @@
                                         </button>
                                     </div>
                                 </div>
+                            </div>
                         </form>
                     </div>
                     <div class="band-details" id="band-details">
@@ -59,13 +60,13 @@
                 </aside>
                 <!-- materialize grid column -->
                 <!-- section for main page body -->
-                <section class="col s12 m8 l9 main-body">
+                <div class="col s12 m8 l9 main-body">
                     <!-- materialize grid row to split up the body into 2 columns -->
                     <div class="row body-row">
                         <!-- column for the page intro and detail search results -->
                         <div class="col s12 m6 l6">
                             <!-- cards used for but could be other materialize items? -->
-                            <section class="card blurb-about-site" id="blurb-about-site">
+                            <div class="card blurb-about-site" id="blurb-about-site">
                                 <div class="card-title center">BANDEAR</div>
                                 <div class="card-content center blurb-about-site-content">
                                     <div>---------</div>
@@ -82,21 +83,29 @@
                                     </div>
                                     <div>---------</div>
                                 </div>
-                            </section>
-                            <section class="card bands-in-town" id="bands-in-town">
+                            </div>
+                            <div class="card bands-in-town" id="bands-in-town">
                                 <div class="card-title" id="bands-in-town-band-name">The bands in Town</div>
                                 <div class="card-content bands-in-town-list" id="bands-in-town-list"></div>
-                            </section>
+                            </div>
                         </div>
                         <div class="col s12 m6 l6">
-                            <section class="card map-canvas" id="map-canvas">
-                            </section>
-                            <section class="card event-information" id="event-information">
+                            <div class="card map-canvas" id="map-canvas">
+                            </div>
+                            <div class="card event-information" id="event-information">
                                 <div class="card-title">Event Information</div>
-                                <div class="card-content" id="event-information-content"></div>
-                            </section>
+                                <div class="row">
+                                    <div class="col s12 m6 l6">
+                                        <div class="card-content" id="event-information-content"></div>
+                                    </div>
+                                    <div class="col s12 m6 l6">
+                                        <div class="card-content" id="event-information-list"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                </section>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
