@@ -50,7 +50,7 @@
 // })
 
 // $(document).on('click', 'td', function () {
-//     $('.display_hits').remove()
+//     $('.display-hits').remove()
 
 //     let artist_id = this.className.slice(5)
 //     let artist = $(`.col_1${artist_id}`)
@@ -64,9 +64,9 @@
 //         console.log(dat);
 //         const tracks = dat.tracks
 
-//         const new_Div = $(`<div class='display_hits'><p class='text-right'>x</p><table id='hits'></table> </div>`)
+//         const new_Div = $(`<div class='display-hits'><p class='text-right'>x</p><table id='hits'></table> </div>`)
 //         $(`.col_3${artist_id}`).append(new_Div)
-//         $('.display_hits').show()
+//         $('.display-hits').show()
 //         tracks.forEach(track => {
 //             track.album.album_type  // may be used if needed
 //             let new_row = $('<tr>')
@@ -76,7 +76,7 @@
 //             new_row.append(ex_url, preview)
 
 //             $('#hits').append(new_row)
-//             $('.text-right').click(() => $('.display_hits').remove())
+//             $('.text-right').click(() => $('.display-hits').remove())
 //         })
 
 //     })

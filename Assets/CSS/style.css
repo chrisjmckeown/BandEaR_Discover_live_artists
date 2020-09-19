@@ -1,18 +1,21 @@
 /********** Colour reference chart*********
 *************************** colour *******/ 
 :root {
-    --spotify-card:#d6465a;
-    --artist-card:#8babb2;
+    --display-hits:#d6465a;
     --Main-Body: white;
     --borders: #d6465a;
     --text: white;
     --link: white;
     --scroll: white;
-    
+
+    --artist:#8babb2;
+    --blurb-about-site:#F4F4DF;
+    --bands-in-town:#F4F4DF;
+    --event-information:#8babb2;
+
     --buttons-hover: white;
   }
 
-  
 *,
 *::before,
 *::after {
@@ -26,11 +29,16 @@ body {
     margin: 0;
     padding: 0;
 }
+header a{
+    padding-left: 10px !important;
+}
 footer{
     height: 50px;
     position: fixed;
     width: 100%;
     bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .footer-copyright{
   margin-top: 10px;
@@ -72,7 +80,7 @@ footer{
 }
 .artist{
     display: flex;
-    background-color:var(--artist-card);
+    background-color:var(--artist);
     border-radius: 5px;
     margin:10px;
     justify-content: space-between;
@@ -93,26 +101,44 @@ footer{
 .artist .image-holder{
     text-align: right;
 }
-
-.display_hits{
+.event-information-content{
+    /* background-color: var(--spotify-card); */
+    overflow: scroll;
+    overflow-x: hidden;
+    height:270px;
+    width:100%;
+    padding: 10px !important;
+}
+.event-information-list{
+    background-color: var(--white);
+    overflow: scroll;
+    overflow-x: hidden;
+    height:270px;
+    width:100%;
+    padding: 10px !important;
+}
+.no-padding{
+    padding: 0px !important;
+}
+.display-hits{
     position: absolute;
     top: 5.2rem;
     z-index: 5;
-    background-color: var(--spotify-card);
+    background-color: var(--display-hits);
     overflow: scroll;
     overflow-x: hidden;
     height:250px;
     width:100%;
     padding:5px;
 }
-.display_hits p{
+.display-hits p{
     text-align: right;
     margin: 0;
     padding: 0;
     font-weight: 700;
     color: var(--text);
 }
-.display_hits h5{
+.display-hits h5{
     font-size: 1.3rem;
     text-align: center;
     margin: 0;
@@ -120,10 +146,10 @@ footer{
     text-decoration: underline;
     color: var(--text);
 }
-.display_hits a{
+.display-hits a{
     color: var(--link);
 }
-.display_hits audio{
+.display-hits audio{
     width: 100%;
     height: 20px;
 }
@@ -143,19 +169,20 @@ footer{
 
 /* central panel */
 .blurb-about-site{
+    background-color: var(--blurb-about-site) !important;
     font-family: sans-serif;
     height: 80vh;
     border: 1px solid var(--borders);
     border-radius: 15px !important;
 }
 .blurb-about-site-content{
-    height: 60%;
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 .bands-in-town{
+    background-color: var(--bands-in-town) !important;
     display: none;
     height: 80vh;
     border: 1px solid var(--borders);
@@ -163,6 +190,7 @@ footer{
     height: 40vh;
 }
 .event-information{
+    background-color: var(--event-information) !important;
     display: none;
     border: 1px solid var(--borders);
     border-radius: 15px !important;
@@ -179,4 +207,29 @@ footer{
 }
 .event-item{
     cursor: pointer;
+}
+
+
+
+/* media adjustments to work on phone, ipad and PC */
+@media (max-width: 768px) {
+}
+
+@media (max-width: 550px) { 
+
+    .event-information-content{
+        /* height:50%; */
+    }
+    .event-information-list{
+        /* height:50%; */
+    }
+    
+    .event-information{
+        height: 50% !important;
+        margin-bottom: 100px;
+    }
+    
+    .body-row{
+        padding-bottom: 50px !important;
+    }
 }

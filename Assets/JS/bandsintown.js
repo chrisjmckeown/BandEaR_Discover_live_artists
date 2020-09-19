@@ -12,11 +12,8 @@ $(document).ready(function () {
             $("#map-canvas").attr("style", "height: 82vh; display: block");
             $("#event-information").attr("style", "display: none");
             $('#band-details').empty();
-            $('#event-information-list').empty();
         }
         else {
-            $("#bands-in-town-list").empty();
-            $("#event-information-content").empty();
             // Set middle section
             $("#blurb-about-site").attr("style", "display: none");
             $("#bands-in-town").attr("style", "height: 82vh; display: block");
@@ -24,6 +21,9 @@ $(document).ready(function () {
             $("#map-canvas").attr("style", "height: 40vh; display: block");
             $("#event-information").attr("style", "height: 40vh; display: block");
         }
+        $('#event-information-list').empty();
+        $("#bands-in-town-list").empty();
+        $("#event-information-content").empty();
         getDefaultCityCountry();
     }
 
@@ -96,9 +96,9 @@ $(document).ready(function () {
             headers: { 'Authorization': 'Bearer ' + token }
         }).then(function (response) {
             const tracks = response.tracks
-            const new_Div = $(`<div id='spotify' class='display_hits'><p class='text-right'>x</p><h5>Top Hits</h5> </div>`)
+            const new_Div = $(`<div id='spotify' class='display-hits'><p class='text-right'>x</p><h5>Top Hits</h5> </div>`)
             $(`#${divId}`).append(new_Div)
-            $('.display_hits').show()
+            $('.display-hits').show()
             tracks.forEach(track => {
                 track.album.album_type  // may be used if needed
                 let new_hit = $('<div>')
@@ -108,7 +108,7 @@ $(document).ready(function () {
                 new_hit.append(ex_url, preview)
 
                 $('#spotify').append(new_hit)
-                $('.text-right').click(() => $('.display_hits').remove())
+                $('.text-right').click(() => $('.display-hits').remove())
             })
         })
         artists_search_results.forEach((element, index) => {
@@ -126,7 +126,7 @@ $(document).ready(function () {
         }
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
-            $("#event-information-list").append($("<p>").text(data.upcoming_event_count + " upcoming events:"));
+            $("#event-information-title").text("Event Information: " + data.upcoming_event_count + " events");
         }
         else {
             $("#event-information-content").append($("<p>").text(artist + " is not in town."))
@@ -161,16 +161,26 @@ $(document).ready(function () {
         $("#event-information-content").empty();
         appendEventInfo(eventList[index], index);
     });
-
+    var timeout;
     function appendEventInfo(data, index) {
-        console.log(index);
         //events
-        if (index === 0) {
-            $("#event-information-content").append("Next upcoming event:")
-        }
-        else {
-            $("#event-information-content").append("Upcoming event:")
-        }
+        var date = moment(data.datetime).format('DD/MM/YYYY');
+        clearInterval(timeout);
+        $("#event-information-content").append("Date: " + date)
+
+        var eventTime = moment(data.datetime).unix(); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
+        var currentTime = moment().unix();//1366547400; // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
+        var diffTime = eventTime - currentTime;
+        var duration = moment.duration(diffTime * 1000, 'milliseconds');
+        var durationDay = moment(data.datetime).diff(moment(), 'days');
+        var interval = 1000;
+        $("#event-information-content").append($("<p>").attr("id", "countdown"))
+
+        timeout = setInterval(function () {
+            duration = moment.duration(duration - interval, 'milliseconds');
+            durationDay = moment(data.datetime).diff(moment(), 'days');
+            $('#countdown').text("Countdown: " + durationDay + " " + duration.hours() + ":" + duration.minutes() + ":" + duration.seconds())
+        }, interval);
         // venue info
         if (data.venue.name) {
             $("#event-information-content").append($("<h6>").text(data.venue.name))
