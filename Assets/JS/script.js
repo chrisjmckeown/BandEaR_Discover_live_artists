@@ -1,6 +1,27 @@
 $(document).ready(function () {
     //#region spotify
     setMainBody(false);
+    let favourite_singers = []
+    let artists_search_results = []
+    let artist_id = []
+    let artist_image = []
+    if (localStorage.getItem('favourite_singers')) {
+        favourite_singers = JSON.parse(localStorage.getItem('favourite_singers'))
+        console.log(favourite_singers, typeof favourite_singers)
+    }
+    favourite_singers.forEach(function (artist) {
+        console.log(artist)
+        const new_artist = $(`<div class="artist" id=${artist[2]}></div>`)
+        const new_artist_name = $(`<h3 class=col_1${artist[2]}>${artist[0]} </h3>`)
+        // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
+        const new_artist_image = $(`<div class='col_3${artist[2]} image-holder' ><img src=${artist[1]} width='50'></div>`)
+        new_artist.append(new_artist_name, new_artist_image)
+        $('#band-details').append(new_artist)
+        $('#band-details').show()
+        artists_search_results.push(artist[0])
+        artist_image.push(artist[1])
+        artist_id.push(artist[2])
+    })
 
     function setMainBody(searchInProgress) {
         if (!searchInProgress) {
@@ -27,8 +48,7 @@ $(document).ready(function () {
         getDefaultCityCountry();
     }
 
-    let artists_search_results = []
-    let artist_id = []
+
     const clientId = '41cd629d017d4f53bc20ccb457fdd08e';
     const clientSecret = '70a3757b1ad54861be12d8693bc8b929';
     $.post({
@@ -44,6 +64,7 @@ $(document).ready(function () {
 
     function get_results() {
         artists_search_results = []
+        artist_image = []
         artist_id = []
         $('#band-details').empty()
         $('#band-details').show()
@@ -57,13 +78,14 @@ $(document).ready(function () {
             // console.log(dat.artists.items);
             const artists = dat.artists.items
             artists.forEach(function (artist, index) {
-                const new_artist = $(`<div class="artist" id=${index}></div>`)
+                const new_artist = $(`<div class="artist" id=${artist.id}></div>`)
                 const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
                 // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
                 const new_artist_image = $(`<div class='col_3${artist.id} image-holder' ><img src=${artist.images[2].url} width='50'></div>`)
                 new_artist.append(new_artist_name, new_artist_image)
                 $('#band-details').append(new_artist)
                 artists_search_results.push(artist.name)
+                artist_image.push(artist.images[2].url)
                 artist_id.push(artist.id)
             });
         })
@@ -89,9 +111,21 @@ $(document).ready(function () {
     })
 
     $(document).on('click', '.artist', function () {
+
         setMainBody(true);
-        let artistId = artist_id[parseInt(this.id)]
-        let divId = this.id
+        let artistId = this.id
+        let check = 0
+        favourite_singers.forEach(singer => singer[2] === artistId ? check++ : check)
+        console.log(check);
+        artist_id.forEach((artist, index) => {
+            if (artist === artistId && check === 0) {
+                favourite_singers.push([artists_search_results[index], artist_image[index], artistId])
+                localStorage.setItem('favourite_singers', JSON.stringify(favourite_singers))
+            }
+        });
+
+
+
         // let artist = artists_search_results[parseInt(this.id)]
         $.get({
             url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=AU`,
@@ -115,15 +149,12 @@ $(document).ready(function () {
                 $(".display-hits").append(new_hit)
             })
 
-            // $(`#${divId}`).on("click", function(event) {
-            //     event.stopPropagation();
-            //     $(`.${divId}-artist`).toggle()
-            // })
+
         })
 
-        artists_search_results.forEach((element, index) => {
-            if (parseInt(this.id) === index) {
-                displayBandsInTownData(element)
+        favourite_singers.forEach((singer) => {
+            if ((this.id) === singer[2]) {
+                displayBandsInTownData(singer[0])
             }
         });
     })
