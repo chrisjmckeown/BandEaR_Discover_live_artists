@@ -3,9 +3,10 @@
 :root {
     --display-hits:#d6465a;
     --Main-Body: white;
-    --borders: #d6465a;
+    --borders: black;
     --text: white;
-    --link: white;
+    --text-link: rgba(3, 17, 145, 0.753);
+    --link:#8babb2;
     --scroll: white;
 
     --artist:#00838f  ;
@@ -13,7 +14,8 @@
     --bands-in-town:#F4F4DF;
     --event-information:#C0D6DF ;
 
-    --buttons-hover: white;
+    --hover-item: #477079;
+    --hover-text: black;
   }
 
 *,
@@ -63,6 +65,13 @@ footer{
 }
 .container{
     width: 100%  ;
+}
+li:hover, 
+.artist:hover, 
+.footer-copyright a:hover, 
+.display-hits a:hover,
+.event-information-content a:hover{
+    background-color: var(--hover-item);
 }
 /* Main base body styling */
 .main-body{
@@ -117,6 +126,7 @@ footer{
     text-align: right;
 }
 .event-information-content{
+    color: var(--text);
     /* background-color: var(--spotify-card); */
     overflow: scroll;
     overflow-x: hidden;
@@ -124,7 +134,11 @@ footer{
     width:100%;
     padding: 10px  ;
 }
+.event-information-content a{
+    color: var(--text-link);
+}
 .event-information-list{
+    color: var(--text-link);
     background-color: var(--white);
     overflow: scroll;
     overflow-x: hidden;
@@ -132,11 +146,26 @@ footer{
     width:100%;
     padding: 10px  ;
 }
+.event-information-list ul{
+    margin-top: 7px;
+    margin-bottom: 0px;
+}
+.event-information-list li{
+    padding-bottom: 5px;
+    border-top: 1px solid white;
+}
+.event-information-list li:last-child{
+    border-bottom: 1px solid white;
+}
 .no-padding{
     padding: 0px  ;
 }
 .display-hits{
     top: 5.2rem;
+<<<<<<< HEAD
+=======
+    z-index: 5;
+>>>>>>> master
     overflow: scroll;
     overflow-x: hidden;
     height: 30vh;
@@ -152,17 +181,15 @@ footer{
     margin: 0;
     padding: 0;
     font-weight: 700;
-    /* color: var(--text); */
 }
 #bands-in-town-list h5{
     font-size: 2rem;
     text-align: center;
   
     text-decoration: underline;
-    /* color: var(--text); */
 }
 .display-hits a{
-    /* color: var(--link); */
+    color: var(--text-link);
 }
 .display-hits audio{
     width: 100%;
@@ -170,22 +197,24 @@ footer{
 }
 ::-webkit-scrollbar {
     width: .5em;
-  }
-   
+}   
  ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px var(--text);
-  }
-   
+}   
 ::-webkit-scrollbar-thumb {
     background-color:  var(--scroll);
     outline: 1px solid  var(--scroll);
     padding:30px 0;
+<<<<<<< HEAD
   }
   .display-hits::-webkit-scrollbar-thumb {
     background-color:  #004d40;
     outline: 1px solid #00897b  ;
     padding:30px 0;
   }
+=======
+}
+>>>>>>> master
 
 /* central panel */
 .blurb-about-site{
@@ -222,26 +251,15 @@ footer{
     cursor: pointer;
 }
 
-
-
 /* media adjustments to work on phone, ipad and PC */
 @media (max-width: 768px) {
 }
 
 @media (max-width: 550px) { 
-
-    .event-information-content{
-        /* height:50%; */
-    }
-    .event-information-list{
-        /* height:50%; */
-    }
-    
     .event-information{
         height: 50%  ;
         margin-bottom: 100px;
-    }
-    
+    }    
     .body-row{
         padding-bottom: 50px  ;
     }
