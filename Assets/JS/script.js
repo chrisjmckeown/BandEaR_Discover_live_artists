@@ -174,54 +174,72 @@ $(document).ready(function () {
 
     function appendEventInfo(data) {
         //events
-        $("#event-information-content").append("<hr>")
+        var $mapContainer = $("<div>");
+        var $container = $("<div>");
+        $container.append("<hr>")
         var date = moment(data.datetime).format('DD/MM/YYYY');
         clearInterval(timeout);
-        $("#event-information-content").append("Date: " + date)
-        $("#event-information-content").append("<hr>")
-
-        var eventTime = moment(data.datetime).unix(); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
-        var currentTime = moment().unix(); //1366547400; // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
+        $container.append(date)
+        $mapContainer.append(date)
+        $container.append("<hr>")
+        $container.append($("<p>").attr("id", "countdown"))
+        // create a count down timer to event
+        var eventTime = moment(data.datetime).unix();
+        var currentTime = moment().unix();
         var diffTime = eventTime - currentTime;
         var duration = moment.duration(diffTime * 1000, 'milliseconds');
         var durationDay = moment(data.datetime).diff(moment(), 'days');
         var interval = 1000;
-        $("#event-information-content").append($("<p>").attr("id", "countdown"))
-
         timeout = setInterval(function () {
             duration = moment.duration(duration - interval, 'milliseconds');
             durationDay = moment(data.datetime).diff(moment(), 'days');
             $('#countdown').text("Countdown: " + durationDay + " " + duration.hours() + ":" + duration.minutes() + ":" + duration.seconds())
         }, interval);
-        $("#event-information-content").append("<hr>")
+        $container.append("<hr>")
         // venue info
+        var placesSearchQuery;
         if (data.venue.name) {
-            $("#event-information-content").append($("<h6>").text(data.venue.name))
-            $("#event-information-content").append("<hr>")
+            $mapContainer.append($("<h6>").text(data.venue.name))
+            $container.append($("<h6>").text(data.venue.name))
+            $container.append("<hr>")
+            placesSearchQuery = data.venue.name;
         }
         if (data.title) {
-            $("#event-information-content").append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
-            $("#event-information-content").append("<hr>")
+            $container.append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
+            $container.append("<hr>")
         }
         if (data.venue.location) {
-            $("#event-information-content").append("Location: " + data.venue.location)
-            $("#event-information-content").append("<hr>")
+            $mapContainer.append(data.venue.location)
+            $container.append("Location: " + data.venue.location)
+            $container.append("<hr>")
+            if (placesSearchQuery) {
+                placesSearchQuery += ", " + data.venue.location
+            } else {
+                placesSearchQuery += data.venue.location
+            }
         } else {
-            $("#event-information-content").append("Location: " + data.venue.type)
-            $("#event-information-content").append("<hr>")
+            $container.append("Location: " + data.venue.type)
+            $container.append("<hr>")
         }
         // ticket info
         if (data.offers[0].url) {
-            $("#event-information-content").append('<p><a href=' + data.offers[0].url + ' target="_blank">Tickets available here</a></p>')
-            $("#event-information-content").append("<hr>")
+            $container.append('<p><a href=' + data.offers[0].url + ' target="_blank">Tickets available here</a></p>')
+            $container.append("<hr>")
         }
-        // lat, long
-        if (data.venue.latitude && data.venue.longitude) {
-            var coordinates = {
-                latitude: parseFloat(data.venue.latitude),
-                longitude: parseFloat(data.venue.longitude)
-            };
-            initMap(coordinates)
+
+        $("#event-information-content").append($container)
+
+        if (placesSearchQuery) {
+            initMapPlace(placesSearchQuery, $mapContainer, data.venue);
+        } else {
+            // lat, long
+            if (data.venue.latitude && data.venue.longitude) {
+                var coordinates = {
+                    lat: parseFloat(data.venue.latitude),
+                    lng: parseFloat(data.venue.longitude)
+                };
+                initMap(coordinates)
+            }
         }
     }
 
@@ -265,113 +283,75 @@ $(document).ready(function () {
     //#endregion
 
     //#region google
-    if (coordinates) {
+    let map;
+    var marker;
 
-
-        let map;
-        var marker;
-
-        // initialise the map based on coordinates
-        function initMap(coordinates) {
-            //  create an object for the google settings
-            // some of these could be user settings stored in local settings
-            var mapOptions = {
-                zoom: 10,
-                center: {
-                    lat: coordinates.latitude,
-                    lng: coordinates.longitude
-                },
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false,
-            };
-            // set the map variable, center location, and zoom
-            map = new google.maps.Map($('#map-canvas')[0], mapOptions);
-            // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-
-            marker = new google.maps.Marker({
-                position: {
-                    lat: coordinates.latitude,
-                    lng: coordinates.longitude
-                },
-                // title: 'Hello World!',
-                animation: google.maps.Animation.DROP,
-                // icon: image,
-            });
-
-            marker.setMap(map);
-            marker.addListener('click', toggleBounce);
-            //marker.setMap(null); // remove markers
-        }
+    // initialise the map based on coordinates
+    function initMap(coordinates) {
+        //  create an object for the google settings
+        // some of these could be user settings stored in local settings
+        var mapOptions = {
+            zoom: 10,
+            center: {
+                lat: coordinates.latitude,
+                lng: coordinates.longitude
+            },
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+        };
+        // set the map variable, center location, and zoom
+        return map = new google.maps.Map($('#map-canvas')[0], mapOptions);
     }
 
-    // function initMap() {
-    //     var map = new google.maps.Map(document.getElementById('google-map'), {
-    //       zoom: 10,
-    //       center: {lat: -33.9, lng: 151.2}
-    //     });
+    // initialise the map based on coordinates
+    function initMapPlace(queryPlace, $container, venue) {
+        // request query for findPlaceFromQuery call
+        var requestQuery = {
+            query: queryPlace,
+            fields: ["name", "geometry"]
+        };
+        // initialise the PlacesService to pin point the venue location
+        var service = new google.maps.places.PlacesService(map);
+        // using the requestQuery find the venue
+        service.findPlaceFromQuery(requestQuery, function (results, status) {
+            // if result is returned then set the marker to the coordinate of the venue
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (let i = 0; i < results.length; i++) {
+                    createMarker(results[i].geometry.location, $container);
+                }
+                map.setCenter(results[0].geometry.location);
+            } else {
+                // else if the venue lng and lat exist, which is the city rather than the venue itself, set the marker to the city
+                if (venue.latitude && venue.longitude) {
+                    var coordinates = {
+                        lat: parseFloat(venue.latitude),
+                        lng: parseFloat(venue.longitude)
+                    };
+                    createMarker(coordinates, $container);
+                    map.setCenter(coordinates);
+                }
+            }
+        });
+    }
 
-    //     //setMarkers(map);
-    //   }
-
-    // Data for the markers consisting of a name, a LatLng and a zIndex for the
-    // order in which these markers should display on top of each other.
-    // var beaches = [
-    //     ['Bondi Beach', -33.890542, 151.274856, 4],
-    //     ['Coogee Beach', -33.923036, 151.259052, 5],
-    //     ['Cronulla Beach', -34.028249, 151.157507, 3],
-    //     ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-    //     ['Maroubra Beach', -33.950198, 151.259302, 1]
-    // ];
-
-    // function setMarkers(map) {
-    //     // Adds markers to the map.
-
-    //     // Marker sizes are expressed as a Size of X,Y where the origin of the image
-    //     // (0,0) is located in the top left of the image.
-
-    //     // Origins, anchor positions and coordinates of the marker increase in the X
-    //     // direction to the right and in the Y direction down.
-    //     var image = {
-    //         url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    //         // This marker is 20 pixels wide by 32 pixels high.
-    //         size: new google.maps.Size(20, 32),
-    //         // The origin for this image is (0, 0).
-    //         origin: new google.maps.Point(0, 0),
-    //         // The anchor for this image is the base of the flagpole at (0, 32).
-    //         anchor: new google.maps.Point(0, 32)
-    //     };
-    //     // Shapes define the clickable region of the icon. The type defines an HTML
-    //     // <area> element 'poly' which traces out a polygon as a series of X,Y points.
-    //     // The final coordinate closes the poly by connecting to the first coordinate.
-    //     var shape = {
-    //         coords: [1, 1, 1, 20, 18, 20, 18, 1],
-    //         type: 'poly'
-    //     };
-    //     for (var i = 0; i < beaches.length; i++) {
-    //         var beach = beaches[i];
-    //         marker = new google.maps.Marker({
-    //             position: {
-    //                 lat: beach[1],
-    //                 lng: beach[2]
-    //             },
-    //             map: map,
-    //             icon: image,
-    //             shape: shape,
-    //             animation: google.maps.Animation.DROP,
-    //             title: beach[0],
-    //             zIndex: beach[3]
-    //         });
-    //         marker.addListener('click', toggleBounce);
-    //     }
-    // }
-
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
+    // create the marker and info window
+    function createMarker(location, $container) {
+        // initialise the marker data
+        marker = new google.maps.Marker({
+            map,
+            position: location,
+            animation: google.maps.Animation.DROP,
+        });
+        // set the marker on the map
+        marker.setMap(map);
+        // create a infowindow item to display some facts about the venue
+        var infowindow = new google.maps.InfoWindow({
+            content: $container.prop('outerHTML'),
+        });
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
     }
 
     // ipinfo API key
