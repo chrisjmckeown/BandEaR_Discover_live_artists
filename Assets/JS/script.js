@@ -95,8 +95,8 @@ $(document).ready(function() {
     })
 
     $("#artist-input").keyup(function() {
-        var input = $(this).val().trim();
-        if (!input) {
+        var $input = $(this).val().trim();
+        if (!$input) {
             setMainBody(false);
         }
     });
@@ -134,13 +134,13 @@ $(document).ready(function() {
 
             tracks.forEach(track => {
                 // track.album.album_type // may be used if needed
-                let new_hit = $('<div>')
-                let ex_url = $(`<div><a href=${track.external_urls.spotify} target='_blank'>${track.name}</a></div>`)
+                let $new_hit = $('<div>')
+                let $ex_url = $(`<div><a href=${track.external_urls.spotify} target='_blank'>${track.name}</a></div>`)
                 // track.album.release_date // may be used if needed
                 const preview = track.preview_url ? $(`<div><audio controls src=${track.preview_url}></div><hr>`) : $('<hr>')
-                new_hit.append(ex_url, preview)
+                $new_hit.append($ex_url, preview)
 
-                $(".display-hits").append(new_hit)
+                $(".display-hits").append($new_hit)
             })
         })
 
@@ -160,7 +160,7 @@ $(document).ready(function() {
         if (data.image_url) {
             $("#bands-in-town-list").prepend($("<img>").attr("src", data.image_url).css({
                 "max-width": "100%",
-                "max-height": "300px"
+                "max-height": "260px"
             }));
         }
         // check and set the upcoming event count, if none then display no upcoming events
@@ -291,7 +291,7 @@ $(document).ready(function() {
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
-                    $("#bands-in-town-list").prepend($("<p>").text(artist + ", was not found, but feel free to preview their music :)"));
+                    $("#bands-in-town-list").prepend($("<p>").text(artist + ", was not found, but feel free to preview their music :)").css("font-size", "12px"));
 
                     $("#event-information-content").attr('style', 'overflow-y: hidden');
                     $("#event-information-list").attr('style', 'overflow-y: hidden');
@@ -309,7 +309,7 @@ $(document).ready(function() {
                             appendEventInfoList(response);
                         });
                     } else {
-                        $("#bands-in-town-list").prepend($("<p>").text(artist + ", has no events, but feel free to preview their music :)"));
+                        $("#bands-in-town-list").prepend($("<p>").text(artist + ", has no events, but feel free to preview their music :)").css("font-size", "12px"));
                     }
                     appendArtistInfo(response);
                 }
