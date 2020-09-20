@@ -45,6 +45,7 @@ $(document).ready(function () {
         artists_search_results = []
         artist_id = []
         $('#band-details').empty()
+        $('#band-details').show()
         $.get({
             // method: 'GET',
             url: `https://api.spotify.com/v1/search?q=${$('#artist-input').val().trim()}&type=artist`,
@@ -107,7 +108,7 @@ $(document).ready(function () {
                 let new_hit = $('<div>')
                 let ex_url = $(`<div><a href=${track.external_urls.spotify} target='_blank'>${track.name}</a></div>`)
                 // track.album.release_date // may be used if needed
-                const preview = track.preview_url ? $(`<div><audio controls src=${track.preview_url}></div`) : ''
+                const preview = track.preview_url ? $(`<div><audio controls src=${track.preview_url}></div><hr>`) : $('<hr>')
                 new_hit.append(ex_url, preview)
 
                 $(".display-hits").append(new_hit)
