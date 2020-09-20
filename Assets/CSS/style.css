@@ -92,8 +92,8 @@ li:hover,
 }
 .btn{
     height: 44px  ;
- background-color:#0288d1 !important;
- color: white!important;
+    background-color: white !important;
+    color: black!important;
 }
 #band-details{
     display: none;
