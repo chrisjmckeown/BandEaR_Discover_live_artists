@@ -295,7 +295,13 @@ $(document).ready(function () {
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
                     $("#bands-in-town-list").prepend($("<p>").text(artist + ", was not found, but preview their music."));
+                    
+                    $("#event-information-content").attr('style','overflow-y: hidden');
+                    $("#event-information-list").attr('style','overflow-y: hidden');
+               
                 } else {
+                    $("#event-information-content").attr('style','overflow-y: scroll');
+                    $("#event-information-list").attr('style','overflow-y: scroll');
                     appendArtistInfo(artist, response);
                 };
                 if (response.upcoming_event_count > 0) {

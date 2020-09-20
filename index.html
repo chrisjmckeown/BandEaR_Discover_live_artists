@@ -4,25 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkb96g-9_ZHg68di_g4cUEDTA5pEi9Ef8&libraries=places&v=weekly"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <title>Preview live bands</title>
+
+    <title>Discover live artists in your area</title>
     <link rel="stylesheet" href="./Assets/CSS/style.css" />
+
 </head>
+
 <body>
     <!-- semantic header Navbar-->
-    <header>
+    <header class="grey darken-4">
         <nav>
+
+            <!-- materialize nav. Change the color "blue accent-4 https://materializecss.com/color.html" -->
             <div class="nav-wrapper grey darken-4">
                 <!-- <div class="container"> -->
                 <a href="index.html" class="brand-logo">BANDEAR</a>
                 <!-- </div> -->
             </div>
         </nav>
-    </header class="grey darken-4">
+    </header>
+    <!-- <div class=" container black"> -->
     <!-- semantic main Page Layout-->
     <!-- materialize main-content -->
     <main class="main-content grey darken-4">
@@ -38,7 +45,7 @@
                                 <label for="artist-input" class="side-content-title white-text">Search by Band
                                     Name:</label>
                             </div>
-                            <div class="col l9">
+                            <div class="col l8">
                                 <input placeholder="Keyword" id="artist-input" class="artist-input white black-text"
                                     type="text">
                             </div>
@@ -62,6 +69,7 @@
                 <div class="row body-row">
                     <!-- column for the page intro and detail search results -->
                     <div class="col s12 m6 l6 mid-column">
+                        <!-- cards used for but could be other materialize items? -->
                         <div class="card blurb-about-site" id="blurb-about-site">
                             <div class="card-title center">BANDEAR</div>
                             <div class="card-content center blurb-about-site-content">
@@ -108,7 +116,10 @@
     <!-- semantic footer -->
     <!-- materialize footer. Change the color "blue accent-4 https://materializecss.com/color.html" -->
     <footer class="grey darken-4">
+
+
         <div class="footer-copyright">
+            <!-- <div class="container"> -->
             <span class="grey-text text-lighten-4">© 2020 - BANDEAR</span>
             <!-- links to our github accounts -->
             <a class="grey-text text-lighten-4 right" target="_blank" href="https://github.com/chrisjmckeown">chris-</a>
@@ -116,6 +127,7 @@
             <a class="grey-text text-lighten-4 right" target="_blank"
                 href="https://github.com/willwoodburn1">william-</a>
             <a class="grey-text text-lighten-4 right" target="_blank" href="https://github.com/smcheah">-simone-</a>
+            <!-- </div> -->
         </div>
     </footer>
 
