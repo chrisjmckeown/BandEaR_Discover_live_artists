@@ -57,12 +57,12 @@ $(document).ready(function () {
             // console.log(dat.artists.items);
             const artists = dat.artists.items
             artists.forEach(function (artist, index) {
-                const new_artist = $(`<div class="artist" id=${index}></div>`)
-                const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
+                const $new_artist = $(`<div class="artist" id=${index}></div>`)
+                const $new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
                 // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
-                const new_artist_image = $(`<div class='col_3${artist.id} image-holder' ><img src=${artist.images[2].url} width='50'></div>`)
-                new_artist.append(new_artist_name, new_artist_image)
-                $('#band-details').append(new_artist)
+                const $new_artist_image = $(`<div class='col_3${artist.id} image-holder' ><img src=${artist.images[2].url} width='50'></div>`)
+                $new_artist.append($new_artist_name, $new_artist_image)
+                $('#band-details').append($new_artist)
                 artists_search_results.push(artist.name)
                 artist_id.push(artist.id)
             });
@@ -75,8 +75,8 @@ $(document).ready(function () {
     })
 
     $("#artist-input").keyup(function () {
-        var input = $(this).val().trim();
-        if (!input) {
+        var $input = $(this).val().trim();
+        if (!$input) {
             setMainBody(false);
         }
     });
@@ -106,13 +106,13 @@ $(document).ready(function () {
 
             tracks.forEach(track => {
                 // track.album.album_type // may be used if needed
-                let new_hit = $('<div>')
-                let ex_url = $(`<div><a href=${track.external_urls.spotify} target='_blank'>${track.name}</a></div>`)
+                let $new_hit = $('<div>')
+                let $ex_url = $(`<div><a href=${track.external_urls.spotify} target='_blank'>${track.name}</a></div>`)
                 // track.album.release_date // may be used if needed
                 const preview = track.preview_url ? $(`<div><audio controls src=${track.preview_url}></div><hr>`) : $('<hr>')
-                new_hit.append(ex_url, preview)
+                $new_hit.append($ex_url, preview)
 
-                $(".display-hits").append(new_hit)
+                $(".display-hits").append($new_hit)
             })
 
             // $(`#${divId}`).on("click", function(event) {
@@ -166,9 +166,9 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '.clickable-event-item', function () {
-        var index = $(this).attr("index");
+        var $index = $(this).attr("index");
         $("#event-information-content").empty();
-        appendEventInfo(eventList[index], index);
+        appendEventInfo(eventList[$index], $index);
     });
     var timeout;
 
@@ -182,7 +182,7 @@ $(document).ready(function () {
         // date of event
         var date = moment(data.datetime).format('DD/MM/YYYY');
         $mapContainer.append(date)
-        $eventUL.append($("<li>").text(date).attr("id", "event-item"));
+        $eventUL.append($("<li>").html("Date: <br><strong>" + date +"</strong>").attr("id", "event-item"));
 
         // create a count down timer to event
         clearInterval(timeout);
@@ -196,7 +196,12 @@ $(document).ready(function () {
         timeout = setInterval(function () {
             duration = moment.duration(duration - interval, 'milliseconds');
             durationDay = moment(data.datetime).diff(moment(), 'days');
-            $('#countdown').text("Countdown: " + durationDay + " " + duration.hours() + ":" + duration.minutes() + ":" + duration.seconds())
+            $('#countdown').html(
+                "Countdown: <br><strong>" + 
+                durationDay + " " + 
+                duration.hours() + ":" + 
+                duration.minutes() + ":" + 
+                duration.seconds() +"</strong>");
         }, interval);
 
         // query for google maps places
@@ -204,24 +209,24 @@ $(document).ready(function () {
         // check if venue name exists and add to list
         if (data.venue.name) {
             $mapContainer.append($("<h6>").text(data.venue.name))
-            $eventUL.append($("<li>").text(data.venue.name).attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Venue: <br><strong>" + data.venue.name +"</strong>").attr("id", "event-item"));
             placesSearchQuery = data.venue.name;
         }
         // check if venue title exists and add to list
         if (data.title) {
-            $eventUL.append($("<li>").text(data.title).attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Title: <br><strong>" + data.title +"</strong>").attr("id", "event-item"));
         }
         // check if venue location exists and add to list
         if (data.venue.location) {
             $mapContainer.append(data.venue.location);
-            $eventUL.append($("<li>").text(data.venue.location).attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Location: <br><strong>" + data.venue.location +"</strong>").attr("id", "event-item"));
             if (placesSearchQuery) {
                 placesSearchQuery += ", " + data.venue.location
             } else {
                 placesSearchQuery += data.venue.location
             }
         } else {
-            $eventUL.append($("<li>").text(data.venue.type).attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Type: <br><strong>" + data.venue.type +"</strong>").attr("id", "event-item"));
         }
         // check if venue ticket information exists and add to list
         if (data.offers[0].url) {
