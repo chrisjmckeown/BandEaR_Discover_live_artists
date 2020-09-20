@@ -173,56 +173,72 @@ $(document).ready(function () {
 
     function appendEventInfo(data) {
         //events
-        $("#event-information-content").append("<hr>")
+        var $mapContainer = $("<div>");
+        var $container = $("<div>");
+        $container.append("<hr>")
         var date = moment(data.datetime).format('DD/MM/YYYY');
         clearInterval(timeout);
-        $("#event-information-content").append("Date: " + date)
-        $("#event-information-content").append("<hr>")
-
-        var eventTime = moment(data.datetime).unix(); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
-        var currentTime = moment().unix(); //1366547400; // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
+        $container.append(date)
+        $mapContainer.append(date)
+        $container.append("<hr>")
+        $container.append($("<p>").attr("id", "countdown"))
+        // create a count down timer to event
+        var eventTime = moment(data.datetime).unix();
+        var currentTime = moment().unix();
         var diffTime = eventTime - currentTime;
         var duration = moment.duration(diffTime * 1000, 'milliseconds');
         var durationDay = moment(data.datetime).diff(moment(), 'days');
         var interval = 1000;
-        $("#event-information-content").append($("<p>").attr("id", "countdown"))
-
         timeout = setInterval(function () {
             duration = moment.duration(duration - interval, 'milliseconds');
             durationDay = moment(data.datetime).diff(moment(), 'days');
             $('#countdown').text("Countdown: " + durationDay + " " + duration.hours() + ":" + duration.minutes() + ":" + duration.seconds())
         }, interval);
-        $("#event-information-content").append("<hr>")
+        $container.append("<hr>")
         // venue info
+        var placesSearchQuery;
         if (data.venue.name) {
-            $("#event-information-content").append($("<h6>").text(data.venue.name))
-            $("#event-information-content").append("<hr>")
-            
-            initMapPlace(data.venue.name);
+            $mapContainer.append($("<h6>").text(data.venue.name))
+            $container.append($("<h6>").text(data.venue.name))
+            $container.append("<hr>")
+            placesSearchQuery = data.venue.name;
         }
         if (data.title) {
-            $("#event-information-content").append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
-            $("#event-information-content").append("<hr>")
+            $container.append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
+            $container.append("<hr>")
         }
         if (data.venue.location) {
-            $("#event-information-content").append("Location: " + data.venue.location)
-            $("#event-information-content").append("<hr>")
+            $mapContainer.append(data.venue.location)
+            $container.append("Location: " + data.venue.location)
+            $container.append("<hr>")
+            if (placesSearchQuery) {
+                placesSearchQuery += ", " + data.venue.location
+            } else {
+                placesSearchQuery += data.venue.location
+            }
         } else {
-            $("#event-information-content").append("Location: " + data.venue.type)
-            $("#event-information-content").append("<hr>")
+            $container.append("Location: " + data.venue.type)
+            $container.append("<hr>")
         }
         // ticket info
         if (data.offers[0].url) {
-            $("#event-information-content").append('<p><a href=' + data.offers[0].url + ' target="_blank">Tickets available here</a></p>')
-            $("#event-information-content").append("<hr>")
+            $container.append('<p><a href=' + data.offers[0].url + ' target="_blank">Tickets available here</a></p>')
+            $container.append("<hr>")
         }
-        // lat, long
-        if (data.venue.latitude && data.venue.longitude) {
-            var coordinates = {
-                latitude: parseFloat(data.venue.latitude),
-                longitude: parseFloat(data.venue.longitude)
-            };
-            initMap(coordinates)
+
+        $("#event-information-content").append($container)
+
+        if (placesSearchQuery) {
+            initMapPlace(placesSearchQuery, $mapContainer, data.venue);
+        } else {
+            // lat, long
+            if (data.venue.latitude && data.venue.longitude) {
+                var coordinates = {
+                    lat: parseFloat(data.venue.latitude),
+                    lng: parseFloat(data.venue.longitude)
+                };
+                initMap(coordinates)
+            }
         }
     }
 
@@ -284,45 +300,57 @@ $(document).ready(function () {
             fullscreenControl: false,
         };
         // set the map variable, center location, and zoom
-       return map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+        return map = new google.maps.Map($('#map-canvas')[0], mapOptions);
     }
 
     // initialise the map based on coordinates
-    function initMapPlace(queryPlace) {
-        // set the map variable, center location, and zoom
-        map = initMap(coordinates);
-
-        const request = {
+    function initMapPlace(queryPlace, $container, venue) {
+        // request query for findPlaceFromQuery call
+        var requestQuery = {
             query: queryPlace,
             fields: ["name", "geometry"]
         };
-        service = new google.maps.places.PlacesService(map);
-        service.findPlaceFromQuery(request, (results, status) => {
+        // initialise the PlacesService to pin point the venue location
+        var service = new google.maps.places.PlacesService(map);
+        // using the requestQuery find the venue
+        service.findPlaceFromQuery(requestQuery, function (results, status) {
+            // if result is returned then set the marker to the coordinate of the venue
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 for (let i = 0; i < results.length; i++) {
-                    createMarker(results[i]);
+                    createMarker(results[i].geometry.location, $container);
                 }
                 map.setCenter(results[0].geometry.location);
+            } else {
+                // else if the venue lng and lat exist, which is the city rather than the venue itself, set the marker to the city
+                if (venue.latitude && venue.longitude) {
+                    var coordinates = {
+                        lat: parseFloat(venue.latitude),
+                        lng: parseFloat(venue.longitude)
+                    };
+                    createMarker(coordinates, $container);
+                    map.setCenter(coordinates);
+                }
             }
         });
     }
 
-    function createMarker(place) {
-         marker = new google.maps.Marker({
-                        map,
-            position: place.geometry.location,
+    // create the marker and info window
+    function createMarker(location, $container) {
+        // initialise the marker data
+        marker = new google.maps.Marker({
+            map,
+            position: location,
             animation: google.maps.Animation.DROP,
         });
+        // set the marker on the map
         marker.setMap(map);
-        marker.addListener('click', toggleBounce);
-    }
-
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
+        // create a infowindow item to display some facts about the venue
+        var infowindow = new google.maps.InfoWindow({
+            content: $container.prop('outerHTML'),
+        });
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
     }
 
     // ipinfo API key
