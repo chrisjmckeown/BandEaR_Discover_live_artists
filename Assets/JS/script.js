@@ -197,6 +197,8 @@ $(document).ready(function () {
         if (data.venue.name) {
             $("#event-information-content").append($("<h6>").text(data.venue.name))
             $("#event-information-content").append("<hr>")
+            
+            initMapPlace(data.venue.name);
         }
         if (data.title) {
             $("#event-information-content").append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
@@ -264,106 +266,56 @@ $(document).ready(function () {
     //#endregion
 
     //#region google
-    if (coordinates) {
+    let map;
+    var marker;
 
-
-        let map;
-        var marker;
-
-        // initialise the map based on coordinates
-        function initMap(coordinates) {
-            //  create an object for the google settings
-            // some of these could be user settings stored in local settings
-            var mapOptions = {
-                zoom: 10,
-                center: {
-                    lat: coordinates.latitude,
-                    lng: coordinates.longitude
-                },
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false,
-            };
-            // set the map variable, center location, and zoom
-            map = new google.maps.Map($('#map-canvas')[0], mapOptions);
-            // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-
-            marker = new google.maps.Marker({
-                position: {
-                    lat: coordinates.latitude,
-                    lng: coordinates.longitude
-                },
-                // title: 'Hello World!',
-                animation: google.maps.Animation.DROP,
-                // icon: image,
-            });
-
-            marker.setMap(map);
-            marker.addListener('click', toggleBounce);
-            //marker.setMap(null); // remove markers
-        }
+    // initialise the map based on coordinates
+    function initMap(coordinates) {
+        //  create an object for the google settings
+        // some of these could be user settings stored in local settings
+        var mapOptions = {
+            zoom: 10,
+            center: {
+                lat: coordinates.latitude,
+                lng: coordinates.longitude
+            },
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+        };
+        // set the map variable, center location, and zoom
+       return map = new google.maps.Map($('#map-canvas')[0], mapOptions);
     }
 
-    // function initMap() {
-    //     var map = new google.maps.Map(document.getElementById('google-map'), {
-    //       zoom: 10,
-    //       center: {lat: -33.9, lng: 151.2}
-    //     });
+    // initialise the map based on coordinates
+    function initMapPlace(queryPlace) {
+        // set the map variable, center location, and zoom
+        map = initMap(coordinates);
 
-    //     //setMarkers(map);
-    //   }
+        const request = {
+            query: queryPlace,
+            fields: ["name", "geometry"]
+        };
+        service = new google.maps.places.PlacesService(map);
+        service.findPlaceFromQuery(request, (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (let i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
+                map.setCenter(results[0].geometry.location);
+            }
+        });
+    }
 
-    // Data for the markers consisting of a name, a LatLng and a zIndex for the
-    // order in which these markers should display on top of each other.
-    // var beaches = [
-    //     ['Bondi Beach', -33.890542, 151.274856, 4],
-    //     ['Coogee Beach', -33.923036, 151.259052, 5],
-    //     ['Cronulla Beach', -34.028249, 151.157507, 3],
-    //     ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-    //     ['Maroubra Beach', -33.950198, 151.259302, 1]
-    // ];
-
-    // function setMarkers(map) {
-    //     // Adds markers to the map.
-
-    //     // Marker sizes are expressed as a Size of X,Y where the origin of the image
-    //     // (0,0) is located in the top left of the image.
-
-    //     // Origins, anchor positions and coordinates of the marker increase in the X
-    //     // direction to the right and in the Y direction down.
-    //     var image = {
-    //         url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    //         // This marker is 20 pixels wide by 32 pixels high.
-    //         size: new google.maps.Size(20, 32),
-    //         // The origin for this image is (0, 0).
-    //         origin: new google.maps.Point(0, 0),
-    //         // The anchor for this image is the base of the flagpole at (0, 32).
-    //         anchor: new google.maps.Point(0, 32)
-    //     };
-    //     // Shapes define the clickable region of the icon. The type defines an HTML
-    //     // <area> element 'poly' which traces out a polygon as a series of X,Y points.
-    //     // The final coordinate closes the poly by connecting to the first coordinate.
-    //     var shape = {
-    //         coords: [1, 1, 1, 20, 18, 20, 18, 1],
-    //         type: 'poly'
-    //     };
-    //     for (var i = 0; i < beaches.length; i++) {
-    //         var beach = beaches[i];
-    //         marker = new google.maps.Marker({
-    //             position: {
-    //                 lat: beach[1],
-    //                 lng: beach[2]
-    //             },
-    //             map: map,
-    //             icon: image,
-    //             shape: shape,
-    //             animation: google.maps.Animation.DROP,
-    //             title: beach[0],
-    //             zIndex: beach[3]
-    //         });
-    //         marker.addListener('click', toggleBounce);
-    //     }
-    // }
+    function createMarker(place) {
+         marker = new google.maps.Marker({
+                        map,
+            position: place.geometry.location,
+            animation: google.maps.Animation.DROP,
+        });
+        marker.setMap(map);
+        marker.addListener('click', toggleBounce);
+    }
 
     function toggleBounce() {
         if (marker.getAnimation() !== null) {
