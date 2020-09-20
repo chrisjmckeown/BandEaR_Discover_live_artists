@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //#region spotify
     setMainBody(false);
     let favourite_singers = []
@@ -7,14 +7,13 @@ $(document).ready(function () {
     let artist_image = []
     if (localStorage.getItem('favourite_singers')) {
         favourite_singers = JSON.parse(localStorage.getItem('favourite_singers'))
-        console.log(favourite_singers, typeof favourite_singers)
+        // console.log(favourite_singers, typeof favourite_singers)
     }
-    favourite_singers.forEach(function (artist) {
-        console.log(artist)
+    favourite_singers.forEach(function(artist) {
         const new_artist = $(`<div class="artist" id=${artist[2]}></div>`)
         const new_artist_name = $(`<h3 class=col_1${artist[2]}>${artist[0]} </h3>`)
-        // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
         const new_artist_image = $(`<div class='col_3${artist[2]} image-holder' ><img src=${artist[1]} width='50'></div>`)
+
         new_artist.append(new_artist_name, new_artist_image)
         $('#band-details').append(new_artist)
         $('#band-details').show()
@@ -48,7 +47,6 @@ $(document).ready(function () {
         getDefaultCityCountry();
     }
 
-
     const clientId = '41cd629d017d4f53bc20ccb457fdd08e';
     const clientSecret = '70a3757b1ad54861be12d8693bc8b929';
     $.post({
@@ -58,7 +56,7 @@ $(document).ready(function () {
             'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
         },
         data: 'grant_type=client_credentials'
-    }).then(function (res) {
+    }).then(function(res) {
         token = res.access_token
     })
 
@@ -74,16 +72,16 @@ $(document).ready(function () {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        }).then(function (dat) {
+        }).then(function(dat) {
             // console.log(dat.artists.items);
             const artists = dat.artists.items
-            artists.forEach(function (artist, index) {
-                const $new_artist = $(`<div class="artist" id=${index}></div>`)
-                const $new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
-                // const new_col_2 = artist.genres[0] ? new_col_2 = $(`<td class=col_2${artist.id}>${artist.genres[0]}</td>`) : new_col_2 = $(`<td class=col_2${artist.id}>N/A</td>`)
-                const $new_artist_image = $(`<div class='col_3${artist.id} image-holder' ><img src=${artist.images[2].url} width='50'></div>`)
-                $new_artist.append($new_artist_name, $new_artist_image)
-                $('#band-details').append($new_artist)
+            artists.forEach(function(artist) {
+                const new_artist = $(`<div class="artist" id=${artist.id}></div>`)
+                const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
+                const new_artist_image = $(`<div class='col_3${artist.id} image-holder' ><img src=${artist.images[2].url} width='50'></div>`)
+
+                new_artist.append(new_artist_name, new_artist_image)
+                $('#band-details').append(new_artist)
                 artists_search_results.push(artist.name)
                 artist_image.push(artist.images[2].url)
                 artist_id.push(artist.id)
@@ -91,12 +89,12 @@ $(document).ready(function () {
         })
     }
 
-    $('#search-form').submit(function (event) {
+    $('#search-form').submit(function(event) {
         event.preventDefault();
         get_results();
     })
 
-    $("#artist-input").keyup(function () {
+    $("#artist-input").keyup(function() {
         var $input = $(this).val().trim();
         if (!$input) {
             setMainBody(false);
@@ -106,12 +104,11 @@ $(document).ready(function () {
 
     //#region bandsintown
 
-    $(document).on('click', '#spotify', function (event) {
+    $(document).on('click', '#spotify', function(event) {
         event.stopPropagation()
     })
 
-    $(document).on('click', '.artist', function () {
-
+    $(document).on('click', '.artist', function() {
         setMainBody(true);
         let artistId = this.id
         let check = 0
@@ -124,15 +121,12 @@ $(document).ready(function () {
             }
         });
 
-
-
-        // let artist = artists_search_results[parseInt(this.id)]
         $.get({
             url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=AU`,
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        }).then(function (response) {
+        }).then(function(response) {
             const tracks = response.tracks
             $("#bands-in-town-list").prepend($("<h5>").text("Top Hits"))
             $("#bands-in-town-list").append($("<div>").attr("class", "display-hits"))
@@ -148,8 +142,6 @@ $(document).ready(function () {
 
                 $(".display-hits").append($new_hit)
             })
-
-
         })
 
         favourite_singers.forEach((singer) => {
@@ -159,11 +151,17 @@ $(document).ready(function () {
         });
     })
 
-    function appendArtistInfo(artist, data) {
+    function appendArtistInfo(data) {
         // artist info
         // check and set the artist name and add to card title -> bands-in-town-band-name
         if (data.name) {
             $("#bands-in-town-band-name").text(data.name);
+        }
+        if (data.image_url) {
+            $("#bands-in-town-list").prepend($("<img>").attr("src", data.image_url).css({
+                "max-width": "100%",
+                "max-height": "260px"
+            }));
         }
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
@@ -172,9 +170,6 @@ $(document).ready(function () {
             // reset map to your location
             initMap(defaultCoodinates);
         };
-        if (data.image_url) {
-            $("#bands-in-town-list").prepend($("<img>").attr("src", data.image_url).css({ "max-width": "100%", "max-height": "300px" }));
-        }
     }
 
     var eventList = [];
@@ -184,8 +179,9 @@ $(document).ready(function () {
         var $eventListUL = $("<ul>");
         $eventListUL.addClass("all-events");
         $("#event-information-list").append($eventListUL);
+
         var index = 0;
-        response.forEach(function (data) {
+        response.forEach(function(data) {
             var $newEvent = $("<li>");
             $newEvent.text(data.venue.name);
             $newEvent.addClass("clickable-event-item");
@@ -196,7 +192,7 @@ $(document).ready(function () {
         appendEventInfo(response[0]);
     }
 
-    $(document).on('click', '.clickable-event-item', function () {
+    $(document).on('click', '.clickable-event-item', function() {
         var $index = $(this).attr("index");
         $("#event-information-content").empty();
         appendEventInfo(eventList[$index], $index);
@@ -213,7 +209,7 @@ $(document).ready(function () {
         // date of event
         var date = moment(data.datetime).format('DD/MM/YYYY');
         $mapContainer.append(date)
-        $eventUL.append($("<li>").html("Date: <br><strong>" + date +"</strong>").attr("id", "event-item"));
+        $eventUL.append($("<li>").html("Date: <br><strong>" + date + "</strong>").attr("id", "event-item"));
 
         // create a count down timer to event
         clearInterval(timeout);
@@ -224,15 +220,15 @@ $(document).ready(function () {
         var duration = moment.duration(diffTime * 1000, 'milliseconds');
         var durationDay = moment(data.datetime).diff(moment(), 'days');
         var interval = 1000;
-        timeout = setInterval(function () {
+        timeout = setInterval(function() {
             duration = moment.duration(duration - interval, 'milliseconds');
             durationDay = moment(data.datetime).diff(moment(), 'days');
             $('#countdown').html(
-                "Countdown: <br><strong>" + 
-                durationDay + " " + 
-                duration.hours() + ":" + 
-                duration.minutes() + ":" + 
-                duration.seconds() +"</strong>");
+                "Countdown: <br><strong>" +
+                durationDay + " " +
+                duration.hours() + ":" +
+                duration.minutes() + ":" +
+                duration.seconds() + "</strong>");
         }, interval);
 
         // query for google maps places
@@ -240,24 +236,24 @@ $(document).ready(function () {
         // check if venue name exists and add to list
         if (data.venue.name) {
             $mapContainer.append($("<h6>").text(data.venue.name))
-            $eventUL.append($("<li>").html("Venue: <br><strong>" + data.venue.name +"</strong>").attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Venue: <br><strong>" + data.venue.name + "</strong>").attr("id", "event-item"));
             placesSearchQuery = data.venue.name;
         }
         // check if venue title exists and add to list
         if (data.title) {
-            $eventUL.append($("<li>").html("Title: <br><strong>" + data.title +"</strong>").attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Title: <br><strong>" + data.title + "</strong>").attr("id", "event-item"));
         }
         // check if venue location exists and add to list
         if (data.venue.location) {
             $mapContainer.append(data.venue.location);
-            $eventUL.append($("<li>").html("Location: <br><strong>" + data.venue.location +"</strong>").attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Location: <br><strong>" + data.venue.location + "</strong>").attr("id", "event-item"));
             if (placesSearchQuery) {
                 placesSearchQuery += ", " + data.venue.location
             } else {
                 placesSearchQuery += data.venue.location
             }
         } else {
-            $eventUL.append($("<li>").html("Type: <br><strong>" + data.venue.type +"</strong>").attr("id", "event-item"));
+            $eventUL.append($("<li>").html("Type: <br><strong>" + data.venue.type + "</strong>").attr("id", "event-item"));
         }
         // check if venue ticket information exists and add to list
         if (data.offers[0].url) {
@@ -290,30 +286,33 @@ $(document).ready(function () {
             $.ajax({
                 url: artistURL,
                 method: "GET"
-            }).then(function (response) {
+            }).then(function(response) {
+                console.log("HELLO ", response)
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
-                    $("#bands-in-town-list").prepend($("<p>").text(artist + ", was not found, but preview their music."));
-                    
-                    $("#event-information-content").attr('style','overflow-y: hidden');
-                    $("#event-information-list").attr('style','overflow-y: hidden');
-               
+                    $("#bands-in-town-list").prepend($("<p>").text(artist + ", was not found, but feel free to preview their music :)").css("font-size", "12px"));
+
+                    $("#event-information-content").attr('style', 'overflow-y: hidden');
+                    $("#event-information-list").attr('style', 'overflow-y: hidden');
                 } else {
-                    $("#event-information-content").attr('style','overflow-y: scroll');
-                    $("#event-information-list").attr('style','overflow-y: scroll');
-                    appendArtistInfo(artist, response);
-                };
-                if (response.upcoming_event_count > 0) {
-                    var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-                    $.ajax({
-                        url: eventURL,
-                        method: "GET"
-                    }).then(function (response) {
-                        eventList = [];
-                        appendEventInfoList(response);
-                    });
-                };
+                    $("#event-information-content").attr('style', 'overflow-y: scroll');
+                    $("#event-information-list").attr('style', 'overflow-y: scroll');
+
+                    if (response.upcoming_event_count > 0) {
+                        var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+                        $.ajax({
+                            url: eventURL,
+                            method: "GET"
+                        }).then(function(response) {
+                            eventList = [];
+                            appendEventInfoList(response);
+                        });
+                    } else {
+                        $("#bands-in-town-list").prepend($("<p>").text(artist + ", has no events, but feel free to preview their music :)").css("font-size", "12px"));
+                    }
+                    appendArtistInfo(response);
+                }
             });
         };
     };
@@ -325,7 +324,7 @@ $(document).ready(function () {
 
     // initialise the map based on coordinates
     function initMap(coordinates) {
-        //  create an object for the google settings
+        // create an object for the google settings
         // some of these could be user settings stored in local settings
         var mapOptions = {
             zoom: 10,
@@ -351,7 +350,7 @@ $(document).ready(function () {
         // initialise the PlacesService to pin point the venue location
         var service = new google.maps.places.PlacesService(map);
         // using the requestQuery find the venue
-        service.findPlaceFromQuery(requestQuery, function (results, status) {
+        service.findPlaceFromQuery(requestQuery, function(results, status) {
             // if result is returned then set the marker to the coordinate of the venue
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 for (let i = 0; i < results.length; i++) {
@@ -386,7 +385,7 @@ $(document).ready(function () {
         var infowindow = new google.maps.InfoWindow({
             content: $container.prop('outerHTML'),
         });
-        marker.addListener('click', function () {
+        marker.addListener('click', function() {
             infowindow.open(map, marker);
         });
     }
@@ -408,7 +407,7 @@ $(document).ready(function () {
         $.ajax({
             url: queryURL,
             method: 'get'
-        }).then(function (response) {
+        }).then(function(response) {
             // split the location string to parse the longitude and latitude
             if (response.loc) {
                 var loc = response.loc.split(',');
@@ -421,7 +420,7 @@ $(document).ready(function () {
                 initMap(coordinates);
                 setStoredCoordinates(coordinates);
             }
-        }).catch(function (err) {
+        }).catch(function(err) {
             console.log(err);
         });
         defaultCoodinates = coordinates;
