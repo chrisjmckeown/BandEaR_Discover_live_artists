@@ -20,6 +20,7 @@ $(document).ready(function () {
             $("#map-canvas").attr("style", "height: 40vh; display: block");
             $("#event-information").attr("style", "height: 40vh; display: block");
         }
+        $("#event-information-title").text("Event Information:");
         $('#event-information-list').empty();
         $("#bands-in-town-list").empty();
         $("#event-information-content").empty();
@@ -137,7 +138,6 @@ $(document).ready(function () {
         if (data.upcoming_event_count) {
             $("#event-information-title").text("Event Information: " + data.upcoming_event_count + " events");
         } else {
-            $("#event-information-title").text(artist + " is not in town.");
             // reset map to your location
             initMap(defaultCoodinates);
         };
@@ -150,22 +150,22 @@ $(document).ready(function () {
 
     function appendEventInfoList(response) {
         eventList = response;
-        var $eventUL = $("<ul>");
-        $("#event-information-list").append($eventUL);
+        var $eventListUL = $("<ul>");
+        $eventListUL.addClass("all-events");
+        $("#event-information-list").append($eventListUL);
         var index = 0;
         response.forEach(function (data) {
             var $newEvent = $("<li>");
             $newEvent.text(data.venue.name);
-            $newEvent.addClass("event-item");
-            $newEvent.attr("id", "event-item");
+            $newEvent.addClass("clickable-event-item");
+            $newEvent.attr("id", "clickable-event-item");
             $newEvent.attr("index", index++);
-            $newEvent.attr("data", data);
-            $($eventUL).append($newEvent);
+            $($eventListUL).append($newEvent);
         });
         appendEventInfo(response[0]);
     }
 
-    $(document).on('click', '.event-item', function () {
+    $(document).on('click', '.clickable-event-item', function () {
         var index = $(this).attr("index");
         $("#event-information-content").empty();
         appendEventInfo(eventList[index], index);
@@ -173,17 +173,20 @@ $(document).ready(function () {
     var timeout;
 
     function appendEventInfo(data) {
-        //events
+        // create an item to pass key info to the map
         var $mapContainer = $("<div>");
-        var $container = $("<div>");
-        $container.append("<hr>")
+        // un-ordered list for event information and add to event-information-content div
+        var $eventUL = $("<ul>");
+        $("#event-information-content").append($eventUL);
+        $eventUL.addClass("current-event");
+        // date of event
         var date = moment(data.datetime).format('DD/MM/YYYY');
-        clearInterval(timeout);
-        $container.append(date)
         $mapContainer.append(date)
-        $container.append("<hr>")
-        $container.append($("<p>").attr("id", "countdown"))
+        $eventUL.append($("<li>").text(date).attr("id", "event-item"));
+
         // create a count down timer to event
+        clearInterval(timeout);
+        $eventUL.append($("<li>").attr("id", "countdown"));
         var eventTime = moment(data.datetime).unix();
         var currentTime = moment().unix();
         var diffTime = eventTime - currentTime;
@@ -195,44 +198,44 @@ $(document).ready(function () {
             durationDay = moment(data.datetime).diff(moment(), 'days');
             $('#countdown').text("Countdown: " + durationDay + " " + duration.hours() + ":" + duration.minutes() + ":" + duration.seconds())
         }, interval);
-        $container.append("<hr>")
-        // venue info
+
+        // query for google maps places
         var placesSearchQuery;
+        // check if venue name exists and add to list
         if (data.venue.name) {
             $mapContainer.append($("<h6>").text(data.venue.name))
-            $container.append($("<h6>").text(data.venue.name))
-            $container.append("<hr>")
+            $eventUL.append($("<li>").text(data.venue.name).attr("id", "event-item"));
             placesSearchQuery = data.venue.name;
         }
+        // check if venue title exists and add to list
         if (data.title) {
-            $container.append($("<h5>").text(data.title).attr("style", "margin-top: 0"))
-            $container.append("<hr>")
+            $eventUL.append($("<li>").text(data.title).attr("id", "event-item"));
         }
+        // check if venue location exists and add to list
         if (data.venue.location) {
-            $mapContainer.append(data.venue.location)
-            $container.append("Location: " + data.venue.location)
-            $container.append("<hr>")
+            $mapContainer.append(data.venue.location);
+            $eventUL.append($("<li>").text(data.venue.location).attr("id", "event-item"));
             if (placesSearchQuery) {
                 placesSearchQuery += ", " + data.venue.location
             } else {
                 placesSearchQuery += data.venue.location
             }
         } else {
-            $container.append("Location: " + data.venue.type)
-            $container.append("<hr>")
+            $eventUL.append($("<li>").text(data.venue.type).attr("id", "event-item"));
         }
-        // ticket info
+        // check if venue ticket information exists and add to list
         if (data.offers[0].url) {
-            $container.append('<p><a href=' + data.offers[0].url + ' target="_blank">Tickets available here</a></p>')
-            $container.append("<hr>")
+            var $eventLi = $("<li>");
+            $eventLi.append('<a href=' + data.offers[0].url + ' target="_blank">Tickets available here</a>');
+            $eventLi.addClass("clickable-event-item");
+            $eventLi.attr("id", "clickable-event-item");
+            $eventUL.append($eventLi);
         }
-
-        $("#event-information-content").append($container)
-
+        // if the places query was populated then try find the venue location and pin point it
         if (placesSearchQuery) {
             initMapPlace(placesSearchQuery, $mapContainer, data.venue);
         } else {
-            // lat, long
+            // try find the venue lng and lat, which is the city and use it
             if (data.venue.latitude && data.venue.longitude) {
                 var coordinates = {
                     lat: parseFloat(data.venue.latitude),
@@ -245,41 +248,33 @@ $(document).ready(function () {
 
     function displayBandsInTownData(artistName) {
         // replaces all special chars except letters, nums, non-latin chars and spaces
-        var artist = artistName.replace("&", "and").replace(/([^a-zA-Z0-9$ \p{L}-]+)/ug, "")
+        var artist = artistName.replace("&", "and").replace(/([^a-zA-Z0-9$ \p{L}-]+)/ug, "");
         if (artist) {
-            var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp"
-
+            var artistURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp";
             $.ajax({
                 url: artistURL,
                 method: "GET"
             }).then(function (response) {
                 // error checking
-                if (response.error) {
-                    $("#bands-in-town-list").append(
-                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
-                        ($("<p>").text(artist + " " + response.error)))
-                } else if (response === "") {
-                    $("#bands-in-town-list").append(
-                        ($("<h2>").text(artist).attr("style", "margin: 0 0 5px 0")),
-                        ($("<p>").text(artist + " is not in town")))
+                if (response.error || response === "") {
+                    $("#bands-in-town-band-name").text(artist);
+                    $("#bands-in-town-list").prepend($("<p>").text(artist + ", was not found, but preview their music."));
                 } else {
                     appendArtistInfo(artist, response);
-                }
-
+                };
                 if (response.upcoming_event_count > 0) {
                     var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-
                     $.ajax({
                         url: eventURL,
                         method: "GET"
                     }).then(function (response) {
                         eventList = [];
-                        appendEventInfoList(response)
-                    })
-                }
-            })
-        }
-    }
+                        appendEventInfoList(response);
+                    });
+                };
+            });
+        };
+    };
     //#endregion
 
     //#region google

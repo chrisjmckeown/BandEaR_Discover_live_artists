@@ -1,7 +1,6 @@
 /********** Colour reference chart*********
 *************************** colour *******/ 
 :root {
-    --display-hits:#d6465a;
     --Main-Body: white;
     --borders: black;
     --text: white;
@@ -9,10 +8,10 @@
     --link:#8babb2;
     --scroll: white;
 
-    --artist:#00838f  ;
+    --artist:#00838f;
     --blurb-about-site:#F4F4DF;
     --bands-in-town:#F4F4DF;
-    --event-information:#C0D6DF ;
+    --event-information:#00838f;
 
     --hover-item: #477079;
     --hover-text: black;
@@ -51,22 +50,23 @@ footer{
 }
 .footer-copyright{
   margin-top: 10px;
+  margin-left: 10px;
 }
 .body-row{
-    margin: 0px  ;
-    padding: 0px  ;
+    margin: 0px;
+    padding: 0px;
 }
 .mid-column{
-    padding-left: 8px!important;
+    padding-left: 8px !important;
 }
 .main-body{
-    margin: 0px  ;
-    padding: 0px  ;
+    margin: 0px;
+    padding: 0px;
 }
 .container{
-    width: 100%  ;
+    width: 100%;
 }
-li:hover, 
+.clickable-event-item:hover, 
 .artist:hover, 
 .footer-copyright a:hover, 
 .display-hits a:hover,
@@ -85,15 +85,18 @@ li:hover,
     font-size: 1.2rem;
     font-weight: 400;
     font-family: sans-serif;
+    margin-left: 10px !important;
 }
 .artist-input{
-    padding-left: 10px !important ;
+    margin-left: 10px !important;
+    padding-left: 10px !important;
     border-radius: 5px !important;
 }
 .btn{
-    height: 44px  ;
- background-color:#0288d1 !important;
- color: white!important;
+    float: right;
+    height: 44px;
+    background-color: var(--artist) !important;
+    color:var(--text) !important;
 }
 #band-details{
     display: none;
@@ -126,8 +129,6 @@ li:hover,
     text-align: right;
 }
 .event-information-content{
-    color: var(--text);
-    /* background-color: var(--spotify-card); */
     overflow: scroll;
     overflow-x: hidden;
     height:270px;
@@ -146,19 +147,19 @@ li:hover,
     width:100%;
     padding: 10px  ;
 }
-.event-information-list ul{
+.event-information-list ul, .event-information-content ul{
     margin-top: 7px;
     margin-bottom: 0px;
 }
-.event-information-list li{
+.event-information-list li, .event-information-content li{
     padding-bottom: 5px;
     border-top: 1px solid white;
 }
-.event-information-list li:last-child{
+.event-information-list li:last-child, .event-information-content li:last-child{
     border-bottom: 1px solid white;
 }
 .no-padding{
-    padding: 0px  ;
+    padding: 0px;
 }
 .display-hits{
     top: 5.2rem;
@@ -168,8 +169,6 @@ li:hover,
     width:100%;
     padding:5px;
 }
-
-
 .display-hits p{
     text-align: right;
     margin: 0;
@@ -201,19 +200,17 @@ li:hover,
     padding:30px 0;
 
   }
-  .display-hits::-webkit-scrollbar-thumb {
-    background-color:  #004d40;
-    outline: 1px solid #00897b  ;
+.display-hits::-webkit-scrollbar-thumb {
+    background-color: var(--artist);
+    outline: 1px solid var(--artist);
     padding:30px 0;
   }
-
 
 /* central panel */
 .blurb-about-site{
     background-color: var(--blurb-about-site)  ;
     font-family: sans-serif;
     height: 80vh;
-   
 }
 .blurb-about-site-content{
     font-family: sans-serif;
@@ -229,17 +226,15 @@ li:hover,
 .event-information{
     background-color: var(--event-information)  ;
     display: none;
-
 }
 /* Map styling */
 .map-canvas{
     height: 80vh;
-   
 }
 .card-title{
     padding-left: 10px  ;
 }
-.event-item{
+.clickable-event-item{
     cursor: pointer;
 }
 
