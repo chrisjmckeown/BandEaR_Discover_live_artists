@@ -41,10 +41,10 @@ Primary technologies:
 ## Contact
 
 * Please contact us at: 
-    * Simone Cheah: 
+    * Simone Cheah: simone_cheah@hotmail.com
     * William Woodburn: 
     * Tony Melek: 
-    * Chris Mckeownchris.j.mckeown@hotmail.com
+    * Chris Mckeown: chris.j.mckeown@hotmail.com
 
 ## License
 
