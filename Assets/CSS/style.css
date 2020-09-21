@@ -26,22 +26,21 @@
 /* main body styling */
 html,
 body {
-    height: 100%;
     margin: 0;
     padding: 0;
 }
-header{
-    padding-left: 20px;
-    background-color:#212121 ;
-}
-aside,.mid-column{
-    height:88vh;
+.nav-wrapper, header{
+    height: 6vh !important;
+    padding-left: 0px;
 }
 header a{
-    padding-left: 10px  ;
+    padding-left: 20px !important;
+}
+aside,.mid-column{
+    height:90vh;
 }
 footer{
-    height: 50px;
+    height: 4vh;
     position: fixed;
     width: 100%;
     bottom: 0px;
@@ -49,7 +48,7 @@ footer{
     padding-right: 10px;
 }
 .footer-copyright{
-  margin-top: 10px;
+  margin-top: 1.2vh;
   margin-left: 10px;
 }
 .body-row{
@@ -74,13 +73,20 @@ footer{
     background-color: var(--hover-item);
 }
 /* Main base body styling */
-.main-body{
-    background-color:var(--Main-Body);
-    margin-top: 10px;
-    height: 85vh;
+.main-content{
+    height: 90vh;
 }
-
 /* Aside styling */
+.input-group{
+    margin-top: 3vh;
+    height: 15vh;
+}
+.band-details{
+    display: none;
+    height: 72vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
 .side-content-title {
     font-size: 1.2rem;
     font-weight: 400;
@@ -97,12 +103,6 @@ footer{
     height: 44px;
     background-color: var(--artist) !important;
     color:var(--text) !important;
-}
-#band-details{
-    display: none;
-    height: 70vh;
-    overflow: scroll;
-    overflow-x: hidden;
 }
 .artist{
     display: flex;
@@ -240,17 +240,15 @@ footer{
 
 /* media adjustments to work on phone, ipad and PC */
 @media (max-width: 768px) { 
-    .body-row{
-        padding-bottom: 50px  ;
-    }
+
 }
 
 @media (max-width: 550px) { 
-    .event-information{
-        height: 50%  ;
-        margin-bottom: 100px;
-    }    
-    .body-row{
-        padding-bottom: 50px  ;
-    }
+    .footer-copyright{
+        margin-top: .4vh;
+        font-size: .7rem;
+    } 
+    .footer-copyright a{
+        font-size: .7rem;
+    } 
 }
