@@ -26,10 +26,10 @@ $(document).ready(function() {
         if (!searchInProgress) {
             // set the divs
             // Set middle section
-            $("#blurb-about-site").attr("style", "height: 82vh; display: block");
+            $("#blurb-about-site").attr("style", "display: block");
             $("#bands-in-town").attr("style", "display: none");
             // Set right section
-            $("#map-canvas").attr("style", "height: 82vh; display: block");
+            $("#map-canvas").attr("style", "display: block");
             $("#event-information").attr("style", "display: none");
             $('#band-details').empty();
         } else {
