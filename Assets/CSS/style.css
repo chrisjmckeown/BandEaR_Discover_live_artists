@@ -40,10 +40,10 @@ aside, .main-body{
 }
 .left-column, .mid-column, .right-column{
     padding-top: 3vh !important;
-    height:90vh;
+    height:87vh;
 }
-.blurb-about-site, .map-canvas{
-    height:90vh;
+.bands-in-town, .blurb-about-site, .map-canvas{
+    height:87vh;
     margin: 0px;
 }
 footer{
@@ -55,7 +55,6 @@ footer{
     padding-right: 10px;
 }
 .footer-copyright{
-  margin-top: 1.2vh;
   margin-left: 10px;
 }
 .body-row{
@@ -85,7 +84,7 @@ footer{
 }
 .band-details{
     display: none;
-    height: 75vh;
+    height: 73vh;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -132,12 +131,25 @@ footer{
 .artist .image-holder{
     text-align: right;
 }
+.bands-in-town{
+    background-color: var(--bands-in-town)  ;
+    display: none;
+}
+.spacer{
+    height: 2vh; 
+}
+.event-information{
+    background-color: var(--event-information)  ;
+    display: none;
+    height: 40vh; 
+    margin:0;
+}
 .event-information-content{
     overflow: scroll;
     overflow-x: hidden;
-    height: 31vh;
-    width:90%;
-    padding: 10px  ;
+    height: 30vh;
+    width: 90%;
+    padding: 10px;
 }
 .event-information-content a{
     color: var(--text-link);
@@ -147,9 +159,9 @@ footer{
     background-color: var(--white);
     overflow: scroll;
     overflow-x: hidden;
-    height: 31vh;
+    height: 30vh;
     width:100%;
-    padding: 10px  ;
+    padding: 10px;
 }
 .event-information-list ul, .event-information-content ul{
     margin-top: 7px;
@@ -220,15 +232,6 @@ footer{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-}
-.bands-in-town{
-    background-color: var(--bands-in-town)  ;
-    display: none;
-    height: 40vh;
-}
-.event-information{
-    background-color: var(--event-information)  ;
-    display: none;
 }
 /* Map styling */
 .card-title{
