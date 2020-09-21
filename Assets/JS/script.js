@@ -42,7 +42,8 @@ $(document).ready(function() {
         }
         $("#event-information-title").text("Event Information:");
         $('#event-information-list').empty();
-        $("#bands-in-town-list").empty();
+        $("#band-info").empty();
+        $("#band-tracks").empty();
         $("#event-information-content").empty();
         getDefaultCityCountry();
     }
@@ -128,8 +129,8 @@ $(document).ready(function() {
             }
         }).then(function(response) {
             const tracks = response.tracks
-            $("#bands-in-town-list").prepend($("<h5>").text("Top Hits"))
-            $("#bands-in-town-list").append($("<div>").attr("class", "display-hits"))
+            $("#band-tracks").append($("<h5>").text("Top Hits"))
+            $("#band-tracks").append($("<div>").attr("class", "display-hits"))
             $(".display-hits").show()
 
             tracks.forEach(track => {
@@ -158,7 +159,7 @@ $(document).ready(function() {
             $("#bands-in-town-band-name").text(data.name);
         }
         if (data.image_url) {
-            $("#bands-in-town-list").prepend($("<img>").attr("src", data.image_url).css({
+            $("#band-info").prepend($("<img>").attr("src", data.image_url).css({
                 "max-width": "100%",
                 "max-height": "260px"
             }));
@@ -291,7 +292,7 @@ $(document).ready(function() {
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
-                    $("#bands-in-town-list").prepend($("<p>").text(artist + ", was not found, but feel free to preview their music :)").css("font-size", "12px"));
+                    $("#band-info").append($("<p>").text(artist + ", was not found, but feel free to preview their music :)").css("font-size", "12px"));
 
                     $("#event-information-content").attr('style', 'overflow-y: hidden');
                     $("#event-information-list").attr('style', 'overflow-y: hidden');
@@ -309,7 +310,7 @@ $(document).ready(function() {
                             appendEventInfoList(response);
                         });
                     } else {
-                        $("#bands-in-town-list").prepend($("<p>").text(artist + ", has no events, but feel free to preview their music :)").css("font-size", "12px"));
+                        $("#band-info").append($("<p>").text(artist + ", has no events, but feel free to preview their music :)").css("font-size", "12px"));
                     }
                     appendArtistInfo(response);
                 }
