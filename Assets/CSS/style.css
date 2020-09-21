@@ -1,7 +1,6 @@
 /********** Colour reference chart*********
 *************************** colour *******/ 
 :root {
-    --Main-Body: white;
     --borders: black;
     --text: white;
     --text-link: rgba(3, 17, 145, 0.753);
@@ -26,22 +25,29 @@
 /* main body styling */
 html,
 body {
-    height: 100%;
     margin: 0;
     padding: 0;
 }
-header{
-    padding-left: 20px;
-    background-color:#212121 ;
-}
-aside,.mid-column{
-    height:88vh;
+.nav-wrapper, header{
+    height: 6vh !important;
+    padding-left: 0px;
 }
 header a{
-    padding-left: 10px  ;
+    padding-left: 20px !important;
+}
+aside, .main-body{
+    margin: 0px;
+}
+.left-column, .mid-column, .right-column{
+    padding-top: 3vh !important;
+    height:87vh;
+}
+.bands-in-town, .blurb-about-site, .map-canvas{
+    height:87vh;
+    margin: 0px;
 }
 footer{
-    height: 50px;
+    height: 4vh;
     position: fixed;
     width: 100%;
     bottom: 0px;
@@ -49,7 +55,6 @@ footer{
     padding-right: 10px;
 }
 .footer-copyright{
-  margin-top: 10px;
   margin-left: 10px;
 }
 .body-row{
@@ -58,10 +63,6 @@ footer{
 }
 .mid-column{
     padding-left: 8px !important;
-}
-.main-body{
-    margin: 0px;
-    padding: 0px;
 }
 .container{
     width: 100%;
@@ -74,13 +75,19 @@ footer{
     background-color: var(--hover-item);
 }
 /* Main base body styling */
-.main-body{
-    background-color:var(--Main-Body);
-    margin-top: 10px;
-    height: 85vh;
+.main-content{
+    height: 90vh;
 }
-
 /* Aside styling */
+.input-group{
+    height: 12vh;
+}
+.band-details{
+    display: none;
+    height: 73vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
 .side-content-title {
     font-size: 1.2rem;
     font-weight: 400;
@@ -93,16 +100,12 @@ footer{
     border-radius: 5px !important;
 }
 .btn{
-    margin-left: 10px !important;
+    margin-right: 10px;
+    float: right !important;
     height: 44px;
+    width:16%;
     background-color: var(--artist) !important;
     color:var(--text) !important;
-}
-#band-details{
-    display: none;
-    height: 70vh;
-    overflow: scroll;
-    overflow-x: hidden;
 }
 .artist{
     display: flex;
@@ -128,12 +131,25 @@ footer{
 .artist .image-holder{
     text-align: right;
 }
+.bands-in-town{
+    background-color: var(--bands-in-town)  ;
+    display: none;
+}
+.spacer{
+    height: 2vh; 
+}
+.event-information{
+    background-color: var(--event-information)  ;
+    display: none;
+    height: 40vh; 
+    margin:0;
+}
 .event-information-content{
     overflow: scroll;
     overflow-x: hidden;
-    height: 31vh;
-    width:90%;
-    padding: 10px  ;
+    height: 30vh;
+    width: 90%;
+    padding: 10px;
 }
 .event-information-content a{
     color: var(--text-link);
@@ -143,9 +159,9 @@ footer{
     background-color: var(--white);
     overflow: scroll;
     overflow-x: hidden;
-    height: 31vh;
+    height: 30vh;
     width:100%;
-    padding: 10px  ;
+    padding: 10px;
 }
 .event-information-list ul, .event-information-content ul{
     margin-top: 7px;
@@ -212,6 +228,7 @@ footer{
     font-family: sans-serif;
     height: 80vh;
     padding: 5% 2%;
+
 }
 .blurb-about-site-content{
     font-family: sans-serif;
@@ -219,6 +236,7 @@ footer{
     flex-direction: column;
     justify-content: space-around;
 }
+
 .blurb-about-site-content p {
     color: rgb(87, 87, 87);
     padding: 0 5%;
@@ -246,9 +264,6 @@ footer{
     display: none;
 }
 /* Map styling */
-.map-canvas{
-    height: 80vh;
-}
 .card-title{
     padding-left: 10px  ;
 }
@@ -258,17 +273,23 @@ footer{
 
 /* media adjustments to work on phone, ipad and PC */
 @media (max-width: 768px) { 
-    .body-row{
-        padding-bottom: 50px  ;
-    }
+
 }
 
 @media (max-width: 550px) { 
-    .event-information{
-        height: 50%  ;
-        margin-bottom: 100px;
-    }    
-    .body-row{
-        padding-bottom: 50px  ;
+    /* Aside styling */
+    .input-group{
+        height: 15vh;
     }
+    .band-details{
+        height: 72vh;
+    }
+
+    .footer-copyright{
+        margin-top: .4vh;
+        font-size: .7rem;
+    } 
+    .footer-copyright a{
+        font-size: .7rem;
+    } 
 }
