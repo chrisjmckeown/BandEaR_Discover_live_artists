@@ -211,12 +211,30 @@ footer{
     background-color: var(--blurb-about-site)  ;
     font-family: sans-serif;
     height: 80vh;
+    padding: 5% 2%;
 }
 .blurb-about-site-content{
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+.blurb-about-site-content p {
+    color: rgb(87, 87, 87);
+    padding: 0 5%;
+}
+.blurb-about-site-content .line-break {
+    font-size: smaller;
+    line-height: 15px;
+}
+.blurb-about-site-content h2 {
+    font-size: calc(30px + 0.9vw);
+    margin: 15px 0 0 0;
+}
+.blurb-about-site-content h4 {
+    font-size: calc(16px + 0.5vw);
+    color: rgb(87, 87, 87);
+    margin: 5px 0 15px 0;
 }
 .bands-in-town{
     background-color: var(--bands-in-town)  ;
