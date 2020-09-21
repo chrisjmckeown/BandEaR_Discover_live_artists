@@ -1,27 +1,30 @@
-$(document).ready(function() {
+$(document).ready(function () {
     //#region spotify
     setMainBody(false);
-    let favourite_singers = []
-    let artists_search_results = []
-    let artist_id = []
-    let artist_image = []
-    if (localStorage.getItem('favourite_singers')) {
-        favourite_singers = JSON.parse(localStorage.getItem('favourite_singers'))
-        // console.log(favourite_singers, typeof favourite_singers)
+
+    function displayFavourites() {
+        let favourite_singers = []
+        let artists_search_results = []
+        let artist_id = []
+        let artist_image = []
+        if (localStorage.getItem('favourite_singers')) {
+            favourite_singers = JSON.parse(localStorage.getItem('favourite_singers'))
+            // console.log(favourite_singers, typeof favourite_singers)
+        }
+        favourite_singers.forEach(function (artist) {
+            const new_artist = $(`<div class="artist" id=${artist[2]}></div>`)
+            const new_artist_name = $(`<h3 class=col_1${artist[2]}>${artist[0]} </h3>`)
+            const new_artist_image = $(`<div class='col_3${artist[2]} image-holder' ><img src=${artist[1]} width='50'></div>`)
+
+            new_artist.append(new_artist_name, new_artist_image)
+            $('#band-details').append(new_artist)
+            $('#band-details').show()
+            artists_search_results.push(artist[0])
+            artist_image.push(artist[1])
+            artist_id.push(artist[2])
+        })
     }
-    favourite_singers.forEach(function(artist) {
-        const new_artist = $(`<div class="artist" id=${artist[2]}></div>`)
-        const new_artist_name = $(`<h3 class=col_1${artist[2]}>${artist[0]} </h3>`)
-        const new_artist_image = $(`<div class='col_3${artist[2]} image-holder' ><img src=${artist[1]} width='50'></div>`)
-
-        new_artist.append(new_artist_name, new_artist_image)
-        $('#band-details').append(new_artist)
-        $('#band-details').show()
-        artists_search_results.push(artist[0])
-        artist_image.push(artist[1])
-        artist_id.push(artist[2])
-    })
-
+    displayFavourites()
     function setMainBody(searchInProgress) {
         if (!searchInProgress) {
             // set the divs
@@ -32,6 +35,7 @@ $(document).ready(function() {
             $("#map-canvas").attr("style", "height: 82vh; display: block");
             $("#event-information").attr("style", "display: none");
             $('#band-details').empty();
+            displayFavourites()
         } else {
             // Set middle section
             $("#blurb-about-site").attr("style", "display: none");
@@ -56,7 +60,7 @@ $(document).ready(function() {
             'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
         },
         data: 'grant_type=client_credentials'
-    }).then(function(res) {
+    }).then(function (res) {
         token = res.access_token
     })
 
@@ -72,10 +76,10 @@ $(document).ready(function() {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        }).then(function(dat) {
+        }).then(function (dat) {
             // console.log(dat.artists.items);
             const artists = dat.artists.items
-            artists.forEach(function(artist) {
+            artists.forEach(function (artist) {
                 const new_artist = $(`<div class="artist" id=${artist.id}></div>`)
                 const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
                 const new_artist_image = $(`<div class='col_3${artist.id} image-holder' ><img src=${artist.images[2].url} width='50'></div>`)
@@ -89,12 +93,12 @@ $(document).ready(function() {
         })
     }
 
-    $('#search-form').submit(function(event) {
+    $('#search-form').submit(function (event) {
         event.preventDefault();
         get_results();
     })
 
-    $("#artist-input").keyup(function() {
+    $("#artist-input").keyup(function () {
         var $input = $(this).val().trim();
         if (!$input) {
             setMainBody(false);
@@ -104,11 +108,11 @@ $(document).ready(function() {
 
     //#region bandsintown
 
-    $(document).on('click', '#spotify', function(event) {
+    $(document).on('click', '#spotify', function (event) {
         event.stopPropagation()
     })
 
-    $(document).on('click', '.artist', function() {
+    $(document).on('click', '.artist', function () {
         setMainBody(true);
         let artistId = this.id
         let check = 0
@@ -126,7 +130,7 @@ $(document).ready(function() {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        }).then(function(response) {
+        }).then(function (response) {
             const tracks = response.tracks
             $("#bands-in-town-list").prepend($("<h5>").text("Top Hits"))
             $("#bands-in-town-list").append($("<div>").attr("class", "display-hits"))
@@ -181,7 +185,7 @@ $(document).ready(function() {
         $("#event-information-list").append($eventListUL);
 
         var index = 0;
-        response.forEach(function(data) {
+        response.forEach(function (data) {
             var $newEvent = $("<li>");
             $newEvent.text(data.venue.name);
             $newEvent.addClass("clickable-event-item");
@@ -192,7 +196,7 @@ $(document).ready(function() {
         appendEventInfo(response[0]);
     }
 
-    $(document).on('click', '.clickable-event-item', function() {
+    $(document).on('click', '.clickable-event-item', function () {
         var $index = $(this).attr("index");
         $("#event-information-content").empty();
         appendEventInfo(eventList[$index], $index);
@@ -220,7 +224,7 @@ $(document).ready(function() {
         var duration = moment.duration(diffTime * 1000, 'milliseconds');
         var durationDay = moment(data.datetime).diff(moment(), 'days');
         var interval = 1000;
-        timeout = setInterval(function() {
+        timeout = setInterval(function () {
             duration = moment.duration(duration - interval, 'milliseconds');
             durationDay = moment(data.datetime).diff(moment(), 'days');
             $('#countdown').html(
@@ -286,7 +290,7 @@ $(document).ready(function() {
             $.ajax({
                 url: artistURL,
                 method: "GET"
-            }).then(function(response) {
+            }).then(function (response) {
                 console.log("HELLO ", response)
                 // error checking
                 if (response.error || response === "") {
@@ -304,7 +308,7 @@ $(document).ready(function() {
                         $.ajax({
                             url: eventURL,
                             method: "GET"
-                        }).then(function(response) {
+                        }).then(function (response) {
                             eventList = [];
                             appendEventInfoList(response);
                         });
@@ -350,7 +354,7 @@ $(document).ready(function() {
         // initialise the PlacesService to pin point the venue location
         var service = new google.maps.places.PlacesService(map);
         // using the requestQuery find the venue
-        service.findPlaceFromQuery(requestQuery, function(results, status) {
+        service.findPlaceFromQuery(requestQuery, function (results, status) {
             // if result is returned then set the marker to the coordinate of the venue
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 for (let i = 0; i < results.length; i++) {
@@ -385,7 +389,7 @@ $(document).ready(function() {
         var infowindow = new google.maps.InfoWindow({
             content: $container.prop('outerHTML'),
         });
-        marker.addListener('click', function() {
+        marker.addListener('click', function () {
             infowindow.open(map, marker);
         });
     }
@@ -407,7 +411,7 @@ $(document).ready(function() {
         $.ajax({
             url: queryURL,
             method: 'get'
-        }).then(function(response) {
+        }).then(function (response) {
             // split the location string to parse the longitude and latitude
             if (response.loc) {
                 var loc = response.loc.split(',');
@@ -420,7 +424,7 @@ $(document).ready(function() {
                 initMap(coordinates);
                 setStoredCoordinates(coordinates);
             }
-        }).catch(function(err) {
+        }).catch(function (err) {
             console.log(err);
         });
         defaultCoodinates = coordinates;
