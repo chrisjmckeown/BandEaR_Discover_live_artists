@@ -107,6 +107,19 @@ footer{
     background-color: var(--artist) !important;
     color:var(--text) !important;
 }
+
+#band-details{
+    display: none;
+    height: 70vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.display-hits a:hover{
+    font-weight: 900;
+    color: var(--artist);
+    background-color: transparent!important;
+}
+
 .artist{
     display: flex;
     background-color:var(--artist);

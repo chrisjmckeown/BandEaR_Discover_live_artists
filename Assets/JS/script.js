@@ -2,6 +2,7 @@ let favourite_singers = []
 let artists_search_results = []
 let artist_id = []
 let artist_image = []
+let artist_object = []
 $(document).ready(function () {
     //#region spotify
     setMainBody(false);
@@ -21,6 +22,7 @@ $(document).ready(function () {
             artists_search_results.push(artist[0])
             artist_image.push(artist[1])
             artist_id.push(artist[2])
+            artist_object.push(artist)
         })
     }
     function setMainBody(searchInProgress) {
@@ -90,6 +92,7 @@ $(document).ready(function () {
                 artists_search_results.push(artist.name)
                 artist_image.push(artist.images[2].url)
                 artist_id.push(artist.id)
+                artist_object.push(artist)
             });
         })
     }
@@ -117,11 +120,17 @@ $(document).ready(function () {
         setMainBody(true);
         let artistId = this.id
         let check = 0
-        favourite_singers.forEach(singer => singer[2] === artistId ? check++ : check)
-        console.log(check);
+        favourite_singers.forEach(singer => {
+            if (singer[2] === artistId) {
+                check++;
+
+            }
+        })
+
+
         artist_id.forEach((artist, index) => {
             if (artist === artistId && check === 0) {
-                favourite_singers.push([artists_search_results[index], artist_image[index], artistId])
+                favourite_singers.push([artists_search_results[index], artist_image[index], artistId, artist_object[index]])
                 localStorage.setItem('favourite_singers', JSON.stringify(favourite_singers))
             }
         });
@@ -152,10 +161,30 @@ $(document).ready(function () {
         favourite_singers.forEach((singer) => {
             if ((this.id) === singer[2]) {
                 displayBandsInTownData(singer[0])
+                displaySpotifyData(singer[3])
             }
         });
     })
 
+
+    function displaySpotifyData(artist) {
+        $('#spotify-info').empty()
+        console.log(artist.name);
+        // console.log(artist.external_urls.spotify);
+        $('#spotify-info').append(`<p><strong>Genres: </strong>${artist.genres.slice(0, 2).join()}</p>`)
+        $.get({
+            url: `https://api.spotify.com/v1/artists/${artist.id}/albums?market=AU&limit=10`,
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }).then(function (response) {
+            console.log(response);
+            let albums = []
+            response.items.forEach(item => albums.push(`<a href=${item.external_urls.spotify}>${item.name}</a>`))
+            $('#spotify-info').append(`<p><strong>Albums: </strong>${albums.join()}</p>`)
+
+        })
+    }
     function appendArtistInfo(data) {
         // artist info
         // check and set the artist name and add to card title -> bands-in-town-band-name
@@ -291,7 +320,7 @@ $(document).ready(function () {
                 url: artistURL,
                 method: "GET"
             }).then(function (response) {
-                console.log("HELLO ", response)
+                // console.log("HELLO ", response)
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
@@ -312,7 +341,7 @@ $(document).ready(function () {
                             appendEventInfoList(response);
                         });
                     } else {
-                        $("#band-info").append($("<p>").text(artist + ", has no events, but feel free to preview their music :)").css("font-size", "12px"));
+                        $("#band-info").append($("<p>").html(artist + ", was not found, but feel free to preview their music &#128521;").css("font-size", "12px"));
                     }
                     appendArtistInfo(response);
                 }
@@ -409,7 +438,7 @@ $(document).ready(function () {
         // Call with a get method
         $.ajax({
             url: queryURL,
-            method: 'get'
+            method: 'GET'
         }).then(function (response) {
             // split the location string to parse the longitude and latitude
             if (response.loc) {
