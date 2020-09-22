@@ -170,6 +170,12 @@ $(document).ready(function () {
 
     function displaySpotifyData(artist) {
         $('#spotify-info').empty()
+        $("#bands-in-town-band-name").text(artist.name);
+        $("#band-info").prepend($("<img>").attr("src", artist.images[1].url).css({
+            "max-width": "100%",
+            "max-height": "260px"
+        }))
+
         console.log(artist.name);
         // console.log(artist.external_urls.spotify);
         $('#spotify-info').append(`<p><strong>Genres: </strong>${artist.genres.slice(0, 2).join()}</p>`)
@@ -188,16 +194,17 @@ $(document).ready(function () {
     }
     function appendArtistInfo(data) {
         // artist info
+        //Spotify used to display these info.
         // check and set the artist name and add to card title -> bands-in-town-band-name
-        if (data.name) {
-            $("#bands-in-town-band-name").text(data.name);
-        }
-        if (data.image_url) {
-            $("#band-info").prepend($("<img>").attr("src", data.image_url).css({
-                "max-width": "100%",
-                "max-height": "260px"
-            }));
-        }
+        // if (data.name) {
+        //     $("#bands-in-town-band-name").text(data.name);
+        // }
+        // if (data.image_url) {
+        //     $("#band-info").prepend($("<img>").attr("src", data.image_url).css({
+        //         "max-width": "100%",
+        //         "max-height": "260px"
+        //     }));
+        // }
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
             $("#event-information-title").text("Event Information: " + data.upcoming_event_count + " events");
@@ -326,9 +333,11 @@ $(document).ready(function () {
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
-                    $("#band-info").append($("<p>").html(artist + ", was not found, but feel free to preview their music &#128521;").css("font-size", "12px"));
-                    $("#map-canvas").attr("style", "height:85vh; display: block");
-                    $("#event-information").attr("style", "display: none");
+
+                    $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
+                    $("#event-information-content").attr('style', 'overflow-y: hidden');
+                    $("#event-information-list").attr('style', 'overflow-y: hidden');
+
                 } else {
                     if (response.upcoming_event_count > 0) {
                         var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
@@ -340,9 +349,11 @@ $(document).ready(function () {
                             appendEventInfoList(response);
                         });
                     } else {
+
                         $("#map-canvas").attr("style", "height:85vh; display: block");
                         $("#event-information").attr("style", "display: none");
-                        $("#band-info").append($("<p>").html(artist + ", was not found, but feel free to preview their music &#128521;").css("font-size", "12px"));
+                        $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
+
                     }
                     appendArtistInfo(response);
                 }
