@@ -85,6 +85,7 @@ footer{
 .band-details{
     display: none;
     height: 73vh;
+    clear: both;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -108,12 +109,7 @@ footer{
     color:var(--text) !important;
 }
 
-#band-details{
-    display: none;
-    height: 70vh;
-    overflow: scroll;
-    overflow-x: hidden;
-}
+
 .display-hits a:hover{
     font-weight: 900;
     color: var(--artist);
