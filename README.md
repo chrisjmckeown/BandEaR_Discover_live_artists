@@ -49,9 +49,6 @@ Primary technologies:
 ## Presentation
 [Project Presentation](https://docs.google.com/presentation/d/1GCubsO5xMH9TeXnAAwebHLnGM0IKQegNnpzyYpVBtgc/edit#slide=id.p)
 
-   ## Link to Slides
-    [https://docs.google.com/presentation/d/1GCubsO5xMH9TeXnAAwebHLnGM0IKQegNnpzyYpVBtgc/edit?usp=sharing]
-
 ## License
 
 * See license here: <a href="https://github.com/chrisjmckeown/Weather_Dashboard/blob/master/LICENSE" target="_blank">license agreement</a>
