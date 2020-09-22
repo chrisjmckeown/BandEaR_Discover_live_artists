@@ -71,6 +71,7 @@ $(document).ready(function () {
         artists_search_results = []
         artist_image = []
         artist_id = []
+        artist_object = []
         $('#band-details').empty()
         $('#band-details').show()
         $.get({

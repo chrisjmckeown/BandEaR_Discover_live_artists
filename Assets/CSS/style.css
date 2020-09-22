@@ -87,6 +87,7 @@ footer{
 .band-details{
     display: none;
     height: 73vh;
+    clear: both;
     overflow: scroll;
     overflow-x: hidden;
 }
