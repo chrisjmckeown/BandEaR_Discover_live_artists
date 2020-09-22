@@ -54,6 +54,7 @@ header a{
 }
 /* styling the footer */
 footer{
+    margin-top: .8vh;
     height: 4vh;
     position: fixed;
     width: 100%;
@@ -153,16 +154,16 @@ footer{
 .band-info p{
     font-size:1.2rem;
 }
-/* right column styling */
-.spacer{
-    height: 2vh; 
-}
 .spotify-album{
     display: inline-block;
     background-color: var(--artist);
     margin: 2px;
     padding:5px 12px;
     border-radius: 12px;
+}
+/* right column styling */
+.spacer{
+    height: 2vh; 
 }
 .scroll{
     margin:0 !important;
@@ -304,18 +305,26 @@ footer{
 
 /* media adjustments to work on phone, ipad and PC */
 @media (max-width: 768px) { 
-
+    /* Aside styling */
+    .input-group{
+        height: 9vh;
+    }
+    .band-details{
+        height: 80vh;
+    }
+    .footer-copyright{
+        margin-top: .8vh;
+    } 
 }
 
 @media (max-width: 550px) { 
     /* Aside styling */
     .input-group{
-        height: 15vh;
+        height: 115vh;
     }
     .band-details{
         height: 67vh;
     }
-
     .footer-copyright{
         margin-top: .4vh;
         font-size: .7rem;
