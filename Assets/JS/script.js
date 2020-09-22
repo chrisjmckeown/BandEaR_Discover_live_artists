@@ -31,10 +31,10 @@ $(document).ready(function () {
         if (!searchInProgress) {
             // set the divs
             // Set middle section
-            $("#blurb-about-site").attr("style", "height:85vh; display: block");
-            $("#bands-in-town").attr("style", "height:85vh; display: none");
+            $("#blurb-about-site").attr("style", "height:83vh; display: block");
+            $("#bands-in-town").attr("style", "height:83vh; display: none");
             // Set right section
-            $("#map-canvas").attr("style", "height:85vh; display: block");
+            $("#map-canvas").attr("style", "height:83vh; display: block");
             $("#event-information").attr("style", "display: none");
             $("#spacer").attr("style", "display: none");
             $('#band-details').empty();
@@ -42,9 +42,9 @@ $(document).ready(function () {
         } else {
             // Set middle section
             $("#blurb-about-site").attr("style", "display: none");
-            $("#bands-in-town").attr("style", "height: 85vh; display: block");
+            $("#bands-in-town").attr("style", "height: 83vh; display: block");
             // Set right section
-            $("#map-canvas").attr("style", "height: 43vh; display: block");
+            $("#map-canvas").attr("style", "height: 40vh; display: block");
             $("#spacer").attr("style", "height: 2vh; display: block");
             $("#event-information").attr("style", "height: 40vh; display: block");
         }
@@ -203,16 +203,6 @@ $(document).ready(function () {
     function appendArtistInfo(data) {
         // artist info
         //Spotify used to display these info.
-        // check and set the artist name and add to card title -> bands-in-town-band-name
-        // if (data.name) {
-        //     $("#bands-in-town-band-name").text(data.name);
-        // }
-        // if (data.image_url) {
-        //     $("#band-info").prepend($("<img>").attr("src", data.image_url).css({
-        //         "max-width": "100%",
-        //         "max-height": "260px"
-        //     }));
-        // }
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
             $("#event-information-title").text("Event Information: " + data.upcoming_event_count + " events");

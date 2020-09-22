@@ -18,44 +18,33 @@
 
 <body>
     <!-- semantic header Navbar-->
-    <header class="grey darken-4">
+    <header class="header-colour">
         <nav>
-            <div class="nav-wrapper grey darken-4">
-                <!-- <div class="container"> -->
+            <div class="nav-wrapper header-colour">
                 <a href="index.html" class="brand-logo">BANDEAR</a>
-                <!-- </div> -->
             </div>
         </nav>
     </header>
     <!-- semantic main Page Layout-->
     <!-- materialize main-content -->
-    <main class="main-content grey darken-4">
+    <main class="main-content main-colour">
         <!-- materialize grid row -->
         <div class="row">
             <!-- materialize grid column -->
             <!-- aside for seach area of the page -->
-            <aside class="col s12 m4 l3 grey darken-4 right-column">
-                <div class="input-group">
-                    <form action="submit" id="search-form">
-                        <div class="row">
-                            <div class="col l12">
-                                <label for="artist-input" class="side-content-title white-text">Search by Band
-                                    Name:</label>
-                            </div>
-                            <div class="col s9 m9 l9">
-                                <input placeholder="Keyword" id="artist-input" class="artist-input white black-text"
-                                    type="text">
-                            </div>
-                            <div class="col.right-align">
-                                <div class="input-group-append">
-                                    <button id="search-btn" class="btn white black-text" type="submit" name="action"><i
-                                            class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
+            <aside class="col s12 m4 l3 left-column">
+                <form action="submit" id="search-form" class="input-group">
+                    <div class="row">
+                        <label for="artist-input" class="side-content-title white-text">Search by Band Name:</label>
+                        <div class="inputs">
+                            <input placeholder="Artist/Band" id="artist-input" class="artist-input white black-text"
+                                type="text">
+                            <button id="search-btn" class="btn white black-text" type="submit" name="action"><i
+                                    class="fas fa-search"></i>
+                            </button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
                 <div class="band-details" id="band-details">
                 </div>
             </aside>
@@ -79,7 +68,8 @@
                                 <h2>This is the place for you</h2>
                                 <h4>B A N D E A R</h4>
                                 <br>
-                                <p style="color: black;">Preview 30 second music snippets and view all upcoming events in one location!</p>
+                                <p style="color: black;">Preview 30 second music snippets and view all upcoming events
+                                    in one location!</p>
                                 <br><br><br>
 
                                 <div>
@@ -95,7 +85,7 @@
                         <div class="card bands-in-town" id="bands-in-town">
                             <div class="card-title" id="bands-in-town-band-name">The bands in Town</div>
                             <div class="card-content bands-in-town-list">
-                                <div id="band-info"></div>
+                                <div id="band-info" class="band-info"></div>
                                 <div id="spotify-info"></div>
                                 <div id="band-tracks"></div>
                             </div>
@@ -124,10 +114,7 @@
         </div>
     </main>
     <!-- semantic footer -->
-    <!-- materialize footer. Change the color "blue accent-4 https://materializecss.com/color.html" -->
-    <footer class="grey darken-4">
-
-
+    <footer class="footer-colour">
         <div class="footer-copyright">
             <!-- <div class="container"> -->
             <span class="grey-text text-lighten-4">© 2020 - BANDEAR</span>

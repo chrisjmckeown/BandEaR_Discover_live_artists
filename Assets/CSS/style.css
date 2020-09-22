@@ -1,53 +1,68 @@
 /********** Colour reference chart*********
 *************************** colour *******/ 
 :root {
-    --borders: black;
     --text: white;
-    --text-link: rgba(3, 17, 145, 0.753);
-    --link:#8babb2;
+    --text-link: #1D3461;
     --scroll: white;
-
-    --artist:#00838f;
-    --blurb-about-site:#F4F4DF;
-    --bands-in-town:#F4F4DF;
-    --event-information:#00838f;
-
-    --hover-item: #477079;
-    --hover-text: black;
+    --artist:#B80C09;
+    --btn:#B80C09;
+    --hover-item: #C6878F;
+    --blurb-about-site:#B7B5B3;
+    --bands-in-town:#B7B5B3;
+    --event-information: #B7B5B3;
   }
-
 *,
 *::before,
 *::after {
-  /* Width and height apply to all parts of the element: content, padding and borders */
-  box-sizing: border-box;
+    /* Width and height apply to all parts of the element: content, padding and borders */
+    box-sizing: border-box;
 }
 /* main body styling */
 html,
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0px !important;
+    padding: 0px !important;
 }
+/* colouring */
+.header-colour{
+    background-color: #070505;
+}
+.footer-colour{
+    background-color: #070505;
+}
+.main-colour{
+    background-color: #E5E7E6;
+}
+.left-column{
+    background-color: #070505;
+} 
+.mid-column{
+    background-color: #E5E7E6;
+} 
+.right-column{
+    background-color: #E5E7E6;
+}
+/* navigation styling */
 .nav-wrapper, header{
-    height: 6vh !important;
-    padding-left: 0px;
+    height: 9vh !important;
 }
 header a{
     padding-left: 20px !important;
 }
-aside, .main-body{
-    margin: 0px;
-}
-.left-column, .mid-column, .right-column{
-    padding-top: 3vh !important;
+/* styling the 3 columns */
+.left-column{
     height:87vh;
+}
+.mid-column, .right-column{
+    padding-top: 3vh !important;
+    height:82vh;
 }
 .bands-in-town, .blurb-about-site, .map-canvas{
-    height:87vh;
-    margin: 0px;
+    height:82vh;
     overflow: scroll;
     overflow-x: hidden;
 }
+/* styling the footer */
 footer{
     height: 4vh;
     position: fixed;
@@ -59,61 +74,59 @@ footer{
 .footer-copyright{
   margin-left: 10px;
 }
-.body-row{
-    margin: 0px;
-    padding: 0px;
-}
-.mid-column{
-    padding-left: 8px !important;
-}
-.container{
-    width: 100%;
+/* hover styles */
+.artist:hover, 
+.btn:hover{
+    background-color: var(--hover-item) !important;
 }
 .clickable-event-item:hover, 
-.artist:hover, 
 .footer-copyright a:hover, 
 .display-hits a:hover,
 .event-information-content a:hover{
-    background-color: var(--hover-item);
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: 900;
+    color: var(--artist) !important;
 }
 /* Main base body styling */
 .main-content{
-    height: 90vh;
+    height: 87vh;
 }
-/* Aside styling */
+/* left column styling (aside) */
 .input-group{
-    height: 12vh;
-}
-.band-details{
-    display: none;
-    height: 73vh;
-    clear: both;
-    overflow: scroll;
-    overflow-x: hidden;
+    height: 11vh;
+    padding-left: 20px;
+    padding-right: 10px;
 }
 .side-content-title {
     font-size: 1.2rem;
     font-weight: 400;
     font-family: sans-serif;
-    margin-left: 10px !important;
+    clear: both;
+}
+.inputs{
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100%;
 }
 .artist-input{
-    margin-left: 10px !important;
-    padding-left: 10px !important;
     border-radius: 5px !important;
+    width: 75% !important;
 }
 .btn{
-    margin-right: 10px;
-    float: right !important;
+    float: right;
     height: 44px;
-    width:16%;
-    background-color: var(--artist) !important;
+    width: 15%;
+    background-color: var(--btn) !important;
     color:var(--text) !important;
+    cursor: pointer;
 }
-.display-hits a:hover{
-    font-weight: 900;
-    color: var(--artist);
-    background-color: transparent!important;
+.band-details{
+    display: none;
+    height: 75vh;
+    clear: both;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 .artist{
     display: flex;
@@ -124,7 +137,6 @@ footer{
     align-items: center;
     cursor: pointer;
     position: relative;
-
 }
 .artist h3, .artist .image-holder {
     display: inline-block;
@@ -139,13 +151,15 @@ footer{
 .artist .image-holder{
     text-align: right;
 }
+/* middle column styling */
 .bands-in-town{
     background-color: var(--bands-in-town)  ;
     display: none;
 }
-#band-info p{
-font-size:1.2rem;
+.band-info p{
+    font-size:1.2rem;
 }
+/* right column styling */
 .spacer{
     height: 2vh; 
 }
@@ -215,14 +229,12 @@ font-size:1.2rem;
     font-size: 2rem;
     font-weight: 700;
 }
-/* #bands-in-town-list h5{
-    font-size: 1rem;
-    text-align: center;
-    text-decoration: underline;
-} */
 .card-title, .bands-in-town-list h5{
     font-size: 1.4rem !important;
     font-family: sans-serif;
+}
+.bands-in-town-list a{
+    color: var(--text-link);
 }
 .display-hits a{
     color: var(--text-link);
@@ -253,8 +265,8 @@ font-size:1.2rem;
 .blurb-about-site{
     background-color: var(--blurb-about-site)  ;
     font-family: sans-serif;
-    height: 80vh;
-    padding: 5% 2%;
+    height: 82vh;
+    /* padding: 5% 2%; */
 
 }
 .blurb-about-site-content{
@@ -305,11 +317,11 @@ font-size:1.2rem;
 
 @media (max-width: 550px) { 
     /* Aside styling */
-    .input-group{
+    /* .input-group{
         height: 15vh;
     }
     .band-details{
-        height: 72vh;
+        height: 67vh;
     }
 
     .footer-copyright{
@@ -318,5 +330,5 @@ font-size:1.2rem;
     } 
     .footer-copyright a{
         font-size: .7rem;
-    } 
+    }  */
 }
