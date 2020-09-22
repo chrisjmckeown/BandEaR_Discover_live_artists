@@ -281,6 +281,16 @@ font-size:1.2rem;
     color: rgb(87, 87, 87);
     margin: 5px 0 15px 0;
 }
+.blurb-about-site-content ul {
+    margin: 5px 12%;
+    font-size: 14px;
+    text-align: left;
+    color: rgb(87, 87, 87);
+    list-style-type: disc;
+}
+.blurb-about-site-content ul li {
+    list-style-type: disc;
+}
 .bands-in-town{
     background-color: var(--bands-in-town)  ;
     display: none;
