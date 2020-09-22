@@ -1,5 +1,3 @@
-
-
 let favourite_singers = []
 let artists_search_results = []
 let artist_id = []
@@ -107,9 +105,7 @@ $(document).ready(function () {
         })
     }
 
-
     // Displays the searched for artist along with image of said artist in the side content underneath the search bar
-
     $('#search-form').submit(function (event) {
         event.preventDefault();
         get_results();
@@ -247,10 +243,7 @@ $(document).ready(function () {
         appendEventInfo(response[0]);
     }
 
-
-
     $(document).on('click', '#clickable-event-item', function () {
-
         var $index = $(this).attr("index");
         $("#event-information-content").empty();
         appendEventInfo(eventList[$index], $index);
@@ -346,9 +339,6 @@ $(document).ready(function () {
                 method: "GET"
             }).then(function (response) {
 
-
-           
-
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
@@ -357,11 +347,8 @@ $(document).ready(function () {
                     $("#event-information-content").attr('style', 'overflow-y: hidden');
                     $("#event-information-list").attr('style', 'overflow-y: hidden');
 
-
                     // fetches the artist info and displays song samples
-
                 } else {
-
                     if (response.upcoming_event_count > 0) {
                         var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
                         $.ajax({
@@ -473,11 +460,7 @@ $(document).ready(function () {
         // Call with a get method
         $.ajax({
             url: queryURL,
-
-      
-
             method: 'GET'
-
         }).then(function (response) {
             // split the location string to parse the longitude and latitude
             if (response.loc) {
