@@ -24,18 +24,9 @@ body {
     padding: 0px !important;
 }
 /* colouring */
-.header-colour{
-    background-color: #070505;
-}
-.footer-colour{
-    background-color: #070505;
-}
 .main-colour{
     background-color: #E5E7E6;
 }
-.left-column{
-    background-color: #070505;
-} 
 .mid-column{
     background-color: #E5E7E6;
 } 
@@ -51,19 +42,19 @@ header a{
 }
 /* styling the 3 columns */
 .left-column{
-    height:87vh;
+    height:90vh;
 }
 .mid-column, .right-column{
-    padding-top: 3vh !important;
-    height:82vh;
+    padding-top: 2.5vh !important;
+    height:81vh;
 }
-.bands-in-town, .blurb-about-site, .map-canvas{
-    height:82vh;
+.bands-in-town, .blurb-about-site{
     overflow: scroll;
     overflow-x: hidden;
 }
 /* styling the footer */
 footer{
+    margin-top: .8vh;
     height: 4vh;
     position: fixed;
     width: 100%;
@@ -76,7 +67,8 @@ footer{
 }
 /* hover styles */
 .artist:hover, 
-.btn:hover{
+.btn:hover,
+.spotify-album:hover{
     background-color: var(--hover-item) !important;
 }
 .clickable-event-item:hover, 
@@ -87,6 +79,10 @@ footer{
     margin-right: 10px;
     font-weight: 900;
     color: var(--artist) !important;
+}
+.artist, 
+.clickable-event-item{
+    cursor: pointer;
 }
 /* Main base body styling */
 .main-content{
@@ -112,6 +108,7 @@ footer{
 .artist-input{
     border-radius: 5px !important;
     width: 75% !important;
+    padding-left: 10px !important;
 }
 .btn{
     float: right;
@@ -119,11 +116,10 @@ footer{
     width: 15%;
     background-color: var(--btn) !important;
     color:var(--text) !important;
-    cursor: pointer;
 }
 .band-details{
     display: none;
-    height: 75vh;
+    height: 76vh;
     clear: both;
     overflow: scroll;
     overflow-x: hidden;
@@ -135,7 +131,6 @@ footer{
     margin:10px;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
     position: relative;
 }
 .artist h3, .artist .image-holder {
@@ -153,36 +148,36 @@ footer{
 }
 /* middle column styling */
 .bands-in-town{
-    background-color: var(--bands-in-town)  ;
+    background-color: var(--bands-in-town);
     display: none;
 }
 .band-info p{
     font-size:1.2rem;
 }
-/* right column styling */
-.spacer{
-    height: 2vh; 
-}
-.event-information{
-    background-color: var(--event-information)  ;
-    display: none;
-    height: 40vh; 
-    margin:0;
-    padding-right: 5px;
-}
 .spotify-album{
     display: inline-block;
     background-color: var(--artist);
-    color:var(--blurb-about-site);
     margin: 2px;
     padding:5px 12px;
     border-radius: 12px;
+}
+/* right column styling */
+.spacer{
+    height: 2vh; 
 }
 .scroll{
     margin:0 !important;
     overflow: scroll;
     overflow-x: hidden;
     height: 32vh;
+}
+/* event information styling */
+.event-information{
+    background-color: var(--event-information)  ;
+    display: none;
+    height: 40vh; 
+    margin:0;
+    padding-right: 5px;
 }
 .event-information-content{
     width: 90%;
@@ -211,6 +206,23 @@ footer{
 .no-padding{
     padding: 0px;
 }
+.card-title, .bands-in-town-list h5{
+    font-size: 1.4rem !important;
+    font-family: sans-serif;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+#bands-in-town-band-name{
+    font-size: 2rem;
+    font-weight: 700;
+}
+.bands-in-town-band-name a{
+    color: var(--artist) !important;
+}
+.bands-in-town-list a{
+    color: var(--text-link);
+}
+/* display audio styling */
 .display-hits{
     top: 5.2rem;
     overflow: scroll;
@@ -219,55 +231,43 @@ footer{
     width:100%;
     padding:5px;
 }
+.display-hits a{
+    color: var(--text-link);
+}
 .display-hits p{
     text-align: right;
     margin: 0;
     padding: 0;
     font-weight: 700;
 }
-#bands-in-town-band-name{
-    font-size: 2rem;
-    font-weight: 700;
-}
-.card-title, .bands-in-town-list h5{
-    font-size: 1.4rem !important;
-    font-family: sans-serif;
-}
-.bands-in-town-list a{
-    color: var(--text-link);
-}
-.display-hits a{
-    color: var(--text-link);
-}
 .display-hits audio{
     width: 100%;
     height: 20px;
 }
+/* Scroll bar style adjustments */
 ::-webkit-scrollbar {
     width: .5em;
 }   
- ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px var(--text);
 }   
 ::-webkit-scrollbar-thumb {
     background-color:  var(--scroll);
     outline: 1px solid  var(--scroll);
-    padding:30px 0;
-
+    padding: 30px 0;
 }
 .display-hits::-webkit-scrollbar-thumb {
     background-color: var(--artist);
     outline: 1px solid var(--artist);
     padding:30px 0;
-  }
-
+}
 /* central panel */
-.blurb-about-site{
+.blurb-about-site, .map-canvas, .bands-in-town{
     background-color: var(--blurb-about-site)  ;
     font-family: sans-serif;
     height: 82vh;
-    /* padding: 5% 2%; */
-
+    margin: 0px !important;
+    padding: 0px !important;
 }
 .blurb-about-site-content{
     font-family: sans-serif;
@@ -275,7 +275,6 @@ footer{
     flex-direction: column;
     justify-content: space-around;
 }
-
 .blurb-about-site-content p {
     color: rgb(87, 87, 87);
     padding: 0 5%;
@@ -303,42 +302,34 @@ footer{
 .blurb-about-site-content ul li {
     list-style-type: disc;
 }
-.bands-in-town{
-    background-color: var(--bands-in-town)  ;
-    display: none;
-    height: 40vh;
-}
-.event-information{
-    background-color: var(--event-information)  ;
-    display: none;
-}
-/* Map styling */
-.card-title{
-    padding-left: 10px  ;
-}
-.clickable-event-item{
-    cursor: pointer;
-}
 
 /* media adjustments to work on phone, ipad and PC */
 @media (max-width: 768px) { 
-
+    /* Aside styling */
+    .input-group{
+        height: 9vh;
+    }
+    .band-details{
+        height: 80vh;
+    }
+    .footer-copyright{
+        margin-top: .8vh;
+    } 
 }
 
 @media (max-width: 550px) { 
     /* Aside styling */
-    /* .input-group{
-        height: 15vh;
+    .input-group{
+        height: 115vh;
     }
     .band-details{
         height: 67vh;
     }
-
     .footer-copyright{
         margin-top: .4vh;
         font-size: .7rem;
     } 
     .footer-copyright a{
         font-size: .7rem;
-    }  */
+    } 
 }
