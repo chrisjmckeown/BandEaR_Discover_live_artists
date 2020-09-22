@@ -10,7 +10,6 @@ $(document).ready(function () {
     function displayFavourites() {
         if (localStorage.getItem('favourite_singers')) {
             favourite_singers = JSON.parse(localStorage.getItem('favourite_singers'))
-            // console.log(favourite_singers, typeof favourite_singers)
         }
         favourite_singers.forEach(function (artist) {
             const new_artist = $(`<div class="artist" id=${artist[2]}></div>`)
@@ -31,22 +30,22 @@ $(document).ready(function () {
         if (!searchInProgress) {
             // set the divs
             // Set middle section
-            $("#blurb-about-site").attr("style", "height:83vh; display: block");
-            $("#bands-in-town").attr("style", "height:83vh; display: none");
+            $("#blurb-about-site").css("display", "block");
+            $("#bands-in-town").css("display", "none");
+            $("#map-canvas").css("height", "82vh");
             // Set right section
-            $("#map-canvas").attr("style", "height:83vh; display: block");
-            $("#event-information").attr("style", "display: none");
-            $("#spacer").attr("style", "display: none");
+            $("#event-information").css("display", "none");
+            $("#spacer").css("display", "none");
             $('#band-details').empty();
             displayFavourites();
         } else {
             // Set middle section
-            $("#blurb-about-site").attr("style", "display: none");
-            $("#bands-in-town").attr("style", "height: 83vh; display: block");
+            $("#blurb-about-site").css("display", "none");
+            $("#bands-in-town").css("display", "block");
+            $("#map-canvas").css("height", "40vh");
             // Set right section
-            $("#map-canvas").attr("style", "height: 40vh; display: block");
-            $("#spacer").attr("style", "height: 2vh; display: block");
-            $("#event-information").attr("style", "height: 40vh; display: block");
+            $("#event-information").css("display", "block");
+            $("#spacer").css("display", "block");
         }
         $("#event-information-title").text("Event Information:");
         $('#event-information-list').empty();
@@ -87,7 +86,6 @@ $(document).ready(function () {
                 'Authorization': 'Bearer ' + token
             }
         }).then(function (dat) {
-            // console.log(dat.artists.items);
             const artists = dat.artists.items
             artists.forEach(function (artist) {
                 const new_artist = $(`<div class="artist" id=${artist.id}></div>`)
@@ -184,8 +182,6 @@ $(document).ready(function () {
             "max-height": "260px"
         }))
 
-        console.log(artist.name);
-        // console.log(artist.external_urls.spotify);
         $('#spotify-info').append(`<p><strong>Genres: </strong>${artist.genres.slice(0, 2).join()}</p>`)
         $.get({
             url: `https://api.spotify.com/v1/artists/${artist.id}/albums?market=AU&limit=10`,
@@ -193,7 +189,6 @@ $(document).ready(function () {
                 'Authorization': 'Bearer ' + token
             }
         }).then(function (response) {
-            console.log(response);
             let albums = []
             response.items.forEach(item => albums.push(`<a href=${item.external_urls.spotify} class='spotify-album' target='_blank'>&nbsp;${item.name}</a>`))
             $('#spotify-info').append(`<p><strong>Albums: </strong>${albums.join(' ')}</p>`)
@@ -334,9 +329,6 @@ $(document).ready(function () {
                     $("#bands-in-town-band-name").text(artist);
 
                     $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
-                    $("#event-information-content").attr('style', 'overflow-y: hidden');
-                    $("#event-information-list").attr('style', 'overflow-y: hidden');
-
                     // fetches the artist info and displays song samples
                 } else {
                     if (response.upcoming_event_count > 0) {
@@ -350,8 +342,8 @@ $(document).ready(function () {
                         });
                     } else {
 
-                        $("#map-canvas").attr("style", "height:85vh; display: block");
-                        $("#event-information").attr("style", "display: none");
+                        $("#map-canvas").css("display", "block");
+                        $("#event-information").css("display", "none");
                         $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
 
                     }
@@ -459,6 +451,7 @@ $(document).ready(function () {
                     latitude: parseFloat(loc[0]),
                     longitude: parseFloat(loc[1])
                 };
+                defaultCoodinates = coordinates;
 
                 // initialise the map
                 initMap(coordinates);
@@ -467,7 +460,6 @@ $(document).ready(function () {
         }).catch(function (err) {
             console.log(err);
         });
-        defaultCoodinates = coordinates;
     };
 
     // Get from local storage
