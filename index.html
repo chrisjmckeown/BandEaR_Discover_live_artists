@@ -33,27 +33,18 @@
             <!-- materialize grid column -->
             <!-- aside for seach area of the page -->
             <aside class="col s12 m4 l3 left-column">
-                <div class="input-group">
-                    <form action="submit" id="search-form">
-                        <div class="row">
-                            <div class="col l12">
-                                <label for="artist-input" class="side-content-title white-text">Search by Band
-                                    Name:</label>
-                            </div>
-                            <div class="col s9 m9 l9">
-                                <input placeholder="Keyword" id="artist-input" class="artist-input white black-text"
-                                    type="text">
-                            </div>
-                            <div class="col.right-align">
-                                <div class="input-group-append">
-                                    <button id="search-btn" class="btn white black-text" type="submit" name="action"><i
-                                            class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
+                <form action="submit" id="search-form" class="input-group">
+                    <div class="row">
+                        <label for="artist-input" class="side-content-title white-text">Search by Band Name:</label>
+                        <div class="inputs">
+                            <input placeholder="Artist/Band" id="artist-input" class="artist-input white black-text"
+                                type="text">
+                            <button id="search-btn" class="btn white black-text" type="submit" name="action"><i
+                                    class="fas fa-search"></i>
+                            </button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
                 <div class="band-details" id="band-details">
                 </div>
             </aside>
@@ -77,7 +68,8 @@
                                 <h2>This is the place for you</h2>
                                 <h4>B A N D E A R</h4>
                                 <br>
-                                <p style="color: black;">Preview 30 second music snippets and view all upcoming events in one location!</p>
+                                <p style="color: black;">Preview 30 second music snippets and view all upcoming events
+                                    in one location!</p>
                                 <br><br><br>
 
                                 <div><u>Future Updates:</u></div>

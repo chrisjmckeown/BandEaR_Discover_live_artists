@@ -51,11 +51,11 @@ header a{
 }
 /* styling the 3 columns */
 .left-column{
-    height:89vh;
+    height:87vh;
 }
 .mid-column, .right-column{
     padding-top: 3vh !important;
-    height:87vh;
+    height:82vh;
 }
 .bands-in-town, .blurb-about-site, .map-canvas{
     height:82vh;
@@ -92,20 +92,31 @@ footer{
 .main-content{
     height: 87vh;
 }
-/* Aside styling */
+/* left column styling (aside) */
 .input-group{
-    height: 10vh;
+    height: 11vh;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+.side-content-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-family: sans-serif;
+    clear: both;
+}
+.inputs{
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100%;
 }
 .artist-input{
-    margin-left: 10px !important;
-    padding-left: 10px !important;
     border-radius: 5px !important;
+    width: 75% !important;
 }
 .btn{
-    margin-right: 12px;
-    float: right !important;
+    float: right;
     height: 44px;
-    width:10%;
+    width: 15%;
     background-color: var(--btn) !important;
     color:var(--text) !important;
     cursor: pointer;
@@ -117,12 +128,6 @@ footer{
     overflow: scroll;
     overflow-x: hidden;
 }
-.side-content-title {
-    font-size: 1.2rem;
-    font-weight: 400;
-    font-family: sans-serif;
-    margin-left: 10px !important;
-}
 .artist{
     display: flex;
     background-color:var(--artist);
@@ -132,7 +137,6 @@ footer{
     align-items: center;
     cursor: pointer;
     position: relative;
-
 }
 .artist h3, .artist .image-holder {
     display: inline-block;
@@ -147,6 +151,7 @@ footer{
 .artist .image-holder{
     text-align: right;
 }
+/* middle column styling */
 .bands-in-town{
     background-color: var(--bands-in-town)  ;
     display: none;
@@ -154,6 +159,7 @@ footer{
 .band-info p{
     font-size:1.2rem;
 }
+/* right column styling */
 .spacer{
     height: 2vh; 
 }
@@ -299,7 +305,7 @@ footer{
 
 @media (max-width: 550px) { 
     /* Aside styling */
-    .input-group{
+    /* .input-group{
         height: 15vh;
     }
     .band-details{
@@ -312,5 +318,5 @@ footer{
     } 
     .footer-copyright a{
         font-size: .7rem;
-    } 
+    }  */
 }
