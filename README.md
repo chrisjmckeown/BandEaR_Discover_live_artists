@@ -45,6 +45,9 @@ Primary technologies:
     * William Woodburn: woodburn.william1@gmail.com
     * Tony Melek: tonymelek.au@gmail.com
     * Chris Mckeown: chris.j.mckeown@hotmail.com
+    
+## Link to Slides
+    [Slide Show](https://docs.google.com/presentation/d/1GCubsO5xMH9TeXnAAwebHLnGM0IKQegNnpzyYpVBtgc/edit?usp=sharing)
 
 ## License
 
