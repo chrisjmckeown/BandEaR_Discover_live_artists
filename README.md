@@ -46,11 +46,8 @@ Primary technologies:
     * Tony Melek: tonymelek.au@gmail.com
     * Chris Mckeown: chris.j.mckeown@hotmail.com
     
-## Presentation
-[Project Presentation](https://docs.google.com/presentation/d/1GCubsO5xMH9TeXnAAwebHLnGM0IKQegNnpzyYpVBtgc/edit#slide=id.p)
-
-   ## Link to Slides
-    [https://docs.google.com/presentation/d/1GCubsO5xMH9TeXnAAwebHLnGM0IKQegNnpzyYpVBtgc/edit?usp=sharing]
+  ## Link to Slides
+    [Slide Show](https://docs.google.com/presentation/d/1GCubsO5xMH9TeXnAAwebHLnGM0IKQegNnpzyYpVBtgc/edit?usp=sharing)
 
 ## License
 
