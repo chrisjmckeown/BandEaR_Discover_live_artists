@@ -195,16 +195,6 @@ $(document).ready(function () {
     function appendArtistInfo(data) {
         // artist info
         //Spotify used to display these info.
-        // check and set the artist name and add to card title -> bands-in-town-band-name
-        // if (data.name) {
-        //     $("#bands-in-town-band-name").text(data.name);
-        // }
-        // if (data.image_url) {
-        //     $("#band-info").prepend($("<img>").attr("src", data.image_url).css({
-        //         "max-width": "100%",
-        //         "max-height": "260px"
-        //     }));
-        // }
         // check and set the upcoming event count, if none then display no upcoming events
         if (data.upcoming_event_count) {
             $("#event-information-title").text("Event Information: " + data.upcoming_event_count + " events");

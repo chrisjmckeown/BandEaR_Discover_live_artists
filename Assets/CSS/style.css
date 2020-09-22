@@ -2,29 +2,26 @@
 *************************** colour *******/ 
 :root {
     --text: white;
-    --text-link: #6B2B06;
-    --link:#8babb2;
+    --text-link: #1D3461;
     --scroll: white;
-
     --artist:#B80C09;
     --btn:#B80C09;
-    --hover-item: #E5E7E6;
+    --hover-item: #C6878F;
     --blurb-about-site:#B7B5B3;
     --bands-in-town:#B7B5B3;
     --event-information: #B7B5B3;
   }
-
 *,
 *::before,
 *::after {
-  /* Width and height apply to all parts of the element: content, padding and borders */
-  box-sizing: border-box;
+    /* Width and height apply to all parts of the element: content, padding and borders */
+    box-sizing: border-box;
 }
 /* main body styling */
 html,
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0px !important;
+    padding: 0px !important;
 }
 /* colouring */
 .header-colour{
@@ -45,19 +42,15 @@ body {
 .right-column{
     background-color: #E5E7E6;
 }
-
-
+/* navigation styling */
 .nav-wrapper, header{
     height: 9vh !important;
 }
 header a{
     padding-left: 20px !important;
 }
-aside, .main-body{
-    margin: 0px;
-}
+/* styling the 3 columns */
 .left-column{
-    padding-top:1vh !important;
     height:89vh;
 }
 .mid-column, .right-column{
@@ -66,10 +59,10 @@ aside, .main-body{
 }
 .bands-in-town, .blurb-about-site, .map-canvas{
     height:82vh;
-    margin: 0px;
     overflow: scroll;
     overflow-x: hidden;
 }
+/* styling the footer */
 footer{
     height: 4vh;
     position: fixed;
@@ -81,23 +74,19 @@ footer{
 .footer-copyright{
   margin-left: 10px;
 }
-.body-row{
-    margin: 0px;
-    padding: 0px;
-}
-.mid-column{
-    padding-left: 8px !important;
-}
-.container{
-    width: 100%;
-}
-.clickable-event-item:hover, 
+/* hover styles */
 .artist:hover, 
-.footer-copyright a:hover, 
-.display-hits a:hover,
-.event-information-content a:hover,
 .btn:hover{
     background-color: var(--hover-item) !important;
+}
+.clickable-event-item:hover, 
+.footer-copyright a:hover, 
+.display-hits a:hover,
+.event-information-content a:hover{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: 900;
+    color: var(--artist) !important;
 }
 /* Main base body styling */
 .main-content{
@@ -105,11 +94,25 @@ footer{
 }
 /* Aside styling */
 .input-group{
-    height: 12vh;
+    height: 10vh;
+}
+.artist-input{
+    margin-left: 10px !important;
+    padding-left: 10px !important;
+    border-radius: 5px !important;
+}
+.btn{
+    margin-right: 12px;
+    float: right !important;
+    height: 44px;
+    width:10%;
+    background-color: var(--btn) !important;
+    color:var(--text) !important;
+    cursor: pointer;
 }
 .band-details{
     display: none;
-    height: 73vh;
+    height: 75vh;
     clear: both;
     overflow: scroll;
     overflow-x: hidden;
@@ -119,25 +122,6 @@ footer{
     font-weight: 400;
     font-family: sans-serif;
     margin-left: 10px !important;
-}
-.artist-input{
-    margin-left: 10px !important;
-    padding-left: 10px !important;
-    border-radius: 5px !important;
-}
-.btn{
-    margin-right: 10px;
-    float: right !important;
-    height: 44px;
-    width:16%;
-    background-color: var(--btn) !important;
-    color:var(--text) !important;
-    cursor: pointer;
-}
-.display-hits a:hover{
-    font-weight: 900;
-    color: var(--artist);
-    background-color: transparent!important;
 }
 .artist{
     display: flex;
@@ -167,8 +151,8 @@ footer{
     background-color: var(--bands-in-town)  ;
     display: none;
 }
-#band-info p{
-font-size:1.2rem;
+.band-info p{
+    font-size:1.2rem;
 }
 .spacer{
     height: 2vh; 
@@ -227,14 +211,12 @@ font-size:1.2rem;
     padding: 0;
     font-weight: 700;
 }
-/* #bands-in-town-list h5{
-    font-size: 1rem;
-    text-align: center;
-    text-decoration: underline;
-} */
 .card-title, .bands-in-town-list h5{
     font-size: 1.4rem !important;
     font-family: sans-serif;
+}
+.bands-in-town-list a{
+    color: var(--text-link);
 }
 .display-hits a{
     color: var(--text-link);
