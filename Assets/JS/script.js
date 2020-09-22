@@ -3,6 +3,7 @@ let artists_search_results = []
 let artist_id = []
 let artist_image = []
 let artist_object = []
+
 $(document).ready(function () {
     //#region spotify
     setMainBody(false);
@@ -25,6 +26,7 @@ $(document).ready(function () {
             artist_object.push(artist)
         })
     }
+
     function setMainBody(searchInProgress) {
         if (!searchInProgress) {
             // set the divs
@@ -54,8 +56,11 @@ $(document).ready(function () {
         getDefaultCityCountry();
     }
 
+
+    // Set variables for the API Keys for the Spotify content 
     const clientId = '41cd629d017d4f53bc20ccb457fdd08e';
     const clientSecret = '70a3757b1ad54861be12d8693bc8b929';
+    // Retrieve the Spotify Information
     $.post({
         url: 'https://accounts.spotify.com/api/token',
         headers: {
@@ -67,6 +72,7 @@ $(document).ready(function () {
         token = res.access_token
     })
 
+    // Retrieve information based on teh text typed into the searchbar #artist-input
     function get_results() {
         artists_search_results = []
         artist_image = []
@@ -88,6 +94,7 @@ $(document).ready(function () {
                 const new_artist_name = $(`<h3 class=col_1${artist.id}>${artist.name} </h3>`)
                 const new_artist_image = $(`<div class='col_3${artist.id} image-holder' ><img src=${artist.images[2].url} width='50'></div>`)
 
+                // appends a <h3> of the arists name and an image of teh artist to the empty div .artist and pushes results to empty arrays
                 new_artist.append(new_artist_name, new_artist_image)
                 $('#band-details').append(new_artist)
                 artists_search_results.push(artist.name)
@@ -98,6 +105,7 @@ $(document).ready(function () {
         })
     }
 
+    // Displays the searched for artist along with image of said artist in the side content underneath the search bar
     $('#search-form').submit(function (event) {
         event.preventDefault();
         get_results();
@@ -222,6 +230,7 @@ $(document).ready(function () {
         $eventListUL.addClass("all-events");
         $("#event-information-list").append($eventListUL);
 
+        // loop through the response and add a new <li> then add one to index which then gets appended to the eventListUL
         var index = 0;
         response.forEach(function (data) {
             var $newEvent = $("<li>");
@@ -329,7 +338,7 @@ $(document).ready(function () {
                 url: artistURL,
                 method: "GET"
             }).then(function (response) {
-                // console.log("HELLO ", response)
+
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
@@ -338,6 +347,7 @@ $(document).ready(function () {
                     $("#event-information-content").attr('style', 'overflow-y: hidden');
                     $("#event-information-list").attr('style', 'overflow-y: hidden');
 
+                    // fetches the artist info and displays song samples
                 } else {
                     if (response.upcoming_event_count > 0) {
                         var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
