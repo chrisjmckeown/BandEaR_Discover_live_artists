@@ -1,19 +1,17 @@
 /********** Colour reference chart*********
 *************************** colour *******/ 
 :root {
-    --borders: black;
     --text: white;
-    --text-link: rgba(3, 17, 145, 0.753);
+    --text-link: #6B2B06;
     --link:#8babb2;
     --scroll: white;
 
-    --artist:#00838f;
-    --blurb-about-site:#F4F4DF;
-    --bands-in-town:#F4F4DF;
-    --event-information:#00838f;
-
-    --hover-item: #477079;
-    --hover-text: black;
+    --artist:#B80C09;
+    --btn:#B80C09;
+    --hover-item: #E5E7E6;
+    --blurb-about-site:#B7B5B3;
+    --bands-in-town:#B7B5B3;
+    --event-information: #B7B5B3;
   }
 
 *,
@@ -28,9 +26,29 @@ body {
     margin: 0;
     padding: 0;
 }
+/* colouring */
+.header-colour{
+    background-color: #070505;
+}
+.footer-colour{
+    background-color: #070505;
+}
+.main-colour{
+    background-color: #E5E7E6;
+}
+.left-column{
+    background-color: #070505;
+} 
+.mid-column{
+    background-color: #E5E7E6;
+} 
+.right-column{
+    background-color: #E5E7E6;
+}
+
+
 .nav-wrapper, header{
-    height: 6vh !important;
-    padding-left: 0px;
+    height: 9vh !important;
 }
 header a{
     padding-left: 20px !important;
@@ -38,12 +56,16 @@ header a{
 aside, .main-body{
     margin: 0px;
 }
-.left-column, .mid-column, .right-column{
+.left-column{
+    padding-top:1vh !important;
+    height:89vh;
+}
+.mid-column, .right-column{
     padding-top: 3vh !important;
     height:87vh;
 }
 .bands-in-town, .blurb-about-site, .map-canvas{
-    height:87vh;
+    height:82vh;
     margin: 0px;
     overflow: scroll;
     overflow-x: hidden;
@@ -73,12 +95,13 @@ footer{
 .artist:hover, 
 .footer-copyright a:hover, 
 .display-hits a:hover,
-.event-information-content a:hover{
-    background-color: var(--hover-item);
+.event-information-content a:hover,
+.btn:hover{
+    background-color: var(--hover-item) !important;
 }
 /* Main base body styling */
 .main-content{
-    height: 90vh;
+    height: 87vh;
 }
 /* Aside styling */
 .input-group{
@@ -107,8 +130,9 @@ footer{
     float: right !important;
     height: 44px;
     width:16%;
-    background-color: var(--artist) !important;
+    background-color: var(--btn) !important;
     color:var(--text) !important;
+    cursor: pointer;
 }
 .display-hits a:hover{
     font-weight: 900;
@@ -241,8 +265,8 @@ font-size:1.2rem;
 .blurb-about-site{
     background-color: var(--blurb-about-site)  ;
     font-family: sans-serif;
-    height: 80vh;
-    padding: 5% 2%;
+    height: 82vh;
+    /* padding: 5% 2%; */
 
 }
 .blurb-about-site-content{
@@ -297,7 +321,7 @@ font-size:1.2rem;
         height: 15vh;
     }
     .band-details{
-        height: 72vh;
+        height: 67vh;
     }
 
     .footer-copyright{

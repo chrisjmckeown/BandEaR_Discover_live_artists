@@ -29,10 +29,10 @@ $(document).ready(function () {
         if (!searchInProgress) {
             // set the divs
             // Set middle section
-            $("#blurb-about-site").attr("style", "height:85vh; display: block");
-            $("#bands-in-town").attr("style", "height:85vh; display: none");
+            $("#blurb-about-site").attr("style", "height:82vh; display: block");
+            $("#bands-in-town").attr("style", "height:82vh; display: none");
             // Set right section
-            $("#map-canvas").attr("style", "height:85vh; display: block");
+            $("#map-canvas").attr("style", "height:82vh; display: block");
             $("#event-information").attr("style", "display: none");
             $("#spacer").attr("style", "display: none");
             $('#band-details').empty();
@@ -40,9 +40,9 @@ $(document).ready(function () {
         } else {
             // Set middle section
             $("#blurb-about-site").attr("style", "display: none");
-            $("#bands-in-town").attr("style", "height: 85vh; display: block");
+            $("#bands-in-town").attr("style", "height: 82vh; display: block");
             // Set right section
-            $("#map-canvas").attr("style", "height: 43vh; display: block");
+            $("#map-canvas").attr("style", "height: 40vh; display: block");
             $("#spacer").attr("style", "height: 2vh; display: block");
             $("#event-information").attr("style", "height: 40vh; display: block");
         }
