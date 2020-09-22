@@ -45,6 +45,8 @@ aside, .main-body{
 .bands-in-town, .blurb-about-site, .map-canvas{
     height:87vh;
     margin: 0px;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 footer{
     height: 4vh;
@@ -108,14 +110,11 @@ footer{
     background-color: var(--artist) !important;
     color:var(--text) !important;
 }
-
-
 .display-hits a:hover{
     font-weight: 900;
     color: var(--artist);
     background-color: transparent!important;
 }
-
 .artist{
     display: flex;
     background-color:var(--artist);
@@ -152,13 +151,17 @@ footer{
     display: none;
     height: 40vh; 
     margin:0;
+    padding-right: 5px;
 }
-.event-information-content{
+.scroll{
+    margin:0 !important;
     overflow: scroll;
     overflow-x: hidden;
-    height: 30vh;
+    height: 32vh;
+}
+.event-information-content{
     width: 90%;
-    padding: 10px;
+    padding: 5px !important;
 }
 .event-information-content a{
     color: var(--text-link);
@@ -166,11 +169,8 @@ footer{
 .event-information-list{
     color: var(--text-link);
     background-color: var(--white);
-    overflow: scroll;
-    overflow-x: hidden;
-    height: 30vh;
     width:100%;
-    padding: 10px;
+    padding: 5px !important;
 }
 .event-information-list ul, .event-information-content ul{
     margin-top: 7px;
@@ -200,11 +200,14 @@ footer{
     padding: 0;
     font-weight: 700;
 }
-#bands-in-town-list h5{
-    font-size: 2rem;
+/* #bands-in-town-list h5{
+    font-size: 1rem;
     text-align: center;
-  
     text-decoration: underline;
+} */
+.card-title, .bands-in-town-list h5{
+    font-size: 1.4rem !important;
+    font-family: sans-serif;
 }
 .display-hits a{
     color: var(--text-link);
@@ -224,7 +227,7 @@ footer{
     outline: 1px solid  var(--scroll);
     padding:30px 0;
 
-  }
+}
 .display-hits::-webkit-scrollbar-thumb {
     background-color: var(--artist);
     outline: 1px solid var(--artist);

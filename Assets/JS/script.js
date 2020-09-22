@@ -227,10 +227,11 @@ $(document).ready(function () {
         appendEventInfo(response[0]);
     }
 
-    $(document).on('click', '.clickable-event-item', function () {
+    $(document).on('click', '#clickable-event-item', function () {
         var $index = $(this).attr("index");
         $("#event-information-content").empty();
         appendEventInfo(eventList[$index], $index);
+        $("#scroll").scrollTop(0);
     });
     var timeout;
 
@@ -260,10 +261,10 @@ $(document).ready(function () {
             durationDay = moment(data.datetime).diff(moment(), 'days');
             $('#countdown').html(
                 "Countdown: <br><strong>" +
-                durationDay + " " +
-                duration.hours() + ":" +
-                duration.minutes() + ":" +
-                duration.seconds() + "</strong>");
+                durationDay + "d " +
+                duration.hours() + "h " +
+                duration.minutes() + "m " +
+                duration.seconds() + "s</strong>");
         }, interval);
 
         // query for google maps places
@@ -326,12 +327,9 @@ $(document).ready(function () {
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
                     $("#band-info").append($("<p>").html(artist + ", was not found, but feel free to preview their music &#128521;").css("font-size", "12px"));
-                    $("#event-information-content").attr('style', 'overflow-y: hidden');
-                    $("#event-information-list").attr('style', 'overflow-y: hidden');
+                    $("#map-canvas").attr("style", "height:85vh; display: block");
+                    $("#event-information").attr("style", "display: none");
                 } else {
-                    $("#event-information-content").attr('style', 'overflow-y: scroll');
-                    $("#event-information-list").attr('style', 'overflow-y: scroll');
-
                     if (response.upcoming_event_count > 0) {
                         var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
                         $.ajax({
@@ -342,6 +340,8 @@ $(document).ready(function () {
                             appendEventInfoList(response);
                         });
                     } else {
+                        $("#map-canvas").attr("style", "height:85vh; display: block");
+                        $("#event-information").attr("style", "display: none");
                         $("#band-info").append($("<p>").html(artist + ", was not found, but feel free to preview their music &#128521;").css("font-size", "12px"));
                     }
                     appendArtistInfo(response);
