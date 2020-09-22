@@ -195,8 +195,8 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(response);
             let albums = []
-            response.items.forEach(item => albums.push(`<a href=${item.external_urls.spotify} target='_blank'>&nbsp;${item.name}</a>`))
-            $('#spotify-info').append(`<p><strong>Albums: </strong>${albums.join()}</p>`)
+            response.items.forEach(item => albums.push(`<a href=${item.external_urls.spotify} class='spotify-album' target='_blank'>&nbsp;${item.name}</a>`))
+            $('#spotify-info').append(`<p><strong>Albums: </strong>${albums.join(' ')}</p>`)
 
         })
     }

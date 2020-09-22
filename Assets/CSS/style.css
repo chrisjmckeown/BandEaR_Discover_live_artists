@@ -156,6 +156,14 @@ font-size:1.2rem;
     margin:0;
     padding-right: 5px;
 }
+.spotify-album{
+    display: inline-block;
+    background-color: var(--artist);
+    color:var(--blurb-about-site);
+    margin: 2px;
+    padding:5px 12px;
+    border-radius: 12px;
+}
 .scroll{
     margin:0 !important;
     overflow: scroll;
