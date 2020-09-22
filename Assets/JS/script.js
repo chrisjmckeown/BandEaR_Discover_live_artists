@@ -170,7 +170,7 @@ $(document).ready(function () {
 
     function displaySpotifyData(artist) {
         $('#spotify-info').empty()
-        $("#bands-in-town-band-name").text(artist.name);
+        $("#bands-in-town-band-name").html(`<a href=${artist.external_urls.spotify} target='_blank'>${artist.name}</a>`);
         $("#band-info").prepend($("<img>").attr("src", artist.images[1].url).css({
             "max-width": "100%",
             "max-height": "260px"
@@ -187,7 +187,7 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(response);
             let albums = []
-            response.items.forEach(item => albums.push(`<a href=${item.external_urls.spotify}>${item.name}</a>`))
+            response.items.forEach(item => albums.push(`<a href=${item.external_urls.spotify} target='_blank'>&nbsp;${item.name}</a>`))
             $('#spotify-info').append(`<p><strong>Albums: </strong>${albums.join()}</p>`)
 
         })
