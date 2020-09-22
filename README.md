@@ -43,7 +43,7 @@ Primary technologies:
 * Please contact us at: 
     * Simone Cheah: simone_cheah@hotmail.com
     * William Woodburn: 
-    * Tony Melek: 
+    * Tony Melek: tonymelek.au@gmail.com
     * Chris Mckeown: chris.j.mckeown@hotmail.com
 
    ## Link to Slides
