@@ -1,9 +1,9 @@
-# BANDEAR
+# BandEaR
 
 * [Description](#Description)
 * [Usage](#Usage)
 * [Technologies Utilized](#Technologies-Utilized)
-* [BANDEAR](#BANDEAR)
+* [BandEaR](#BandEaR)
 * [Contact](#Contact)
 * [License](#License)
 
@@ -34,9 +34,9 @@ Primary technologies:
 * HTML-5
 * CSS-3
 
-## BANDEAR
+## BandEaR
 
-* Please find BANDEAR page here: <a href="https://chrisjmckeown.github.io/simone_william_tony_chris/" target="_blank">BANDEAR</a>
+* Please find BandEaR page here: <a href="https://chrisjmckeown.github.io/simone_william_tony_chris/" target="_blank">BANDEAR</a>
 
 ## Contact
 
