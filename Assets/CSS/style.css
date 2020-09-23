@@ -44,6 +44,14 @@ header a{
     padding-left: 20px !important;
     font-family: 'Courgette', cursive;
 }
+h4 a{
+    font-family: 'Courgette', cursive; 
+    color:black;
+    font-size: 3rem;
+}
+.place4u{
+    font-size: 2.5rem!important;
+}
 /* styling the 3 columns */
 .left-column{
     height:90vh;
@@ -63,8 +71,6 @@ footer{
     position: fixed;
     width: 100%;
     bottom: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 .footer-copyright{
   margin-left: 10px;
@@ -95,7 +101,7 @@ footer{
 /* left column styling (aside) */
 .input-group{
     height: 10vh;
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 2vh;
 }

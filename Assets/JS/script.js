@@ -80,7 +80,6 @@ $(document).ready(function () {
         $('#band-details').empty()
         $('#band-details').show()
         $.get({
-            // method: 'GET',
             url: `https://api.spotify.com/v1/search?q=${$('#artist-input').val().trim()}&type=artist`,
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -108,6 +107,7 @@ $(document).ready(function () {
         event.preventDefault();
         get_results();
     })
+    $('#artist-input').click(() => $('#band-details').empty())
 
     $("#artist-input").keyup(function () {
         var $input = $(this).val().trim();
@@ -119,9 +119,6 @@ $(document).ready(function () {
 
     //#region bandsintown
 
-    $(document).on('click', '#spotify', function (event) {
-        event.stopPropagation()
-    })
 
     $(document).on('click', '.artist', function () {
         setMainBody(true);
@@ -562,8 +559,8 @@ $(document).ready(function () {
         $("#info-content").append('<p><b><a href="' + place.url + '" target="_blank">' + place.name + '</a></b></p>');
         $("#info-content").append('<p>Address: ' + place.vicinity + '</p>');
         if (place.formatted_phone_number) {
-            $("#info-content").append('<p>Phone: ' +  place.formatted_phone_number + '</p>');
-        } 
+            $("#info-content").append('<p>Phone: ' + place.formatted_phone_number + '</p>');
+        }
         // Assign a five-star rating to the hotel, using a black star ('&#10029;')
         // to indicate the rating the hotel has earned, and a white star ('&#10025;')
         // for the rating points not achieved.
@@ -576,8 +573,8 @@ $(document).ready(function () {
                     rating += "&#10029;";
                 }
             }
-            $("#info-content").append('<p>Rating: ' +  rating + '</p>');
-        } 
+            $("#info-content").append('<p>Rating: ' + rating + '</p>');
+        }
         // The regexp isolates the first part of the URL (domain plus subdomain) to give a short URL for displaying in the info window.
         if (place.website) {
             let fullUrl = place.website;
@@ -587,7 +584,7 @@ $(document).ready(function () {
                 fullUrl = website;
             }
             $("#info-content").append('<p><b><a href="' + website + '" target="_blank">' + website + '</a></b></p>');
-        } 
+        }
     }
     //#endregion
 });
