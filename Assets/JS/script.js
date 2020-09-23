@@ -326,11 +326,9 @@ $(document).ready(function () {
                 url: artistURL,
                 method: "GET"
             }).then(function (response) {
-
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
-
                     $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
                     // fetches the artist info and displays song samples
                 } else {
@@ -344,8 +342,8 @@ $(document).ready(function () {
                             appendEventInfoList(response);
                         });
                     } else {
-
                         $("#map-canvas").css("display", "block");
+                        $("#map-canvas").css("height", "82vh");
                         $("#event-information").css("display", "none");
                         $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
 
@@ -363,9 +361,12 @@ $(document).ready(function () {
     var ipinfoAPIKey = "f2357f3657a5f4";
     getDefaultCityCountry();
     let map;
-    var marker;
+    var eventMarker;
+    var lodgingMarkers = [];
     var defaultCoodinates;
     var infoWindowAccomodation;
+    var markerPath = "https://developers.google.com/maps/documentation/javascript/images/marker_green";
+    var places;
 
     // initialise the map based on coordinates
     function initMap(coordinates) {
@@ -388,27 +389,28 @@ $(document).ready(function () {
     }
 
     // initialise the map based on coordinates
-    function initMapPlace(queryPlace, $container, venue) {
+    function initMapPlace(queryPlace, $mapContainer, venue) {
         // request query for findPlaceFromQuery call
         var requestQuery = {
             query: queryPlace,
             fields: ["name", "geometry"]
         };
         // initialise the PlacesService to pin point the venue location
-        var service = new google.maps.places.PlacesService(map);
-
+        places = new google.maps.places.PlacesService(map);
+        // set the info window
         infoWindowAccomodation = new google.maps.InfoWindow({
-            content: document.getElementById("info-content")
+            content: $('<div id="info-content"></div>')[0],
         });
         // using the requestQuery find the venue
-        service.findPlaceFromQuery(requestQuery, function (results, status) {
+        places.findPlaceFromQuery(requestQuery, function (results, status) {
             // if result is returned then set the marker to the coordinate of the venue
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (let i = 0; i < results.length; i++) {
-                    createMarker(results[i].geometry.location, $container);
-                }
+                results.forEach(function (result) {
+                    createMarker(result.geometry.location, $mapContainer);
+                });
                 map.setCenter(results[0].geometry.location);
-                search(results[0].geometry.location);
+                // create lodgingMarkers for accommodation near the venue
+                searchForNearByLodging(results[0].geometry.location);
             } else {
                 // else if the venue lng and lat exist, which is the city rather than the venue itself, set the marker to the city
                 if (venue.latitude && venue.longitude) {
@@ -416,7 +418,7 @@ $(document).ready(function () {
                         lat: parseFloat(venue.latitude),
                         lng: parseFloat(venue.longitude)
                     };
-                    createMarker(coordinates, $container);
+                    createMarker(coordinates, $mapContainer);
                     map.setCenter(coordinates);
                 }
             }
@@ -424,21 +426,21 @@ $(document).ready(function () {
     }
 
     // create the marker and info window
-    function createMarker(location, $container) {
+    function createMarker(location, $mapContainer) {
         // initialise the marker data
-        marker = new google.maps.Marker({
+        eventMarker = new google.maps.Marker({
             map,
             position: location,
             animation: google.maps.Animation.DROP,
         });
         // set the marker on the map
-        marker.setMap(map);
+        eventMarker.setMap(map);
         // create a infowindow item to display some facts about the venue
         var infowindow = new google.maps.InfoWindow({
-            content: $container.prop('outerHTML'),
+            content: $mapContainer.prop('outerHTML'),
         });
-        marker.addListener('click', function () {
-            infowindow.open(map, marker);
+        eventMarker.addListener('click', function () {
+            infowindow.open(map, eventMarker);
         });
     }
 
@@ -488,131 +490,104 @@ $(document).ready(function () {
         // save the local storage with new items
         localStorage.setItem("coordinates", JSON.stringify(coordinates));
     }
-    var MARKER_PATH =
-        "https://developers.google.com/maps/documentation/javascript/images/marker_green";
-    var places;
-    var markers = [];
-    function search(coordinates) {
+
+    function searchForNearByLodging(coordinates) {
         var search = {
             location: coordinates,
-            radius: 2000,
+            radius: 3000,
             types: ["lodging"]
         };
+
         places.nearbySearch(search, (results, status, pagination) => {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 clearMarkers();
-                // Create a marker for each hotel found, and
-                // assign a letter of the alphabetic to each marker icon.
-                for (let i = 0; i < results.length; i++) {
-                    const markerLetter = String.fromCharCode(
-                        "A".charCodeAt(0) + (i % 26)
-                    );
+                // Create a marker for each hotel found, and assign a letter of the alphabetic to each marker icon.
+                // using for (var... as i use used as an iterator
+                for (var i = 0; i < results.length; i++) {
+                    var markerLetter = String.fromCharCode("A".charCodeAt(0) + (i % 26));
                     // Use marker animation to drop the icons incrementally on the map.
-                    const markerIcon = MARKER_PATH + markerLetter + ".png";
-
-                    markers[i] = new google.maps.Marker({
+                    const markerIcon = markerPath + markerLetter + ".png";
+                    // add the marker to the marker list
+                    lodgingMarkers[i] = new google.maps.Marker({
                         position: results[i].geometry.location,
-                        animation: google.maps.Animation.DROP,
                         icon: markerIcon
                     });
-                    // If the user clicks a hotel marker, show the details of that hotel
-                    // in an info window.
-
-                    markers[i].placeResult = results[i];
-                    google.maps.event.addListener(
-                        markers[i],
-                        "click",
-                        showInfoWindow
-                    );
+                    // If the user clicks a hotel marker, show the details of that hotel in an info window.
+                    // add the result (info) about the hotel to the marker object
+                    lodgingMarkers[i].placeResult = results[i];
+                    // create listener if the user clicks on a marker
+                    // create a infowindow item to display some facts about the venue
+                    google.maps.event.addListener(lodgingMarkers[i], "click", showInfoWindow);
+                    // add the marker one at a time
                     setTimeout(dropMarker(i), i * 100);
                 }
             }
         });
     }
-
+    // removes the markers from the and the list
     function clearMarkers() {
-        for (let i = 0; i < markers.length; i++) {
-            if (markers[i]) {
-                markers[i].setMap(null);
+        lodgingMarkers.forEach(function (marker) {
+            if (marker) {
+                marker.setMap(null);
             }
-        }
-        markers = [];
+        });
+        lodgingMarkers = [];
     }
-
+    // places the marker on the map
     function dropMarker(i) {
         return function () {
-            markers[i].setMap(map);
+            lodgingMarkers[i].setMap(map);
         };
     }
-
+    // Load the place information into the HTML elements used by the info window.
     function showInfoWindow() {
-        const marker = this;
         places.getDetails(
             {
-                placeId: marker.placeResult.place_id
+                placeId: this.placeResult.place_id
             },
             (place, status) => {
                 if (status !== google.maps.places.PlacesServiceStatus.OK) {
                     return;
                 }
-
-                infoWindowAccomodation.open(map, marker);
-                buildIWContent(place);
+                infoWindowAccomodation.open(map, this);
+                buildInfoContent(place);
             }
         );
-    } // Load the place information into the HTML elements used by the info window.
+    }
 
     const hostnameRegexp = new RegExp("^https?://.+?/");
-    function buildIWContent(place) {
-        document.getElementById("iw-icon").innerHTML =
-            '<img class="hotelIcon" ' + 'src="' + place.icon + '"/>';
-        document.getElementById("iw-url").innerHTML =
-            '<b><a href="' + place.url + '">' + place.name + "</a></b>";
-        document.getElementById("iw-address").textContent = place.vicinity;
-
+    function buildInfoContent(place) {
+        // build the html to fill the info window
+        $("#info-content").append('<p><img class="hotelIcon" ' + 'src="' + place.icon + '"/></p>');
+        $("#info-content").append('<p><b><a href="' + place.url + '" target="_blank">' + place.name + '</a></b></p>');
+        $("#info-content").append('<p>Address: ' + place.vicinity + '</p>');
         if (place.formatted_phone_number) {
-            document.getElementById("iw-phone-row").style.display = "";
-            document.getElementById("iw-phone").textContent =
-                place.formatted_phone_number;
-        } else {
-            document.getElementById("iw-phone-row").style.display = "none";
-        } // Assign a five-star rating to the hotel, using a black star ('&#10029;')
+            $("#info-content").append('<p>Phone: ' +  place.formatted_phone_number + '</p>');
+        } 
+        // Assign a five-star rating to the hotel, using a black star ('&#10029;')
         // to indicate the rating the hotel has earned, and a white star ('&#10025;')
         // for the rating points not achieved.
-
         if (place.rating) {
-            let ratingHtml = "";
-
-            for (let i = 0; i < 5; i++) {
+            var rating = "";
+            for (var i = 0; i < 5; i++) {
                 if (place.rating < i + 0.5) {
-                    ratingHtml += "&#10025;";
+                    rating += "&#10025;";
                 } else {
-                    ratingHtml += "&#10029;";
+                    rating += "&#10029;";
                 }
-
-                document.getElementById("iw-rating-row").style.display = "";
-                document.getElementById("iw-rating").innerHTML = ratingHtml;
             }
-        } else {
-            document.getElementById("iw-rating-row").style.display = "none";
-        }
-        // The regexp isolates the first part of the URL (domain plus subdomain)
-        // to give a short URL for displaying in the info window.
-
+            $("#info-content").append('<p>Rating: ' +  rating + '</p>');
+        } 
+        // The regexp isolates the first part of the URL (domain plus subdomain) to give a short URL for displaying in the info window.
         if (place.website) {
             let fullUrl = place.website;
             let website = String(hostnameRegexp.exec(place.website));
-
             if (!website) {
                 website = "http://" + place.website + "/";
                 fullUrl = website;
             }
-
-            document.getElementById("iw-website-row").style.display = "";
-            document.getElementById("iw-website").textContent = website;
-        } else {
-            document.getElementById("iw-website-row").style.display = "none";
-        }
+            $("#info-content").append('<p><b><a href="' + website + '" target="_blank">' + website + '</a></b></p>');
+        } 
     }
     //#endregion
 });
