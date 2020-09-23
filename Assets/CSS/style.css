@@ -42,6 +42,7 @@ body {
 }
 header a{
     padding-left: 20px !important;
+    font-family: 'Courgette', cursive;
 }
 /* styling the 3 columns */
 .left-column{
