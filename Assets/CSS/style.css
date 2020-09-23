@@ -6,7 +6,7 @@
     --scroll: white;
     --artist:#B80C09;
     --btn:#B80C09;
-    --hover-item: #C6878F;
+    --hover-item: #fd1736;
     --blurb-about-site:#B7B5B3;
     --bands-in-town:#B7B5B3;
     --event-information: #B7B5B3;
@@ -16,6 +16,9 @@
 *::after {
     /* Width and height apply to all parts of the element: content, padding and borders */
     box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
 }
 /* main body styling */
 html,
@@ -85,14 +88,15 @@ footer{
     cursor: pointer;
 }
 /* Main base body styling */
-.main-content{
+.main-content,aside{
     height: 87vh;
 }
 /* left column styling (aside) */
 .input-group{
-    height: 11vh;
+    height: 10vh;
     padding-left: 20px;
     padding-right: 10px;
+    margin-bottom: 2vh;
 }
 .side-content-title {
     font-size: 1.2rem;
@@ -101,25 +105,28 @@ footer{
     clear: both;
 }
 .inputs{
-    box-sizing: border-box;
-    display: inline-block;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
+
 .artist-input{
     border-radius: 5px !important;
     width: 75% !important;
     padding-left: 10px !important;
 }
 .btn{
-    float: right;
-    height: 44px;
-    width: 15%;
+    height: 45px;
+    width: 20%;
+    padding: 0;
+    text-align: center;
     background-color: var(--btn) !important;
     color:var(--text) !important;
+    border-radius: 5px;
 }
+
 .band-details{
     display: none;
-    height: 76vh;
+    height: 73vh;
     clear: both;
     overflow: scroll;
     overflow-x: hidden;
@@ -146,6 +153,10 @@ footer{
 .artist .image-holder{
     text-align: right;
 }
+.image-holder img{
+    width:50px;
+    height:50px;
+}
 /* middle column styling */
 .bands-in-town{
     background-color: var(--bands-in-town);
@@ -160,6 +171,8 @@ footer{
     margin: 2px;
     padding:5px 12px;
     border-radius: 12px;
+    color: var(--blurb-about-site)!important;
+    font-weight: 700;
 }
 /* right column styling */
 .spacer{
@@ -304,11 +317,11 @@ footer{
 }
 
 /* media adjustments to work on phone, ipad and PC */
+
+
 @media (max-width: 768px) { 
     /* Aside styling */
-    .input-group{
-        height: 9vh;
-    }
+   
     .band-details{
         height: 80vh;
     }
@@ -319,11 +332,10 @@ footer{
 
 @media (max-width: 550px) { 
     /* Aside styling */
-    .input-group{
-        height: 115vh;
-    }
+ 
     .band-details{
         height: 67vh;
+        margin:2vh 0;
     }
     .footer-copyright{
         margin-top: .4vh;

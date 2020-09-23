@@ -14,7 +14,7 @@ $(document).ready(function () {
         favourite_singers.forEach(function (artist) {
             const new_artist = $(`<div class="artist" id=${artist[2]}></div>`)
             const new_artist_name = $(`<h3 class=col_1${artist[2]}>${artist[0]} </h3>`)
-            const new_artist_image = $(`<div class='col_3${artist[2]} image-holder' ><img src=${artist[1]} width='50'></div>`)
+            const new_artist_image = $(`<div class='col_3${artist[2]} image-holder' ><img src=${artist[1]} ></div>`)
 
             new_artist.append(new_artist_name, new_artist_image)
             $('#band-details').append(new_artist)
@@ -125,6 +125,8 @@ $(document).ready(function () {
 
     $(document).on('click', '.artist', function () {
         setMainBody(true);
+        document.querySelector('#bands-in-town-band-name').scrollIntoView();
+
         let artistId = this.id
         let check = 0
         favourite_singers.forEach(singer => {
@@ -176,6 +178,7 @@ $(document).ready(function () {
 
     function displaySpotifyData(artist) {
         $('#spotify-info').empty()
+        // console.log(artist)
         $("#bands-in-town-band-name").html(`<a href=${artist.external_urls.spotify} target='_blank'>${artist.name}</a>`);
         $("#band-info").prepend($("<img>").attr("src", artist.images[1].url).css({
             "max-width": "100%",
