@@ -40,13 +40,15 @@ body {
 .nav-wrapper, header{
     height: 9vh !important;
 }
-header a{
-    padding-left: 20px !important;
+.brand-logo{
     font-family: 'Courgette', cursive;
+    color: white;
+}
+header a{
+    padding-left: 20px !important;  
 }
 h4 a{
-    font-family: 'Courgette', cursive; 
-    color:black;
+    color:black!important;
     font-size: 3rem;
 }
 .place4u{
