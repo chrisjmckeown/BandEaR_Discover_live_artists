@@ -60,7 +60,7 @@ h4 a{
 }
 .mid-column, .right-column{
     padding-top: 2.5vh !important;
-    height:81vh;
+    height:85vh;
 }
 .bands-in-town, .blurb-about-site{
     overflow: scroll;
@@ -82,9 +82,6 @@ footer{
 .btn:hover,
 .spotify-album:hover{
     background-color: var(--hover-item) !important;
-}
-.media a:hover{
-    color: var(--hover-item) !important;
 }
 .clickable-event-item:hover, 
 .footer-copyright a:hover, 
@@ -186,18 +183,14 @@ footer{
     color: var(--blurb-about-site)!important;
     font-weight: 700;
 }
-/* social media div */
- .media a{
-    font-size: 25px;
-    color: var(--artist) !important;
-    padding-right:10px;
-}
 /* right column styling */
 .spacer{
     height: 2vh; 
 }
 .scroll{
     margin:0 !important;
+    overflow: scroll;
+    overflow-x: hidden;
     height: 32vh;
 }
 /* event information styling */
@@ -207,8 +200,6 @@ footer{
     height: 40vh; 
     margin:0;
     padding-right: 5px;
-    overflow: scroll;
-    overflow-x: hidden;
 }
 .event-information-content{
     width: 90%;
@@ -243,7 +234,7 @@ footer{
     padding-left: 10px;
     padding-top: 5px;
 }
-.bands-in-town-band-name{
+#bands-in-town-band-name{
     font-size: 2rem;
     font-weight: 700;
 }
@@ -256,8 +247,8 @@ footer{
 /* display audio styling */
 .display-hits{
     top: 5.2rem;
-    /* overflow: scroll; */
-    /* overflow-x: hidden; */
+    overflow: scroll;
+    overflow-x: hidden;
     height: 30vh;
     width:100%;
     padding:5px;
@@ -335,26 +326,13 @@ footer{
 }
 
 /* media adjustments to work on phone, ipad and PC */
-
-
 @media (max-width: 768px) { 
-    /* Aside styling */
-   
-    .band-details{
-        height: 80vh;
-    }
     .footer-copyright{
         margin-top: .8vh;
     } 
 }
 
 @media (max-width: 550px) { 
-    /* Aside styling */
- 
-    .band-details{
-        height: 67vh;
-        margin:2vh 0;
-    }
     .footer-copyright{
         margin-top: .4vh;
         font-size: .7rem;
