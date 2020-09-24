@@ -55,7 +55,6 @@ $(document).ready(function () {
         getDefaultCityCountry();
     }
 
-
     // Set variables for the API Keys for the Spotify content 
     const clientId = '41cd629d017d4f53bc20ccb457fdd08e';
     const clientSecret = '70a3757b1ad54861be12d8693bc8b929';
@@ -118,8 +117,6 @@ $(document).ready(function () {
     //#endregion
 
     //#region bandsintown
-
-
     $(document).on('click', '.artist', function () {
         setMainBody(true);
         document.querySelector('#bands-in-town-band-name').scrollIntoView();
@@ -129,11 +126,8 @@ $(document).ready(function () {
         favourite_singers.forEach(singer => {
             if (singer[2] === artistId) {
                 check++;
-
             }
         })
-
-
         artist_id.forEach((artist, index) => {
             if (artist === artistId && check === 0) {
                 favourite_singers.push([artists_search_results[index], artist_image[index], artistId, artist_object[index]])
@@ -163,7 +157,6 @@ $(document).ready(function () {
                 $(".display-hits").append($new_hit)
             })
         })
-
         favourite_singers.forEach((singer) => {
             if ((this.id) === singer[2]) {
                 displayBandsInTownData(singer[0])
@@ -171,7 +164,6 @@ $(document).ready(function () {
             }
         });
     })
-
 
     function displaySpotifyData(artist) {
         $('#spotify-info').empty()
@@ -208,7 +200,6 @@ $(document).ready(function () {
     }
 
     var eventList = [];
-
     function appendEventInfoList(response) {
         eventList = response;
         var $eventListUL = $("<ul>");
@@ -314,6 +305,7 @@ $(document).ready(function () {
             }
         }
     }
+    
     function displayBandsInTownData(artistName) {
         // replaces all special chars except letters, nums, non-latin chars and spaces
         var artist = artistName.replace("&", "and").replace(/([^a-zA-Z0-9$ \p{L}-]+)/ug, "");
