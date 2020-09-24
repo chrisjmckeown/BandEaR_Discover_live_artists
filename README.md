@@ -8,17 +8,35 @@
 * [License](#License)
 
 ## Description
-I love music and frequently attend live music shows when I can, however I am sick of going to shows with uncertainty as to who I am seeing. I would like an app that allows me to search by band name, preview their music and see all upcoming events.
+Scenario 1
+* I love music and frequently attend live music shows when I can, however I am sick of going to shows with uncertainty as to who I am seeing. I would like an app that allows me to search by band name, preview their music and see all upcoming events.
+
+Scenario 2
+* As a music Promoter I am always looking to spread the word about upcoming gigs and shows. I need an application that allows users to sample various artists and easily figure out where and when these artists are performing.
 
 ## Usage
-* When loaded the page will:
-    * On the left hand side show a history of your last 5 searches and views.
-    * In the central panel introduce and explain the website.
-    * On the right hand side show a google map with your location.
-* Search for a band by key word.
-* View the list of results on the left and listen to 30 second song previews.
-* When an artist is clicked on the central panel will display artist information
-    * The map will show event location.
+* When loaded the page will display:
+    * Search and history on the left hand panel.
+    * Information about the website including future development opportunities in the central panel.
+    * A Google Map set to your location on the right hand panel.
+* To search:
+    * Enter a artist/band name and click search or hit the enter key.
+    * A list of results will display below the search inputst.
+    * Click on an artist to view information about them:
+        * The central panel will display an: 
+            * Image
+            * Genres
+            * Ablums
+            * Top hits, with 30 second previews
+        * The right hand side will show:
+            * All upcoming events, when an event is selected the map will move to the event location, and display nearby accomodation:
+            * Event information includes:
+                * Date
+                * Countdown
+                * Venue name   
+                * Location
+                * and ticket purchase location  
+            * Note: if there are no upcoming events, the map will default to you location and prove a message explaining there are no upcoming events.          
 
 The following image demonstrates the application functionality:
 
@@ -36,7 +54,7 @@ Primary technologies:
 
 ## BandEaR
 
-* Please find BandEaR page here: <a href="https://chrisjmckeown.github.io/simone_william_tony_chris/" target="_blank">BANDEAR</a>
+* Please find BandEaR page here: <a href="https://chrisjmckeown.github.io/BandEaR_Discover_live_artists/" target="_blank">BandEaR</a>
 
 ## Contact
 
@@ -51,4 +69,4 @@ Primary technologies:
 
 ## License
 
-* See license here: <a href="https://github.com/chrisjmckeown/Weather_Dashboard/blob/master/LICENSE" target="_blank">license agreement</a>
+* See license here: <a href="https://github.com/chrisjmckeown/BandEaR_Discover_live_artists/blob/master/LICENSE" target="_blank">license agreement</a>
