@@ -17,7 +17,7 @@ Scenario 2
 ## Usage
 * When loaded the page will display:
     * Search and history on the left hand panel.
-    * Informatation about the website including future development opertunities in the central panel.
+    * Information about the website including future development oportunities in the central panel.
     * A Google Map set to your location on the right hand panel.
 * To search:
     * Enter a artist/band name and click search or hit the enter key.
