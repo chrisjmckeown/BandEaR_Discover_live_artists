@@ -175,7 +175,7 @@ $(document).ready(function () {
 
     function displaySpotifyData(artist) {
         $('#spotify-info').empty()
-        // console.log(artist)
+        console.log(artist)
         $("#bands-in-town-band-name").html(`<a href=${artist.external_urls.spotify} target='_blank'>${artist.name}</a>`);
         $("#band-info").prepend($("<img>").attr("src", artist.images[1].url).css({
             "max-width": "100%",
@@ -232,7 +232,7 @@ $(document).ready(function () {
         var $index = $(this).attr("index");
         $("#event-information-content").empty();
         appendEventInfo(eventList[$index], $index);
-        $("#scroll").scrollTop(0);
+        $("#event-information").scrollTop(0);
     });
     var timeout;
 
@@ -323,11 +323,15 @@ $(document).ready(function () {
                 url: artistURL,
                 method: "GET"
             }).then(function (response) {
+                console.log(response);
                 // error checking
                 if (response.error || response === "") {
                     $("#bands-in-town-band-name").text(artist);
                     $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
                     // fetches the artist info and displays song samples
+                    if (response.facebook_page_url) {
+                        $('#spotify-info').append(`<p><strong>Facebook: </strong>${response.facebook_page_url}</p>`)
+                    }
                 } else {
                     if (response.upcoming_event_count > 0) {
                         var eventURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
@@ -344,6 +348,11 @@ $(document).ready(function () {
                         $("#event-information").css("display", "none");
                         $("#band-info").append($("<p>").html(artist + " has no upcoming events, but feel free to preview their music &#128521;"));
 
+                    }
+                    if (response.facebook_page_url) {
+                    
+                        $('#spotify-info').append(`<p class="media"><strong>Social media: </strong><a href="${response.facebook_page_url}" target="_blank"><i
+                        class="fab fa-facebook-square"></i></a></p>`)
                     }
                     appendArtistInfo(response);
                 }
@@ -468,8 +477,6 @@ $(document).ready(function () {
                 initMap(coordinates);
                 setStoredCoordinates(coordinates);
             }
-        }).catch(function (err) {
-            console.log(err);
         });
     };
 
