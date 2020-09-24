@@ -350,7 +350,7 @@ $(document).ready(function () {
 
                     }
                     if (response.facebook_page_url) {
-                    
+
                         $('#spotify-info').append(`<p class="media"><strong>Social media: </strong><a href="${response.facebook_page_url}" target="_blank"><i
                         class="fab fa-facebook-square"></i></a></p>`)
                     }
@@ -562,6 +562,7 @@ $(document).ready(function () {
     const hostnameRegexp = new RegExp("^https?://.+?/");
     function buildInfoContent(place) {
         // build the html to fill the info window
+        $("#info-content").empty();
         $("#info-content").append('<p><img class="hotelIcon" ' + 'src="' + place.icon + '"/></p>');
         $("#info-content").append('<p><b><a href="' + place.url + '" target="_blank">' + place.name + '</a></b></p>');
         $("#info-content").append('<p>Address: ' + place.vicinity + '</p>');
